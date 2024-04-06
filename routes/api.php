@@ -15,4 +15,5 @@ Route::middleware(ApiAuthMiddleware::class)->group(function() {
     Route::delete("/users/logout", [UserController::class, "logout"]);
 
     Route::post("/products", [ProductController::class,"create"]);
+    Route::get("/products/{productId}", [ProductController::class,"get"])->where("productId", "[0-9]+");
 });

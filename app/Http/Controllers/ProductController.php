@@ -6,6 +6,7 @@ use App\Http\Requests\ProductCreateRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,5 +25,19 @@ class ProductController extends Controller
         $product->save();
 
         return (new ProductResource($product))->response()->setStatusCode(201);
+    }
+
+    public function get(int $productId): ProductResource
+    {
+        $user = Auth::user();
+        $product = Product::where("id", $productId)->where("user_id", $user->id)->first();
+
+        if(!$product) {
+            throw new HttpResponseException(response()->json([
+                "error" => "Produk tidak ditemukan."
+            ])->setStatusCode(404));
+        }
+
+        return new ProductResource($product);
     }
 }
