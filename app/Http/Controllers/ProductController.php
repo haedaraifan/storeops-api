@@ -40,4 +40,12 @@ class ProductController extends Controller
 
         return new ProductResource($product);
     }
+
+    public function list(Request $request): JsonResponse
+    {
+        $user = Auth::user();
+        $products = Product::where("user_id", $user->id)->get();
+
+        return (ProductResource::collection($products))->response()->setStatusCode(200);
+    }
 }
