@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\ApiAuthMiddleware;
 use Illuminate\Http\Request;
@@ -12,4 +13,6 @@ Route::middleware(ApiAuthMiddleware::class)->group(function() {
     Route::get("/users/me", [UserController::class, "get"]);
     Route::patch("/users/me", [UserController::class, "update"]);
     Route::delete("/users/logout", [UserController::class, "logout"]);
+
+    Route::post("/products", [ProductController::class,"create"]);
 });
