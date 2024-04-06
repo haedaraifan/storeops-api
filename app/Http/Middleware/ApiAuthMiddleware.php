@@ -31,11 +31,10 @@ class ApiAuthMiddleware
 
         if(!$user) {
             $authenticate = false;
-        } else {
-            Auth::login($user);
         }
 
         if($authenticate) {
+            Auth::login($user);
             return $next($request);
         } else {
             return response()->json([
