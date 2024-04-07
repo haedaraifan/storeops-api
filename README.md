@@ -11,3 +11,13 @@
 - **Logout User**
 
 [Detail...](https://github.com/haedaraifan/storeops-api/blob/feat/user-api-docs/docs/user-api.md)
+
+## Product Api
+
+- **Add Product**
+- **List Product**
+- **Get Product**
+- **Update Product**
+- **Delete Product**
+
+[Detail...](https://github.com/haedaraifan/storeops-api/blob/feat/product-api-docs/docs/product-api.md)
