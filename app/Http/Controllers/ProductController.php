@@ -74,4 +74,16 @@ class ProductController extends Controller
 
         return new ProductResource($product);
     }
+
+    public function delete(int $productId): JsonResponse
+    {
+        $user = Auth::user();
+        $product = $this->getProduct($user, $productId);
+
+        $product->delete();
+
+        return response()->json([
+            "message"=> "Produk berhasil dihapus."
+        ])->setStatusCode(200);
+    }
 }
