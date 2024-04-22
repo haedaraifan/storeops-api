@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class Transaction extends Model
+{
+    use HasFactory;
+
+    public $timestamps = false;
+
+    protected $fillable = [
+        "date",
+        "note",
+        "discount",
+        "additional_cost",
+        "payment_method",
+        "customer_name",
+        "customer_phone",
+        "customer_address",
+        "user_id",
+        "type_id",
+        "status_id"
+    ];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, "user_id", "id");
+    }
+
+    public function type(): BelongsTo
+    {
+        return $this->belongsTo(TransactionType::class, "type_id","id");
+    }
+
+    public function status(): BelongsTo
+    {
+        return $this->belongsTo(TransactionStatus::class, "status_id","id");
+    }
+}

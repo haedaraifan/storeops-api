@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\ApiAuthMiddleware;
 use Illuminate\Http\Request;
@@ -19,4 +20,6 @@ Route::middleware(ApiAuthMiddleware::class)->group(function() {
     Route::get("/products/{productId}", [ProductController::class,"get"])->where("productId", "[0-9]+");
     Route::put("/products/{productId}", [ProductController::class,"update"])->where("productId", "[0-9]+");
     Route::delete("/products/{productId}", [ProductController::class,"delete"])->where("productId", "[0-9]+");
+
+    Route::post("/transactions/expense", [TransactionController::class, "expense"]);
 });

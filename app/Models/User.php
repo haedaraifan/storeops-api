@@ -24,7 +24,12 @@ class User extends Model implements Authenticatable
 
     public function products(): HasMany
     {
-        return $this->hasMany(Product::class,"product_id", "id");
+        return $this->hasMany(Product::class, "product_id", "id");
+    }
+
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class, "transaction_id", "id");
     }
 
     public function getAuthIdentifierName()
