@@ -6,8 +6,8 @@
 
 - **Register User**
 - **Login User**
-- **Get User**
-- **Update User**
+- **Get User Profile**
+- **Update User Profile**
 - **Logout User**
 
 [Detail...](https://github.com/haedaraifan/storeops-api/blob/feat/user-api-docs/docs/user-api.md)

@@ -2,7 +2,7 @@
 
 ## Register User
 
-**Endpoint :** POST /api/users/register
+**Endpoint :** POST /api/register
 
 **Request Body :**
 
@@ -10,7 +10,7 @@
 {
   "email": "john@gmail.com",
   "password": "rahasia",
-  "name": "john doe"
+  "name": "john doe",
 }
 ```
 
@@ -21,7 +21,8 @@
   "data": {
     "id": 1,
     "email": "john@gmail.com",
-    "name": "john doe"
+    "name": "john doe",
+    "image": null
   }
 }
 ```
@@ -36,7 +37,7 @@
 
 ## Login User
 
-**Endpoint :** POST /api/users/login
+**Endpoint :** POST /api/login
 
 **Request Body :**
 
@@ -55,6 +56,7 @@
     "id": 1,
     "email": "john@gmail.com",
     "name": "john doe",
+    "image": null,
     "token": "token-123"
   }
 }
@@ -68,9 +70,9 @@
 }
 ```
 
-## Get User
+## Get User Profile
 
-**Endpoint :** GET /api/users/me
+**Endpoint :** GET /api/me
 
 **Request Header :**
 - AUTHORIZATION : token-123
@@ -83,6 +85,7 @@
     "id": 1,
     "email": "john@gmail.com",
     "name": "john doe",
+    "image": "https://app.com/storage/images/240424012322872092.png"
   }
 }
 ```
@@ -95,9 +98,9 @@
 }
 ```
 
-## Update User
+## Update User Profile
 
-**Endpoint :** PATCH /api/users/me
+**Endpoint :** POST /api/me
 
 **Request Header :**
 - AUTHORIZATION : token-123
@@ -107,7 +110,8 @@
 ```json
 {
   "name": "doe", // optional
-  "password": "rahasia123" // optional
+  "password": "rahasia123", // optional
+  "image": "[image | mimes:jpg,jpeg,png]" // optional
 }
 ```
 
@@ -118,7 +122,8 @@
   "data": {
     "id": 1,
     "email": "john@gmail.com",
-    "name": "doe"
+    "name": "doe",
+    "image": "https://app.com/storage/images/240424012322872092.png"
   }
 }
 ```
@@ -133,7 +138,7 @@
 
 ## Logout User
 
-**Endpoint :** POST /api/users/logout
+**Endpoint :** POST /api/logout
 
 **Request Header :**
 - AUTHORIZATION : token-123
