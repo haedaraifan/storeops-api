@@ -25,7 +25,8 @@ class UserUpdateRequest extends FormRequest
     {
         return [
             "password" => ["nullable", "max:100"],
-            "name" => ["nullable", "max:100"]
+            "name" => ["nullable", "max:100"],
+            "image" => ["nullable", "mimes:jpg,jpeg,png", "max:2048"]
         ];
     }
 

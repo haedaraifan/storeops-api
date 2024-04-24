@@ -14,7 +14,8 @@ class User extends Model implements Authenticatable
     protected $fillable = [
         "email",
         "password",
-        "name"
+        "name",
+        "image"
     ];
 
     public function authentications(): HasMany

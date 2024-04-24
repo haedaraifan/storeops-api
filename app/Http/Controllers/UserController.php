@@ -12,11 +12,19 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    private function generateFileName($image): string
+    {
+        $extension = $image->getClientOriginalExtension();
+        $fileName = now()->format("ymdHisu") . '.' . $extension;
+        return $fileName;
+    }
+
     public function register(UserRegisterRequest $request): JsonResponse
     {
         $data = $request->validated();
@@ -70,8 +78,17 @@ class UserController extends Controller
         if(isset($data["name"])) {
             $user->name = $data["name"];
         }
+
         if(isset($data["password"])) {
             $user->password = Hash::make($data["password"]);
+        }
+
+        if($request->hasFile("image")) {
+            $image = $request->file("image");
+            $fileName = $this->generateFileName($image);
+            $imagePath = $image->storeAs("images", $fileName, "public");
+            $imageUrl = asset('storage/' . $imagePath);
+            $user->image = $imageUrl;
         }
 
         $user->save();

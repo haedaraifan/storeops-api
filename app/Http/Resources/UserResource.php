@@ -18,6 +18,7 @@ class UserResource extends JsonResource
             "id" => $this->id,
             "email" => $this->email,
             "name" => $this->name,
+            "image" => $this->image,
             "token" => $this->whenNotNull($this->token)
         ];
     }
