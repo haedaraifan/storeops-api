@@ -22,4 +22,5 @@ Route::middleware(ApiAuthMiddleware::class)->group(function() {
     Route::delete("/products/{productId}", [ProductController::class,"delete"])->where("productId", "[0-9]+");
 
     Route::post("/transactions/expense", [TransactionController::class, "expense"]);
+    Route::post("/transactions/income", [TransactionController::class, "income"]);
 });
