@@ -6,7 +6,6 @@ use App\Models\Category;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
 class ProductCreateRequest extends FormRequest
 {
@@ -25,14 +24,12 @@ class ProductCreateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $categories = Category::pluck("name")->toArray();
-
         return [
             "name"=> ["required", "max:100"],
             "quantity" => ["required", "numeric", "min:0"],
             "purchase_price" => ["required", "numeric", "min:0"],
             "selling_price" => ["required", "numeric", "min:0"],
-            "category" => ["required", Rule::in($categories)]
+            "category" => ["required", "exists:categories,name"]
         ];
     }
 
