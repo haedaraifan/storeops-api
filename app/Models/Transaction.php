@@ -16,6 +16,8 @@ class Transaction extends Model
     protected $fillable = [
         "date",
         "note",
+        "purchase_price",
+        "selling_price",
         "discount",
         "additional_cost",
         "payment_method",
