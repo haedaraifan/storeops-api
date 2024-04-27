@@ -23,4 +23,5 @@ Route::middleware(ApiAuthMiddleware::class)->group(function() {
 
     Route::post("/transactions/expense", [TransactionController::class, "expense"]);
     Route::post("/transactions/income", [TransactionController::class, "income"]);
+    Route::get("/transactions", [TransactionController::class, "list"]);
 });

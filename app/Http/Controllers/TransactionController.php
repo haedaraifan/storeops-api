@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TransactionExpenseRequest;
 use App\Http\Requests\TransactionIncomeRequest;
+use App\Http\Resources\TransactionResource;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionProduct;
@@ -89,5 +90,13 @@ class TransactionController extends Controller
             "products" => $data["products"],
             "transaction_products" => $transactionProducts
         ])->setStatusCode(200);
+    }
+
+    public function list(Request $request): JsonResponse
+    {
+        $user = auth()->user();
+        $transactions = Transaction::where("user_id", $user->id)->get();
+
+        return (TransactionResource::collection($transactions))->response()->setStatusCode(200);
     }
 }
