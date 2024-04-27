@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer("price")->nullable(false);
             $table->unsignedBigInteger("transaction_id")->nullable(false);
 
-            $table->foreign("transaction_id")->on("transactions")->references("id");
+            $table->foreign("transaction_id")->on("transactions")->references("id")->onDelete('CASCADE');
         });
     }
 
