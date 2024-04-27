@@ -54,6 +54,7 @@ class TransactionController extends Controller
         $transactionType = $this->gettransactionType("Penjualan");
         $transactionStatus = $this->getTransactionStatus($data["status"]);
         $transactionProducts = [];
+        $transaction->selling_price = 0;
 
         foreach($data["products"] as $productRequest) {
             $product = Product::whereId($productRequest["id"])->first();
@@ -64,6 +65,7 @@ class TransactionController extends Controller
                 ]));
             }
 
+            $transaction->selling_price += $product->selling_price;
             $product->quantity -= $productRequest["quantity"];
             $product->save();
 
