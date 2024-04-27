@@ -6,7 +6,6 @@ use App\Models\TransactionStatus;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
 class TransactionExpenseRequest extends FormRequest
 {
@@ -25,13 +24,11 @@ class TransactionExpenseRequest extends FormRequest
      */
     public function rules(): array
     {
-        $statuses = TransactionStatus::pluck("name")->toArray();
-
         return [
             "date" => ["required", "max:50"],
             "note" => ["nullable", "max:255"],
             "purchase_price" => ["required", "numeric", "min:0"],
-            "status" => ["required", Rule::in($statuses)]
+            "status" => ["required", "exists:transaction_statuses,name"]
         ];
     }
 
