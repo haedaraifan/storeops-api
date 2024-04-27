@@ -88,10 +88,7 @@ class TransactionController extends Controller
         }
 
         return response()->json([
-            "request" => $data,
-            "result" => $transaction,
-            "products" => $data["products"],
-            "transaction_products" => $transactionProducts
+            "message" => "Transaksi berhasil dicatat."
         ])->setStatusCode(200);
     }
 
