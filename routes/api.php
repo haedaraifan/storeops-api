@@ -18,7 +18,7 @@ Route::middleware(ApiAuthMiddleware::class)->group(function() {
     Route::post("/products", [ProductController::class,"create"]);
     Route::get("/products", [ProductController::class,"list"]);
     Route::get("/products/{productId}", [ProductController::class,"get"])->where("productId", "[0-9]+");
-    Route::put("/products/{productId}", [ProductController::class,"update"])->where("productId", "[0-9]+");
+    Route::post("/products/{productId}", [ProductController::class,"update"])->where("productId", "[0-9]+");
     Route::delete("/products/{productId}", [ProductController::class,"delete"])->where("productId", "[0-9]+");
 
     Route::post("/transactions/expense", [TransactionController::class, "expense"]);

@@ -83,6 +83,14 @@ class ProductController extends Controller
         $product = $this->getProduct($user, $productId);
         $category = $this->getCategory($data["category"]);
 
+        if($request->hasFile("image")) {
+            $image = $request->file("image");
+            $fileName = $this->generateFileName($image);
+            $imagePath = $image->storeAs("images", $fileName, "public");
+            $imageUrl = asset('storage/' . $imagePath);
+            $product->image = $imageUrl;
+        }
+
         $product->fill($data);
         $product->category_id = $category->id;
         $product->save();
