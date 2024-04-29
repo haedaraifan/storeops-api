@@ -148,7 +148,7 @@
     "purchase_price": 120000,
     "selling_price": 150000,
     "category": "Pcs",
-    "image": "https://app.com/storage/images/240428155054255496.png"
+    "image": "https://app.com/storage/images/240428155054255497.png"
   }
 }
 ```
