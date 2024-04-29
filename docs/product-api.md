@@ -15,7 +15,8 @@
   "quantity": 100,
   "purchase_price": 120000,
   "selling_price": 150000,
-  "category": "Pcs"
+  "category": "Pcs",
+  "image": "[image | mimes:jpg,jpeg,png]" // optional
 }
 ```
 
@@ -29,7 +30,8 @@
     "quantity": 100,
     "purchase_price": 120000,
     "selling_price": 150000,
-    "category": "Pcs"
+    "category": "Pcs",
+    "image": "https://app.com/storage/images/240424012322872092.png"
   }
 }
 ```
@@ -60,7 +62,8 @@
       "quantity": 100,
       "purchase_price": 120000,
       "selling_price": 150000,
-      "category": "Pcs"
+      "category": "Pcs",
+      "image": "https://app.com/storage/images/240424012322872092.png"
     },
     {
       "id": 2,
@@ -68,7 +71,8 @@
       "quantity": 1000,
       "purchase_price": 800,
       "selling_price": 1000,
-      "category": "Pcs"
+      "category": "Pcs",
+      "image": "https://app.com/storage/images/240424010517844327.png"
     }
   ]
 }
@@ -99,7 +103,8 @@
     "quantity": 100,
     "purchase_price": 120000,
     "selling_price": 150000,
-    "category": "Pcs"
+    "category": "Pcs",
+    "image": "https://app.com/storage/images/240424012322872092.png"
   }
 }
 ```
@@ -114,7 +119,7 @@
 
 ## Update Product
 
-**Endpoint :** PUT /api/products/:productId
+**Endpoint :** POST /api/products/:productId
 
 **Request Header :**
 - AUTHORIZATION : token-123
@@ -127,7 +132,8 @@
   "quantity": 200,
   "purchase_price": 120000,
   "selling_price": 150000,
-  "category": "Pcs"
+  "category": "Pcs",
+  "image": "[image | mimes:jpg,jpeg,png]" // optional
 }
 ```
 
@@ -141,7 +147,8 @@
     "quantity": 200,
     "purchase_price": 120000,
     "selling_price": 150000,
-    "category": "Pcs"
+    "category": "Pcs",
+    "image": "https://app.com/storage/images/240428155054255496.png"
   }
 }
 ```
