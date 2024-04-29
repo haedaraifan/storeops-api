@@ -31,13 +31,28 @@ class ProductController extends Controller
         return Category::where("name", $categoryName)->first();
     }
 
+    private function generateFileName($image): string
+    {
+        $extension = $image->getClientOriginalExtension();
+        $fileName = now()->format("ymdHisu") . '.' . $extension;
+        return $fileName;
+    }
+
     public function create(ProductCreateRequest $request): JsonResponse
     {
         $user = Auth::user();
         $data = $request->validated();
         $category = $this->getCategory($data["category"]);
-
         $product = new Product($data);
+
+        if($request->hasFile("image")) {
+            $image = $request->file("image");
+            $fileName = $this->generateFileName($image);
+            $imagePath = $image->storeAs("images", $fileName, "public");
+            $imageUrl = asset('storage/' . $imagePath);
+            $product->image = $imageUrl;
+        }
+
         $product->user_id = $user->id;
         $product->category_id = $category->id;
         $product->save();
