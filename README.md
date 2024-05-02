@@ -10,7 +10,7 @@
 - **Update User Profile**
 - **Logout User**
 
-[Detail...](https://github.com/haedaraifan/storeops-api/blob/feat/user-api-docs/docs/user-api.md)
+[Detail...](https://github.com/haedaraifan/storeops-api/blob/dev/docs/user-api.md)
 
 ## Product Api
 
@@ -20,4 +20,12 @@
 - **Update Product**
 - **Delete Product**
 
-[Detail...](https://github.com/haedaraifan/storeops-api/blob/feat/product-api-docs/docs/product-api.md)
+[Detail...](https://github.com/haedaraifan/storeops-api/blob/dev/docs/product-api.md)
+
+## Transaction Api
+
+- **Expense Transaction**
+- **Income Transaction**
+- **List Transaction**
+
+[Detail...](https://github.com/haedaraifan/storeops-api/blob/dev/docs/transaction-api.md)
