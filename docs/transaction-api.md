@@ -26,7 +26,7 @@
 }
 ```
 
-**Response Body (Failed) :**
+**Response Body (Failed) :**k
 
 ```json
 {
@@ -100,16 +100,16 @@
       "date": "2 Mei 2024",
       "type": "Pengeluaran",
       "status": "Lunas",
-      "purchase_price": 100000,
-      "selling_price": null
+      "purchase_price": 100000, // nullable
+      "selling_price": null // nullable
     },
     {
       "id": 2,
       "date": "2 Mei 2024",
       "type": "Penjualan",
       "status": "Lunas",
-      "purchase_price": null,
-      "selling_price": 120000
+      "purchase_price": null, // nullable
+      "selling_price": 120000 // nullable
     }
   ]
 }
