@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\User;
+use App\Models\Authentication;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,17 +24,14 @@ class ApiAuthMiddleware
             $authenticate = false;
         }
 
-        $user = User::join("authentications", "users.id", '=', "authentications.user_id")
-            ->where("authentications.token", $token)
-            ->select("users.*")
-            ->first();
+        $auth = Authentication::whereToken($token)->first();
 
-        if(!$user) {
+        if(!$auth) {
             $authenticate = false;
         }
 
         if($authenticate) {
-            Auth::login($user);
+            Auth::login($auth->user);
             return $next($request);
         } else {
             return response()->json([
