@@ -89,7 +89,7 @@ class TransactionController extends Controller
 
         return response()->json([
             "message" => "Transaksi berhasil dicatat."
-        ])->setStatusCode(200);
+        ])->setStatusCode(201);
     }
 
     public function list(Request $request): JsonResponse
