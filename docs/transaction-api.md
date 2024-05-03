@@ -26,7 +26,7 @@
 }
 ```
 
-**Response Body (Failed) :**k
+**Response Body (Failed) :**
 
 ```json
 {
