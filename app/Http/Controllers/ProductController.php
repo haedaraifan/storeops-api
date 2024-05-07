@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductCreateRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Resources\ProductResource;
+use App\Models\AddProductHistory;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
@@ -56,6 +57,11 @@ class ProductController extends Controller
         $product->user_id = $user->id;
         $product->category_id = $category->id;
         $product->save();
+
+        $addProductHistory = new AddProductHistory($product->toArray());
+        $addProductHistory->date = now()->format("d F, Y");
+        $addProductHistory->user_id = $user->id;
+        $addProductHistory->save();
 
         return (new ProductResource($product))->response()->setStatusCode(201);
     }

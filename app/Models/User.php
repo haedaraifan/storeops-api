@@ -33,6 +33,11 @@ class User extends Model implements Authenticatable
         return $this->hasMany(Transaction::class, "transaction_id", "id");
     }
 
+    public function addProductHistories(): HasMany
+    {
+        return $this->hasMany(AddProductHistory::class);
+    }
+
     public function getAuthIdentifierName()
     {
         return "email";
