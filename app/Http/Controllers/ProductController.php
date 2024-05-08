@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ExceptionResponseHelper;
 use App\Http\Requests\ProductCreateRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Resources\ProductResource;
@@ -9,7 +10,6 @@ use App\Models\AddProductHistory;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,9 +20,7 @@ class ProductController extends Controller
     {
         $product = Product::where("id", $productId)->where("user_id", $user->id)->first();
         if(!$product) {
-            throw new HttpResponseException(response()->json([
-                "error" => "Produk tidak ditemukan."
-            ])->setStatusCode(404));
+            ExceptionResponseHelper::throwNotFoundError("Produk tidak ditemukan.");
         }
         return $product;
     }

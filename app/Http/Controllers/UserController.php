@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ExceptionResponseHelper;
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserRegisterRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
 use App\Models\Authentication;
 use App\Models\User;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
@@ -30,9 +29,7 @@ class UserController extends Controller
         $data = $request->validated();
 
         if(User::where("email", $data["email"])->count() == 1) {
-            throw new HttpResponseException(response([
-                "error" => "Email telah terdaftar."
-            ], 400));
+            ExceptionResponseHelper::throwInvariantError("Email telah terdaftar.");
         }
 
         $user = new User($data);
@@ -48,9 +45,7 @@ class UserController extends Controller
         $user = User::where("email", $data["email"])->first();
 
         if(!$user || !Hash::check($data["password"], $user->password)) {
-            throw new HttpResponseException(response([
-                "error" => "Email atau password salah."
-            ], 401));
+            ExceptionResponseHelper::throwAuthenticationError("Email atau password salah.");
         }
 
         $token = Str::uuid()->toString();

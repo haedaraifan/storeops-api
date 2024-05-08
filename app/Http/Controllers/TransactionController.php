@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ExceptionResponseHelper;
 use App\Http\Requests\TransactionExpenseRequest;
 use App\Http\Requests\TransactionIncomeRequest;
 use App\Http\Resources\TransactionResource;
@@ -10,11 +11,9 @@ use App\Models\Transaction;
 use App\Models\TransactionProduct;
 use App\Models\TransactionStatus;
 use App\Models\TransactionType;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class TransactionController extends Controller
 {
@@ -60,9 +59,7 @@ class TransactionController extends Controller
             $product = Product::whereId($productRequest["id"])->first();
 
             if($productRequest["quantity"] > $product->quantity) {
-                throw new HttpResponseException(response()->json([
-                    "error" => "Kuantitas lebih banyak dari stok produk."
-                ]));
+                ExceptionResponseHelper::throwInvariantError("Kuantitas lebih banyak dari stok produk.");
             }
 
             $transaction->selling_price += $product->selling_price;

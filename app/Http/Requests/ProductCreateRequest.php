@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\ExceptionResponseHelper;
 use App\Models\Category;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ProductCreateRequest extends FormRequest
 {
@@ -36,8 +36,6 @@ class ProductCreateRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response([
-            "error" => $validator->getMessageBag()->first(),
-        ], 400));
+        ExceptionResponseHelper::throwInvariantError($validator->getMessageBag()->first());
     }
 }

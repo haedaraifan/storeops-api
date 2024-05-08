@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\ExceptionResponseHelper;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UserRegisterRequest extends FormRequest
 {
@@ -32,8 +32,6 @@ class UserRegisterRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response([
-            "error" => $validator->getMessageBag()->first()
-        ], 400));
+        ExceptionResponseHelper::throwInvariantError($validator->getMessageBag()->first());
     }
 }
