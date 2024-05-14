@@ -49,11 +49,13 @@ class UserController extends Controller
         }
 
         $token = Str::uuid()->toString();
+        $expiredAt = now()->addYear();
         $user->token = $token;
 
         $authentication = new Authentication();
         $authentication->user_id = $user->id;
         $authentication->token = $token;
+        $authentication->expired_at = $expiredAt;
         $authentication->save();
 
         return new UserResource($user);

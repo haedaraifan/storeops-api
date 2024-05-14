@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Helpers\ExceptionResponseHelper;
 use App\Models\Authentication;
 use Closure;
 use Illuminate\Http\Request;
@@ -18,25 +19,16 @@ class ApiAuthMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $token = $request->header("AUTHORIZATION");
-        $authenticate = true;
 
-        if(!$token) {
-            $authenticate = false;
+        if(!$token || !$auth = Authentication::whereToken($token)->first()) {
+            ExceptionResponseHelper::throwAuthenticationError("Unauthorized.");
         }
 
-        $auth = Authentication::whereToken($token)->first();
-
-        if(!$auth) {
-            $authenticate = false;
+        if($auth->isExpired()) {
+            ExceptionResponseHelper::throwAuthenticationError("Token expired.");
         }
 
-        if($authenticate) {
-            Auth::login($auth->user);
-            return $next($request);
-        } else {
-            return response()->json([
-                "error" => "Unauthorized."
-            ])->setStatusCode(401);
-        }
+        Auth::login($auth->user);
+        return $next($request);
     }
 }
