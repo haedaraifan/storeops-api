@@ -28,7 +28,7 @@ class UserController extends Controller
     {
         $data = $request->validated();
 
-        if(User::where("email", $data["email"])->count() == 1) {
+        if(User::whereEmail($data["email"])->first()) {
             ExceptionResponseHelper::throwInvariantError("Email telah terdaftar.");
         }
 
@@ -42,7 +42,7 @@ class UserController extends Controller
     public function login(UserLoginRequest $request): UserResource
     {
         $data = $request->validated();
-        $user = User::where("email", $data["email"])->first();
+        $user = User::whereEmail($data["email"])->first();
 
         if(!$user || !Hash::check($data["password"], $user->password)) {
             ExceptionResponseHelper::throwAuthenticationError("Email atau password salah.");
@@ -95,7 +95,7 @@ class UserController extends Controller
     public function logout(Request $request): JsonResponse
     {
         $token = $request->header("AUTHORIZATION");
-        Authentication::where("token", $token)->delete();
+        Authentication::whereToken($token)->delete();
 
         return response()->json([
             "message" => "Logout berhasil."
