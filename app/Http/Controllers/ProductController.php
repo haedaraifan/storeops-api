@@ -16,9 +16,17 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
+    private function sendProductImage($image): string
+    {
+        $fileName = $this->generateFileName($image);
+        $imagePath = $image->storeAs("images", $fileName, "public");
+        $imageUrl = asset('storage/' . $imagePath);
+        return $imageUrl;
+    }
+
     private function getProduct(User $user, int $productId): Product
     {
-        $product = Product::where("id", $productId)->where("user_id", $user->id)->first();
+        $product = $user->products()->whereId($productId)->first();
         if(!$product) {
             ExceptionResponseHelper::throwNotFoundError("Produk tidak ditemukan.");
         }
@@ -27,7 +35,7 @@ class ProductController extends Controller
 
     private function getCategory(string $categoryName): Category
     {
-        return Category::where("name", $categoryName)->first();
+        return Category::whereName($categoryName)->first();
     }
 
     private function generateFileName($image): string
@@ -45,10 +53,7 @@ class ProductController extends Controller
         $product = new Product($data);
 
         if($request->hasFile("image")) {
-            $image = $request->file("image");
-            $fileName = $this->generateFileName($image);
-            $imagePath = $image->storeAs("images", $fileName, "public");
-            $imageUrl = asset('storage/' . $imagePath);
+            $imageUrl = $this->sendProductImage($request->file("image"));
             $product->image = $imageUrl;
         }
 
@@ -75,7 +80,7 @@ class ProductController extends Controller
     public function list(Request $request): JsonResponse
     {
         $user = Auth::user();
-        $products = Product::where("user_id", $user->id)->get();
+        $products = Product::whereUserId($user->id)->get();
 
         return (ProductResource::collection($products))->response()->setStatusCode(200);
     }
@@ -88,10 +93,7 @@ class ProductController extends Controller
         $category = $this->getCategory($data["category"]);
 
         if($request->hasFile("image")) {
-            $image = $request->file("image");
-            $fileName = $this->generateFileName($image);
-            $imagePath = $image->storeAs("images", $fileName, "public");
-            $imageUrl = asset('storage/' . $imagePath);
+            $imageUrl = $this->sendProductImage($request->file("image"));
             $product->image = $imageUrl;
         }
 
