@@ -29,4 +29,5 @@ Route::middleware(ApiAuthMiddleware::class)->group(function() {
     Route::get("/transactions", [TransactionController::class, "list"]);
 
     Route::post("/notes", [NoteController::class, "create"]);
+    Route::get("/notes", [NoteController::class, "list"]);
 });

@@ -80,7 +80,7 @@ class ProductController extends Controller
     public function list(Request $request): JsonResponse
     {
         $user = Auth::user();
-        $products = Product::whereUserId($user->id)->get();
+        $products = $user->products;
 
         return (ProductResource::collection($products))->response()->setStatusCode(200);
     }
