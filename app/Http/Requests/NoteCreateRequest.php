@@ -6,7 +6,7 @@ use App\Helpers\ExceptionResponseHelper;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductCreateRequest extends FormRequest
+class NoteCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,16 +24,12 @@ class ProductCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name"=> ["required", "max:100"],
-            "quantity" => ["required", "numeric", "min:0"],
-            "purchase_price" => ["required", "numeric", "min:0"],
-            "selling_price" => ["required", "numeric", "min:0"],
-            "category" => ["required", "exists:categories,name"],
-            "image" => ["nullable", "mimes:jpg,jpeg,png", "max:2048"]
+            "title" => ["required", "max:100"],
+            "content" => ["required", "max:255"]
         ];
     }
 
-    protected function failedValidation(Validator $validator)
+    protected function failedValidation(validator $validator)
     {
         ExceptionResponseHelper::throwInvariantError($validator->getMessageBag()->first());
     }

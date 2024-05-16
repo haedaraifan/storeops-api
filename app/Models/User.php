@@ -33,6 +33,11 @@ class User extends Model implements Authenticatable
         return $this->hasMany(Transaction::class);
     }
 
+    public function notes(): HasMany
+    {
+        return $this->hasMany(Note::class);
+    }
+
     public function addProductHistories(): HasMany
     {
         return $this->hasMany(AddProductHistory::class);
