@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Model implements Authenticatable
@@ -15,7 +16,8 @@ class User extends Model implements Authenticatable
         "email",
         "password",
         "name",
-        "image"
+        "image",
+        "role_id"
     ];
 
     public function authentications(): HasMany
@@ -36,6 +38,11 @@ class User extends Model implements Authenticatable
     public function notes(): HasMany
     {
         return $this->hasMany(Note::class);
+    }
+
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
     }
 
     public function addProductHistories(): HasMany

@@ -23,6 +23,11 @@ class ExceptionResponseHelper
         return self::throwClientError($message, 401);
     }
 
+    public static function throwForbiddenError(string $message): JsonResponse
+    {
+        return self::throwClientError($message, 403);
+    }
+
     public static function throwNotFoundError(string $message): JsonResponse
     {
         return self::throwClientError($message, 404);
