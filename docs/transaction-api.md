@@ -4,6 +4,8 @@
 
 **Endpoint :** POST /api/transactions/expense
 
+**Role :** Admin | Kasir
+
 **Request Header :**
 - AUTHORIZATION : token-123
 
@@ -11,7 +13,6 @@
 
 ```json
 {
-  "date": "2 Mei 2024",
   "purchase_price": 100000,
   "status": "Lunas",
   "note": "Bayar listrik" // optional
@@ -38,6 +39,8 @@
 
 **Endpoint :** POST /api/transactions/income
 
+**Role :** Admin | Kasir
+
 **Request Header :**
 - AUTHORIZATION : token-123
 
@@ -57,7 +60,6 @@
   ],
   "discount": 10000, // optional
   "additional_cost": 2000, // optional
-  "date": "2 Mei 2024",
   "status": "Lunas",
   "note": "Penjualan semen dan paku", // optional
   "payment_method": "Cash", // optional
@@ -86,6 +88,8 @@
 ## List Transactions
 
 **Endpoint :** GET /api/transactions
+
+**Role :** Admin | Kasir
 
 **Request Header :**
 - AUTHORIZATION : token-123
