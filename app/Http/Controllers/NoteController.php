@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ExceptionResponseHelper;
 use App\Http\Requests\NoteCreateRequest;
+use App\Http\Requests\NoteUpdateRequest;
 use App\Http\Resources\NoteResource;
 use App\Models\Note;
 use Illuminate\Http\Request;
@@ -11,6 +12,15 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class NoteController extends Controller
 {
+    private function getNote(int $noteId): Note
+    {
+        $note = Note::whereId($noteId)->first();
+        if(!$note) {
+            ExceptionResponseHelper::throwNotFoundError("Catatan tidak ditemukan.");
+        }
+        return $note;
+    }
+
     public function create(NoteCreateRequest $request): JsonResponse
     {
         $data = $request->validated();
@@ -30,11 +40,18 @@ class NoteController extends Controller
 
     public function get(int $noteId): NoteResource
     {
-        $note = Note::whereId($noteId)->first();
+        $note = $this->getNote($noteId);
 
-        if(!$note) {
-            ExceptionResponseHelper::throwNotFoundError("Catatan tidak ditemukan.");
-        }
+        return new NoteResource($note);
+    }
+
+    public function update(int $noteId, NoteUpdateRequest $request): NoteResource
+    {
+        $data = $request->validated();
+        $note = $this->getNote($noteId);
+
+        $note->fill($data);
+        $note->save();
 
         return new NoteResource($note);
     }
