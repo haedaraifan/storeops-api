@@ -39,11 +39,6 @@ class User extends Model implements Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    public function addProductHistories(): HasMany
-    {
-        return $this->hasMany(AddProductHistory::class);
-    }
-
     public function getAuthIdentifierName()
     {
         return "email";

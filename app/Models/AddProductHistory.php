@@ -17,12 +17,6 @@ class AddProductHistory extends Model
         "name",
         "quantity",
         "purchase_price",
-        "selling_price",
-        "user_id"
+        "selling_price"
     ];
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class, "user_id", "id");
-    }
 }

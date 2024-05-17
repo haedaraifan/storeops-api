@@ -12,14 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('add_product_histories', function (Blueprint $table) {
-            $table->string("date", 50)->nullable(false);
+            $table->timestamp("date")->nullable(false);
             $table->string("name", 100)->nullable(false);
             $table->integer("quantity")->nullable(false);
             $table->integer("purchase_price")->nullable(false);
             $table->integer("selling_price")->nullable(false);
-            $table->unsignedBigInteger("user_id")->nullable(false);
-
-            $table->foreign("user_id")->on("users")->references("id");
         });
     }
 

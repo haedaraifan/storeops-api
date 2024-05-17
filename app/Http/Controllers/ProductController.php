@@ -57,11 +57,8 @@ class ProductController extends Controller
         $product->category_id = $category->id;
         $product->save();
 
-        // progress...
-        // $addProductHistory = new AddProductHistory($product->toArray());
-        // $addProductHistory->date = now()->format("d F, Y");
-        // $addProductHistory->user_id = $user->id;
-        // $addProductHistory->save();
+        $addProductHistory = new AddProductHistory($product->toArray());
+        $addProductHistory->save();
 
         return (new ProductResource($product))->response()->setStatusCode(201);
     }
