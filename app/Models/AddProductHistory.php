@@ -12,6 +12,10 @@ class AddProductHistory extends Model
 
     public $timestamps = false;
 
+    protected $casts = [
+        "date" => "datetime",
+    ];
+
     protected $fillable = [
         "date",
         "name",

@@ -15,7 +15,7 @@ class AddProductHistoryResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "date" => $this->date,
+            "date" => $this->date->format("d F, Y"),
             "name" => $this->name,
             "quantity" => $this->quantity,
             "purchase_price" => $this->purchase_price,

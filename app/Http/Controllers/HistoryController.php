@@ -3,16 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\AddProductHistoryResource;
+use App\Models\AddProductHistory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class HistoryController extends Controller
 {
     public function listAddedProduct(Request $request): JsonResponse
     {
-        $user = Auth::user();
-        $histories = $user->addProductHistories;
+        $histories = AddProductHistory::get();
 
         return (AddProductHistoryResource::collection($histories))->response()->setStatusCode(200);
     }
