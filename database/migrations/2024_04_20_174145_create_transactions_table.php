@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string("date", 50)->nullable(false);
+            $table->timestamp("date")->nullable(false);
             $table->string("note", 255)->nullable();
             $table->integer("purchase_price")->nullable();
             $table->integer("selling_price")->nullable();
@@ -23,11 +23,9 @@ return new class extends Migration
             $table->string("customer_name", 100)->nullable();
             $table->string("customer_phone", 20)->nullable();
             $table->string("customer_address", 255)->nullable();
-            $table->unsignedBigInteger("user_id")->nullable(false);
             $table->unsignedBigInteger("type_id")->nullable(false);
             $table->unsignedBigInteger("status_id")->nullable(false);
 
-            $table->foreign("user_id")->on("users")->references("id");
             $table->foreign("type_id")->on("transaction_types")->references("id");
             $table->foreign("status_id")->on("transaction_statuses")->references("id");
         });

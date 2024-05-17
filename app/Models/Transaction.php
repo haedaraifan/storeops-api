@@ -13,6 +13,10 @@ class Transaction extends Model
 
     public $timestamps = false;
 
+    protected $casts = [
+        "date" => "datetime",
+    ];
+
     protected $fillable = [
         "date",
         "note",
@@ -24,15 +28,9 @@ class Transaction extends Model
         "customer_name",
         "customer_phone",
         "customer_address",
-        "user_id",
         "type_id",
         "status_id"
     ];
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class, "user_id", "id");
-    }
 
     public function type(): BelongsTo
     {

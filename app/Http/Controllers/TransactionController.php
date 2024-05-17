@@ -29,13 +29,11 @@ class TransactionController extends Controller
 
     public function expense(TransactionExpenseRequest $request): JsonResponse
     {
-        $user = Auth::user();
         $data = $request->validated();
-        $transactionType = $this->gettransactionType("Pengeluaran");
+        $transactionType = $this->getTransactionType("Pengeluaran");
         $transactionStatus = $this->getTransactionStatus($data["status"]);
 
         $transaction = new Transaction($data);
-        $transaction->user_id = $user->id;
         $transaction->status_id = $transactionStatus->id;
         $transaction->type_id = $transactionType->id;
         $transaction->save();

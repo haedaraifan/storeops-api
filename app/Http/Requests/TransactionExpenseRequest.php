@@ -25,7 +25,6 @@ class TransactionExpenseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "date" => ["required", "max:50"],
             "note" => ["nullable", "max:255"],
             "purchase_price" => ["required", "numeric", "min:0"],
             "status" => ["required", "exists:transaction_statuses,name"]
