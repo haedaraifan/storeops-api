@@ -9,10 +9,8 @@ use App\Http\Resources\ProductResource;
 use App\Models\AddProductHistory;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -101,7 +99,6 @@ class ProductController extends Controller
 
     public function delete(int $productId): JsonResponse
     {
-        $user = Auth::user();
         $product = $this->getProduct($productId);
 
         $product->delete();
