@@ -24,9 +24,9 @@ class ProductController extends Controller
         return $imageUrl;
     }
 
-    private function getProduct(User $user, int $productId): Product
+    private function getProduct(int $productId): Product
     {
-        $product = $user->products()->whereId($productId)->first();
+        $product = Product::whereId($productId)->first();
         if(!$product) {
             ExceptionResponseHelper::throwNotFoundError("Produk tidak ditemukan.");
         }
@@ -70,11 +70,7 @@ class ProductController extends Controller
 
     public function get(int $productId): ProductResource
     {
-        $product = Product::whereId($productId)->first();
-
-        if(!$product) {
-            ExceptionResponseHelper::throwNotFoundError("Produk tidak ditemukan.");
-        }
+        $product = $this->getProduct($productId);
 
         return new ProductResource($product);
     }
@@ -88,17 +84,15 @@ class ProductController extends Controller
 
     public function update(int $productId, ProductUpdateRequest $request): ProductResource
     {
-        $user = Auth::user();
         $data = $request->validated();
-        $product = $this->getProduct($user, $productId);
+        $product = $this->getProduct($productId);
         $category = $this->getCategory($data["category"]);
 
+        $product->fill($data);
         if($request->hasFile("image")) {
             $imageUrl = $this->sendProductImage($request->file("image"));
             $product->image = $imageUrl;
         }
-
-        $product->fill($data);
         $product->category_id = $category->id;
         $product->save();
 
@@ -108,7 +102,7 @@ class ProductController extends Controller
     public function delete(int $productId): JsonResponse
     {
         $user = Auth::user();
-        $product = $this->getProduct($user, $productId);
+        $product = $this->getProduct($productId);
 
         $product->delete();
 
