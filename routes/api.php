@@ -36,4 +36,5 @@ Route::middleware(ApiAuthMiddleware::class)->group(function() {
 
     Route::post("/notes", [NoteController::class, "create"]);
     Route::get("/notes", [NoteController::class, "list"]);
+    Route::get("/notes/{noteId}", [NoteController::class, "get"])->where("noteId", "[0-9]+");
 });
