@@ -45,7 +45,6 @@ class TransactionController extends Controller
 
     public function income(TransactionIncomeRequest $request): JsonResponse
     {
-        $user = Auth::user();
         $data = $request->validated();
         $transaction = new Transaction($data);
         $transactionType = $this->gettransactionType("Penjualan");
@@ -72,7 +71,6 @@ class TransactionController extends Controller
             array_push($transactionProducts, $transactionProduct);
         }
 
-        $transaction->user_id = $user->id;
         $transaction->status_id = $transactionStatus->id;
         $transaction->type_id = $transactionType->id;
         $transaction->save();
