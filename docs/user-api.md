@@ -4,13 +4,19 @@
 
 **Endpoint :** POST /api/register
 
+**Role :** Admin
+
+**Request Header :**
+- AUTHORIZATION : token-123
+
 **Request Body :**
 
 ```json
 {
   "email": "john@gmail.com",
   "password": "rahasia",
-  "name": "john doe",
+  "name": "john",
+  "role": "Kasir"
 }
 ```
 
@@ -19,10 +25,10 @@
 ```json
 {
   "data": {
-    "id": 1,
+    "id": 11,
     "email": "john@gmail.com",
-    "name": "john doe",
-    "image": null
+    "name": "john",
+    "role": "Kasir"
   }
 }
 ```
@@ -53,10 +59,10 @@
 ```json
 {
   "data": {
-    "id": 1,
+    "id": 11,
     "email": "john@gmail.com",
-    "name": "john doe",
-    "image": null,
+    "name": "john",
+    "role": "Kasir",
     "token": "token-123"
   }
 }
@@ -74,6 +80,8 @@
 
 **Endpoint :** GET /api/me
 
+**Role :** Admin | Kasir | Gudang
+
 **Request Header :**
 - AUTHORIZATION : token-123
 
@@ -82,10 +90,10 @@
 ```json
 {
   "data": {
-    "id": 1,
+    "id": 11,
     "email": "john@gmail.com",
-    "name": "john doe",
-    "image": "https://app.com/storage/images/240424012322872092.png"
+    "name": "john",
+    "role": "Kasir"
   }
 }
 ```
@@ -102,6 +110,8 @@
 
 **Endpoint :** POST /api/me
 
+**Role :** Admin | Kasir | Gudang
+
 **Request Header :**
 - AUTHORIZATION : token-123
 
@@ -110,8 +120,7 @@
 ```json
 {
   "name": "doe", // optional
-  "password": "rahasia123", // optional
-  "image": "[image | mimes:jpg,jpeg,png]" // optional
+  "password": "rahasia123" // optional
 }
 ```
 
@@ -120,10 +129,10 @@
 ```json
 {
   "data": {
-    "id": 1,
+    "id": 11,
     "email": "john@gmail.com",
     "name": "doe",
-    "image": "https://app.com/storage/images/240424012322872092.png"
+    "role": "Kasir"
   }
 }
 ```
@@ -139,6 +148,8 @@
 ## Logout User
 
 **Endpoint :** POST /api/logout
+
+**Role :** Admin | Kasir | Gudang
 
 **Request Header :**
 - AUTHORIZATION : token-123
