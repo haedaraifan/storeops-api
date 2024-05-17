@@ -55,4 +55,15 @@ class NoteController extends Controller
 
         return new NoteResource($note);
     }
+
+    public function delete(int $noteId): JsonResponse
+    {
+        $note = $this->getNote($noteId);
+
+        $note->delete();
+
+        return response()->json([
+            "message" => "Catatan berhasil dihapus."
+        ])->setStatusCode(200);
+    }
 }
