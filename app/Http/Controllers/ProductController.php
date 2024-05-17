@@ -81,8 +81,7 @@ class ProductController extends Controller
 
     public function list(Request $request): JsonResponse
     {
-        $user = Auth::user();
-        $products = $user->products;
+        $products = Product::get();
 
         return (ProductResource::collection($products))->response()->setStatusCode(200);
     }
