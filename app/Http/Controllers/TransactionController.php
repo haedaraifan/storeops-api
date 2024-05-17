@@ -87,8 +87,7 @@ class TransactionController extends Controller
 
     public function list(Request $request): JsonResponse
     {
-        $user = auth()->user();
-        $transactions = Transaction::where("user_id", $user->id)->get();
+        $transactions = Transaction::get();
 
         return (TransactionResource::collection($transactions))->response()->setStatusCode(200);
     }
