@@ -70,8 +70,11 @@ class ProductController extends Controller
 
     public function get(int $productId): ProductResource
     {
-        $user = Auth::user();
-        $product = $this->getProduct($user, $productId);
+        $product = Product::whereId($productId)->first();
+
+        if(!$product) {
+            ExceptionResponseHelper::throwNotFoundError("Produk tidak ditemukan.");
+        }
 
         return new ProductResource($product);
     }
