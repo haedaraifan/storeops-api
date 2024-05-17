@@ -24,11 +24,6 @@ class User extends Model implements Authenticatable
         return $this->hasMany(Authentication::class);
     }
 
-    public function products(): HasMany
-    {
-        return $this->hasMany(Product::class);
-    }
-
     public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class);

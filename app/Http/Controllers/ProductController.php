@@ -47,7 +47,6 @@ class ProductController extends Controller
 
     public function create(ProductCreateRequest $request): JsonResponse
     {
-        $user = Auth::user();
         $data = $request->validated();
         $category = $this->getCategory($data["category"]);
         $product = new Product($data);
@@ -57,14 +56,14 @@ class ProductController extends Controller
             $product->image = $imageUrl;
         }
 
-        $product->user_id = $user->id;
         $product->category_id = $category->id;
         $product->save();
 
-        $addProductHistory = new AddProductHistory($product->toArray());
-        $addProductHistory->date = now()->format("d F, Y");
-        $addProductHistory->user_id = $user->id;
-        $addProductHistory->save();
+        // progress...
+        // $addProductHistory = new AddProductHistory($product->toArray());
+        // $addProductHistory->date = now()->format("d F, Y");
+        // $addProductHistory->user_id = $user->id;
+        // $addProductHistory->save();
 
         return (new ProductResource($product))->response()->setStatusCode(201);
     }
