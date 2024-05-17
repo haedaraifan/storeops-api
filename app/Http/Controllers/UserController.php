@@ -48,7 +48,7 @@ class UserController extends Controller
     public function login(UserLoginRequest $request): UserResource
     {
         $data = $request->validated();
-        $user = User::whereEmail($data["email"])->first();
+        $user = User::whereName($data["name"])->first();
 
         if(!$user || !Hash::check($data["password"], $user->password)) {
             ExceptionResponseHelper::throwAuthenticationError("Email atau password salah.");
