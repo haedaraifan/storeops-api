@@ -24,9 +24,8 @@ class UserUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "password" => ["nullable", "max:100"],
             "name" => ["nullable", "max:100"],
-            "image" => ["nullable", "mimes:jpg,jpeg,png", "max:2048"]
+            "password" => ["nullable", "max:100"],
         ];
     }
 

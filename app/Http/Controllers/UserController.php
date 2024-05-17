@@ -18,13 +18,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    private function generateFileName($image): string
-    {
-        $extension = $image->getClientOriginalExtension();
-        $fileName = now()->format("ymdHisu") . '.' . $extension;
-        return $fileName;
-    }
-
     public function register(UserRegisterRequest $request): JsonResponse
     {
         $data = $request->validated();
@@ -84,14 +77,6 @@ class UserController extends Controller
 
         if(isset($data["password"])) {
             $user->password = Hash::make($data["password"]);
-        }
-
-        if($request->hasFile("image")) {
-            $image = $request->file("image");
-            $fileName = $this->generateFileName($image);
-            $imagePath = $image->storeAs("images", $fileName, "public");
-            $imageUrl = asset('storage/' . $imagePath);
-            $user->image = $imageUrl;
         }
 
         $user->save();
