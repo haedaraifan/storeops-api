@@ -13,11 +13,9 @@ class NoteController extends Controller
 {
     public function create(NoteCreateRequest $request): JsonResponse
     {
-        $user = Auth::user();
         $data = $request->validated();
 
         $note = new Note($data);
-        $note->user_id = $user->id;
         $note->save();
 
         return (new NoteResource($note))->response()->setStatusCode(201);

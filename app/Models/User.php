@@ -24,11 +24,6 @@ class User extends Model implements Authenticatable
         return $this->hasMany(Authentication::class);
     }
 
-    public function notes(): HasMany
-    {
-        return $this->hasMany(Note::class);
-    }
-
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);
