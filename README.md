@@ -19,6 +19,7 @@
 - **Get Product**
 - **Update Product**
 - **Delete Product**
+- **List Added Product History**
 
 [Detail...](https://github.com/haedaraifan/storeops-api/blob/dev/docs/product-api.md)
 
@@ -29,3 +30,13 @@
 - **List Transaction**
 
 [Detail...](https://github.com/haedaraifan/storeops-api/blob/dev/docs/transaction-api.md)
+
+## Note Api
+
+- **Add Note**
+- **List Note**
+- **Get Note**
+- **Update Note**
+- **Delete Note**
+
+[Detail...](https://github.com/haedaraifan/storeops-api/blob/dev/docs/note-api.md)
