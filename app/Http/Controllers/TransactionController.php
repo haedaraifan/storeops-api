@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\ExceptionResponseHelper;
 use App\Http\Requests\TransactionExpenseRequest;
 use App\Http\Requests\TransactionIncomeRequest;
+use App\Http\Resources\TransactionDetailResource;
 use App\Http\Resources\TransactionResource;
 use App\Models\Product;
 use App\Models\Transaction;
@@ -90,5 +91,13 @@ class TransactionController extends Controller
         $transactions = Transaction::get();
 
         return (TransactionResource::collection($transactions))->response()->setStatusCode(200);
+    }
+
+    public function listIncome(Request $request): JsonResponse
+    {
+        $incomeType = TransactionType::whereName("Penjualan")->first();
+        $transactions = Transaction::whereTypeId($incomeType->id)->get();
+
+        return (TransactionDetailResource::collection($transactions))->response()->setStatusCode(200);
     }
 }
