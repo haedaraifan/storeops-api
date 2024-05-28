@@ -233,3 +233,42 @@
   "error": "Unauthorized."
 }
 ```
+
+## Restock Product
+
+**Endpoint :** POST /api/products/:productId/restock
+
+**Role :** Admin
+
+**Request Header :**
+- AUTHORIZATION : token-123
+
+**Request Body :**
+
+```json
+{
+  "quantity": 45,
+  "destination_address": "Besito",
+  "supplier_name": "Jamal",
+  "supplier_address": "Gang 10",
+  "supplier_phone": "0811111",
+  "shipping_method": "Mobil",
+  "payment_method": "Cash"
+}
+```
+
+**Response Body (Success) :**
+
+```json
+{
+  "message": "Produk berhasil direstok."
+}
+```
+
+**Response Body (Failed) :**
+
+```json
+{
+  "error": "Produk tidak ditemukan."
+}
+```

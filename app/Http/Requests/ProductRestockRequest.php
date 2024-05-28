@@ -24,7 +24,6 @@ class ProductRestockRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "product_id" => ["required"],
             "quantity" => ["required", "numeric", "min:1"],
             "destination_address" => ["required", "max:255"],
             "supplier_name" => ["required", "max:100"],

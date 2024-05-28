@@ -107,10 +107,10 @@ class ProductController extends Controller
         ])->setStatusCode(200);
     }
 
-    public function restock(ProductRestockRequest $request): JsonResponse
+    public function restock(int $product_id, ProductRestockRequest $request): JsonResponse
     {
         $data = $request->validated();
-        $product = $this->getProduct($data["product_id"]);
+        $product = $this->getProduct($product_id);
 
         $product->increment("quantity", $data['quantity']);
         $product->save();
