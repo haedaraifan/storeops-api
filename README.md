@@ -20,6 +20,7 @@
 - **Update Product**
 - **Delete Product**
 - **List Added Product History**
+- **Restock Product**
 
 [Detail...](https://github.com/haedaraifan/storeops-api/blob/dev/docs/product-api.md)
 
