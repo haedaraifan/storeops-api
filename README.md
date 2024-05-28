@@ -28,6 +28,7 @@
 - **Expense Transaction**
 - **Income Transaction**
 - **List Transaction**
+- **List Income Transactions**
 
 [Detail...](https://github.com/haedaraifan/storeops-api/blob/dev/docs/transaction-api.md)
 
