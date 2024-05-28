@@ -60,7 +60,7 @@ class TransactionController extends Controller
                 ExceptionResponseHelper::throwInvariantError("Kuantitas lebih banyak dari stok produk.");
             }
 
-            $transaction->selling_price += $product->selling_price;
+            $transaction->selling_price += ($product->selling_price * $productRequest["quantity"]);
             $product->quantity -= $productRequest["quantity"];
             $product->save();
 

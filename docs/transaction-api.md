@@ -89,7 +89,7 @@
 
 **Endpoint :** GET /api/transactions
 
-**Role :** Admin | Kasir
+**Role :** Admin | Kasir | Gudang
 
 **Request Header :**
 - AUTHORIZATION : token-123
@@ -114,6 +114,60 @@
       "status": "Lunas",
       "purchase_price": null, // nullable
       "selling_price": 120000 // nullable
+    }
+  ]
+}
+```
+
+**Response Body (Failed) :**
+
+```json
+{
+  "error": "Unauthorized."
+}
+```
+
+## List Income Transactions
+
+**Endpoint :** GET /api/transactions/income
+
+**Role :** Admin | Kasir | Gudang
+
+**Request Header :**
+- AUTHORIZATION : token-123
+
+**Response Body (Success) :**
+
+```json
+{
+  "data": [
+    {
+      "id": 2,
+      "date": "2 Mei 2024",
+      "type": "Penjualan",
+      "status": "Lunas",    
+      "purchase_price": null, // nullable
+      "selling_price": 160000, // nullable
+      "discount": 20000, // nullable
+      "additional_cost": 10000, // nullable
+      "payment_method": "Cash", // nullable
+      "customer":  {
+        "name": "Budi", // nullable
+        "phone": "08512345", // nullable
+        "address": "Besito" // nullable
+      },
+      "products": [
+        {
+            "name": "Kayu",
+            "quantity": 1,
+            "price": 150000
+        },
+        {
+            "name": "Paku",
+            "quantity": 10,
+            "price": 10000
+        }
+      ]
     }
   ]
 }
