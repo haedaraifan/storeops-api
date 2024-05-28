@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ExceptionResponseHelper;
 use App\Http\Requests\ProductCreateRequest;
+use App\Http\Requests\ProductRestockRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\AddProductHistory;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\RestockProductHistory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -101,7 +103,26 @@ class ProductController extends Controller
         $product->delete();
 
         return response()->json([
-            "message"=> "Produk berhasil dihapus."
+            "message" => "Produk berhasil dihapus."
+        ])->setStatusCode(200);
+    }
+
+    public function restock(ProductRestockRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+        $product = $this->getProduct($data["product_id"]);
+
+        $product->increment("quantity", $data['quantity']);
+        $product->save();
+
+        $restockProductHistory = new RestockProductHistory($data);
+        $restockProductHistory->name = $product->name;
+        $restockProductHistory->purchase_price = $product->purchase_price;
+        $restockProductHistory->selling_price = $product->selling_price;
+        $restockProductHistory->save();
+
+        return response()->json([
+            "message" => "Produk berhasil direstok."
         ])->setStatusCode(200);
     }
 }
