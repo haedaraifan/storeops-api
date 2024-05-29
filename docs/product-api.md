@@ -272,3 +272,65 @@
   "error": "Produk tidak ditemukan."
 }
 ```
+
+## List Restocked Product History
+
+**Endpoint :** GET /api/products/restock
+
+**Role :** Admin | Kasir | Gudang
+
+**Request Header :**
+- AUTHORIZATION : token-123
+
+**Response Body (Success) :**
+
+```json
+{
+  "data": [
+    {
+        "id": 1,
+        "date": "28 Mei, 2024",
+        "product": {
+            "name": "Kayu",
+            "purchase_price": 120000,
+            "selling_price": 150000,
+            "new_quantity": 40
+        },
+        "destination_address": "Besito",
+        "payment_method": "Cash",
+        "shipping_method": "Mobil pickup",
+        "supplier": {
+            "name": "Udin",
+            "address": "Dawe",
+            "phone": "08912345"
+        }
+    },
+    {
+        "id": 2,
+        "date": "29 Mei, 2024",
+        "product": {
+            "name": "Paku",
+            "purchase_price": 800,
+            "selling_price": 1000,
+            "new_quantity": 100
+        },
+        "destination_address": "Besito",
+        "payment_method": "Cash",
+        "shipping_method": "Mobil pickup",
+        "supplier": {
+            "name": "Udin",
+            "address": "Dawe",
+            "phone": "08912345"
+        }
+    },
+  ]
+}
+```
+
+**Response Body (Failed) :**
+
+```json
+{
+  "error": "Unauthorized."
+}
+```
