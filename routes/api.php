@@ -35,6 +35,7 @@ Route::middleware(ApiAuthMiddleware::class)->group(function() {
     Route::get("/products", [ProductController::class,"list"]);
     Route::get("/products/{productId}", [ProductController::class,"get"])->where("productId", "[0-9]+");
     Route::get("/products/histories/add", [HistoryController::class, "listAddedProduct"]);
+    Route::get("/products/histories/restock", [HistoryController::class, "listRestockedProduct"]);
 
     Route::post("/notes", [NoteController::class, "create"]);
     Route::get("/notes", [NoteController::class, "list"]);
