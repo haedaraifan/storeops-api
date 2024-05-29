@@ -25,6 +25,7 @@ class ProductRestockRequest extends FormRequest
     {
         return [
             "quantity" => ["required", "numeric", "min:1"],
+            "total_purchase_price" => ["required", "numeric", "min:0"],
             "destination_address" => ["required", "max:255"],
             "supplier_name" => ["required", "max:100"],
             "supplier_address" => ["required", "max:255"],

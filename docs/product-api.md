@@ -248,6 +248,7 @@
 ```json
 {
   "quantity": 45,
+  "total_purchase_price": 500000,
   "destination_address": "Besito",
   "supplier_name": "Jamal",
   "supplier_address": "Gang 10",
@@ -293,7 +294,8 @@
         "product": {
             "name": "Kayu",
             "category": "Pcs",
-            "purchase_price": 120000,
+            "purchase_price": 4800000,
+            "total_purchase_price": 500000,
             "selling_price": 150000,
             "new_quantity": 40
         },
@@ -313,6 +315,7 @@
             "name": "Paku",
             "category": "Pcs",
             "purchase_price": 800,
+            "total_purchase_price": 80000,
             "selling_price": 1000,
             "new_quantity": 100
         },

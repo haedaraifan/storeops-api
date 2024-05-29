@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string("name", 100)->nullable(false);
             $table->string("category", 20)->nullable(false);
             $table->integer("purchase_price")->nullable(false);
+            $table->integer("total_purchase_price")->nullable(false);
             $table->integer("selling_price")->nullable(false);
             $table->integer("quantity")->nullable(false);
             $table->string("destination_address", 255)->nullable(false);

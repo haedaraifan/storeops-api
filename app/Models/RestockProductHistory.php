@@ -13,6 +13,7 @@ class RestockProductHistory extends Model
         "name",
         "category",
         "purchase_price",
+        "total_purchase_price",
         "selling_price",
         "quantity",
         "destination_address",
