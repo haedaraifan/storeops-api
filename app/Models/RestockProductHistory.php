@@ -11,6 +11,7 @@ class RestockProductHistory extends Model
 
     protected $fillable = [
         "name",
+        "category",
         "purchase_price",
         "selling_price",
         "quantity",

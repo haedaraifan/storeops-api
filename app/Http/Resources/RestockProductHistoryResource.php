@@ -19,6 +19,7 @@ class RestockProductHistoryResource extends JsonResource
             "date" => $this->created_at->format("d F, Y"),
             "product" => [
                 "name" => $this->name,
+                "category" => $this->category,
                 "pruchase_price" => $this->purchase_price,
                 "selling_price" => $this->selling_price,
                 "new_quantity" => $this->quantity

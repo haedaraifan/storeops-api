@@ -292,6 +292,7 @@
         "date": "28 Mei, 2024",
         "product": {
             "name": "Kayu",
+            "category": "Pcs",
             "purchase_price": 120000,
             "selling_price": 150000,
             "new_quantity": 40
@@ -310,6 +311,7 @@
         "date": "29 Mei, 2024",
         "product": {
             "name": "Paku",
+            "category": "Pcs",
             "purchase_price": 800,
             "selling_price": 1000,
             "new_quantity": 100
