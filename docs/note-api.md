@@ -26,7 +26,7 @@
     "id": 1,
     "title": "ini judul",
     "content": "lorem ipsum",
-    "created_at": "17 Mei, 2024"
+    "created_at": "Jumat, 17 Mei 2024"
   }
 }
 ```
@@ -57,13 +57,13 @@
       "id": 1,
       "title": "ini judul",
       "content": "lorem ipsum",
-      "created_at": "17 Mei, 2024"
+      "created_at": "Jumat, 17 Mei 2024"
     },
     {
       "id": 2,
       "title": "ini judul hehe",
       "content": "lorem ipsum dolor",
-      "created_at": "17 Mei, 2024"
+      "created_at": "Jumat, 17 Mei 2024"
     }
   ]
 }
@@ -92,7 +92,7 @@
     "id": 1,
     "title": "ini judul",
     "content": "lorem ipsum",
-    "created_at": "17 Mei, 2024"
+    "created_at": "Jumat, 17 Mei 2024"
   }
 }
 ```
@@ -131,7 +131,7 @@
     "id": 1,
     "title": "ini judul yang baru",
     "content": "hehe",
-    "created_at": "17 Mei, 2024"
+    "created_at": "Jumat, 17 Mei 2024"
   }
 }
 ```
