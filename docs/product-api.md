@@ -209,7 +209,7 @@
 {
   "data": [
     {
-      "date": "16 Mei. 2024",
+      "date": "Kamis, 16 Mei 2024",
       "name": "kayu jati",
       "quantity": 100,
       "category": "Pcs",
@@ -217,7 +217,7 @@
       "selling_price": 150000
     },
     {
-      "date": "17 Mei. 2024",
+      "date": "Jumat, 17 Mei 2024",
       "name": "paku",
       "quantity": 1000,
       "category": "Pcs",
@@ -292,7 +292,7 @@
   "data": [
     {
         "id": 1,
-        "date": "28 Mei, 2024",
+        "date": "Selasa, 28 Mei 2024",
         "product": {
             "name": "Kayu",
             "category": "Pcs",
@@ -312,7 +312,7 @@
     },
     {
         "id": 2,
-        "date": "29 Mei, 2024",
+        "date": "Rabu, 29 Mei 2024",
         "product": {
             "name": "Paku",
             "category": "Pcs",
