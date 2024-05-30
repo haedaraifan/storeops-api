@@ -101,7 +101,7 @@
   "data": [
     {
       "id": 1,
-      "date": "2 Mei 2024",
+      "date": "Kamis, 2 Mei 2024",
       "type": "Pengeluaran",
       "status": "Lunas",
       "purchase_price": 100000, // nullable
@@ -109,7 +109,7 @@
     },
     {
       "id": 2,
-      "date": "2 Mei 2024",
+      "date": "Kamis, 2 Mei 2024",
       "type": "Penjualan",
       "status": "Lunas",
       "purchase_price": null, // nullable
@@ -143,7 +143,7 @@
   "data": [
     {
       "id": 2,
-      "date": "2 Mei 2024",
+      "date": "Kamis, 2 Mei 2024",
       "type": "Penjualan",
       "status": "Lunas",    
       "purchase_price": null, // nullable
