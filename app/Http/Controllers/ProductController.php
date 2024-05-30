@@ -60,6 +60,7 @@ class ProductController extends Controller
         $product->save();
 
         $addProductHistory = new AddProductHistory($product->toArray());
+        $addProductHistory->category = $product->category->name;
         $addProductHistory->save();
 
         return (new ProductResource($product))->response()->setStatusCode(201);
