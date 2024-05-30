@@ -212,6 +212,7 @@
       "date": "16 Mei. 2024",
       "name": "kayu jati",
       "quantity": 100,
+      "category": "Pcs",
       "purchase_price": 120000,
       "selling_price": 150000
     },
@@ -219,6 +220,7 @@
       "date": "17 Mei. 2024",
       "name": "paku",
       "quantity": 1000,
+      "category": "Pcs",
       "purchase_price": 800,
       "selling_price": 1000
     }
