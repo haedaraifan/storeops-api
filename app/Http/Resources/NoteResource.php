@@ -18,7 +18,7 @@ class NoteResource extends JsonResource
             "id" =>  $this->id,
             "title" => $this->title,
             "content" => $this->content,
-            "created_at" => $this->created_at->format("d F, Y")
+            "created_at" => $this->created_at->isoFormat('dddd, D MMMM Y')
         ];
     }
 }
