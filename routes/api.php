@@ -12,7 +12,7 @@ Route::post("/login", [UserController::class, "login"]);
 
 Route::middleware(ApiAuthMiddleware::class)->group(function() {
     Route::get("/me", [UserController::class, "get"]);
-    Route::post("/me", [UserController::class, "update"]);
+    Route::patch("/me", [UserController::class, "update"]);
     Route::delete("/logout", [UserController::class, "logout"]);
 
     Route::middleware("role:Admin")->group(function() {

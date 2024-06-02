@@ -49,7 +49,7 @@
 
 ```json
 {
-  "email": "john@gmail.com",
+  "name": "john",
   "password": "rahasia"
 }
 ```
@@ -108,7 +108,7 @@
 
 ## Update User Profile
 
-**Endpoint :** POST /api/me
+**Endpoint :** PATCH /api/me
 
 **Role :** Admin | Kasir | Gudang
 
@@ -120,6 +120,7 @@
 ```json
 {
   "name": "doe", // optional
+  "email": "doe@gmail.com", // optional
   "password": "rahasia123" // optional
 }
 ```
@@ -130,7 +131,7 @@
 {
   "data": {
     "id": 11,
-    "email": "john@gmail.com",
+    "email": "doe@gmail.com",
     "name": "doe",
     "role": "Kasir"
   }
@@ -147,7 +148,7 @@
 
 ## Logout User
 
-**Endpoint :** POST /api/logout
+**Endpoint :** DELETE /api/logout
 
 **Role :** Admin | Kasir | Gudang
 
