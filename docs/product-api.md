@@ -203,7 +203,7 @@
 
 ## List Added Product History
 
-**Endpoint :** GET /api/products/add
+**Endpoint :** GET /api/products/histories/add
 
 **Role :** Admin | Kasir | Gudang
 
@@ -287,7 +287,7 @@
 
 ## List Restocked Product History
 
-**Endpoint :** GET /api/products/restock
+**Endpoint :** GET /api/products/histories/restock
 
 **Role :** Admin | Kasir | Gudang
 
