@@ -17,7 +17,7 @@
   "quantity": 100,
   "purchase_price": 120000,
   "selling_price": 150000,
-  "unit": "Pcs" | "Kg",
+  "unit": "pcs | kg",
   "category": "Kayu",
   "image": "[image | mimes:jpg,jpeg,png]" // optional
 }
