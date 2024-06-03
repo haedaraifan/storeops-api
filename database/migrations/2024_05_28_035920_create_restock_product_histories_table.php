@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('restock_product_histories', function (Blueprint $table) {
             $table->id();
             $table->string("name", 100)->nullable(false);
-            $table->string("category", 20)->nullable(false);
+            $table->string("unit", 20)->nullable(false);
             $table->integer("purchase_price")->nullable(false);
             $table->integer("total_purchase_price")->nullable(false);
             $table->integer("selling_price")->nullable(false);

@@ -17,7 +17,7 @@
   "quantity": 100,
   "purchase_price": 120000,
   "selling_price": 150000,
-  "category": "Pcs",
+  "unit": "Pcs" | "Kg",
   "image": "[image | mimes:jpg,jpeg,png]" // optional
 }
 ```
@@ -32,7 +32,7 @@
     "quantity": 100,
     "purchase_price": 120000,
     "selling_price": 150000,
-    "category": "Pcs",
+    "unit": "Pcs",
     "image": "https://app.com/storage/images/240424012322872092.png" // nullable
   }
 }
@@ -66,7 +66,7 @@
       "quantity": 100,
       "purchase_price": 120000,
       "selling_price": 150000,
-      "category": "Pcs",
+      "unit": "Pcs",
       "image": "https://app.com/storage/images/240424012322872092.png" // nullable
     },
     {
@@ -75,7 +75,7 @@
       "quantity": 1000,
       "purchase_price": 800,
       "selling_price": 1000,
-      "category": "Pcs",
+      "unit": "Pcs",
       "image": "https://app.com/storage/images/240424010517844327.png" // nullable
     }
   ]
@@ -109,7 +109,7 @@
     "quantity": 100,
     "purchase_price": 120000,
     "selling_price": 150000,
-    "category": "Pcs",
+    "unit": "Pcs",
     "image": "https://app.com/storage/images/240424012322872092.png" // nullable
   }
 }
@@ -140,7 +140,7 @@
   "quantity": 200,
   "purchase_price": 120000,
   "selling_price": 150000,
-  "category": "Pcs",
+  "unit": "Pcs",
   "image": "[image | mimes:jpg,jpeg,png]" // optional
 }
 ```
@@ -155,7 +155,7 @@
     "quantity": 200,
     "purchase_price": 120000,
     "selling_price": 150000,
-    "category": "Pcs",
+    "unit": "Pcs",
     "image": "https://app.com/storage/images/240428155054255497.png" // nullable
   }
 }
@@ -212,7 +212,7 @@
       "date": "Kamis, 16 Mei 2024",
       "name": "kayu jati",
       "quantity": 100,
-      "category": "Pcs",
+      "unit": "Pcs",
       "purchase_price": 120000,
       "selling_price": 150000
     },
@@ -220,7 +220,7 @@
       "date": "Jumat, 17 Mei 2024",
       "name": "paku",
       "quantity": 1000,
-      "category": "Pcs",
+      "unit": "Pcs",
       "purchase_price": 800,
       "selling_price": 1000
     }
@@ -295,7 +295,7 @@
         "date": "Selasa, 28 Mei 2024",
         "product": {
             "name": "Kayu",
-            "category": "Pcs",
+            "unit": "Pcs",
             "purchase_price": 4800000,
             "total_purchase_price": 500000,
             "selling_price": 150000,
@@ -315,7 +315,7 @@
         "date": "Rabu, 29 Mei 2024",
         "product": {
             "name": "Paku",
-            "category": "Pcs",
+            "unit": "Pcs",
             "purchase_price": 800,
             "total_purchase_price": 80000,
             "selling_price": 1000,

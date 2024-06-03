@@ -18,7 +18,7 @@ class AddProductHistoryResource extends JsonResource
             "date" => $this->date->isoFormat('dddd, D MMMM Y'),
             "name" => $this->name,
             "quantity" => $this->quantity,
-            "category" => $this->category,
+            "unit" => $this->unit,
             "purchase_price" => $this->purchase_price,
             "selling_price" => $this->selling_price
         ];

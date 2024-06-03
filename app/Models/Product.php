@@ -16,11 +16,11 @@ class Product extends Model
         "purchase_price",
         "selling_price",
         "image",
-        "category_id"
+        "unit_id"
     ];
 
-    public function category(): BelongsTo
+    public function unit(): BelongsTo
     {
-        return $this->belongsTo(Category::class, "category_id", "id");
+        return $this->belongsTo(ProductUnit::class, "unit_id", "id");
     }
 }

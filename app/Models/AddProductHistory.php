@@ -22,6 +22,6 @@ class AddProductHistory extends Model
         "quantity",
         "purchase_price",
         "selling_price",
-        "category"
+        "unit"
     ];
 }

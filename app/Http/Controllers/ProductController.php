@@ -8,8 +8,8 @@ use App\Http\Requests\ProductRestockRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\AddProductHistory;
-use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductUnit;
 use App\Models\RestockProductHistory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -33,9 +33,9 @@ class ProductController extends Controller
         return $product;
     }
 
-    private function getCategory(string $categoryName): Category
+    private function getProductUnit(string $unitName): ProductUnit
     {
-        return Category::whereName($categoryName)->first();
+        return ProductUnit::whereName($unitName)->first();
     }
 
     private function generateFileName($image): string
@@ -48,7 +48,7 @@ class ProductController extends Controller
     public function create(ProductCreateRequest $request): JsonResponse
     {
         $data = $request->validated();
-        $category = $this->getCategory($data["category"]);
+        $unit = $this->getProductUnit($data["unit"]);
         $product = new Product($data);
 
         if($request->hasFile("image")) {
@@ -56,11 +56,11 @@ class ProductController extends Controller
             $product->image = $imageUrl;
         }
 
-        $product->category_id = $category->id;
+        $product->unit_id = $unit->id;
         $product->save();
 
         $addProductHistory = new AddProductHistory($product->toArray());
-        $addProductHistory->category = $product->category->name;
+        $addProductHistory->unit = $product->unit->name;
         $addProductHistory->save();
 
         return (new ProductResource($product))->response()->setStatusCode(201);
@@ -84,14 +84,14 @@ class ProductController extends Controller
     {
         $data = $request->validated();
         $product = $this->getProduct($productId);
-        $category = $this->getCategory($data["category"]);
+        $unit = $this->getProductUnit($data["unit"]);
 
         $product->fill($data);
         if($request->hasFile("image")) {
             $imageUrl = $this->sendProductImage($request->file("image"));
             $product->image = $imageUrl;
         }
-        $product->category_id = $category->id;
+        $product->unit_id = $unit->id;
         $product->save();
 
         return new ProductResource($product);
@@ -118,7 +118,7 @@ class ProductController extends Controller
 
         $restockProductHistory = new RestockProductHistory($data);
         $restockProductHistory->name = $product->name;
-        $restockProductHistory->category = $product->category->name;
+        $restockProductHistory->unit = $product->unit->name;
         $restockProductHistory->purchase_price = $product->purchase_price;
         $restockProductHistory->selling_price = $product->selling_price;
         $restockProductHistory->save();

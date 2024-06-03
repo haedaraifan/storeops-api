@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Category;
+use App\Models\ProductUnit;
 use App\Models\Role;
 use App\Models\TransactionStatus;
 use App\Models\TransactionType;
@@ -18,13 +18,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $categories = ["Pcs", "Kg"];
+        $units = ["Pcs", "Kg"];
         $transactionStatuses = ["Lunas", "Belum lunas"];
         $transactionTypes = ["Penjualan", "Pengeluaran"];
         $roles = ["Admin", "Kasir", "Gudang"];
 
-        foreach($categories as $category) {
-            Category::create([ "name" => $category ]);
+        foreach($units as $unit) {
+            ProductUnit::create([ "name" => $unit ]);
         }
 
         foreach($transactionStatuses as $transactionStatus) {

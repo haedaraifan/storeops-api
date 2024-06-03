@@ -18,10 +18,10 @@ return new class extends Migration
             $table->integer("purchase_price")->nullable(false);
             $table->integer("selling_price")->nullable(false);
             $table->string("image")->nullable();
-            $table->unsignedBigInteger("category_id")->nullable();
+            $table->unsignedBigInteger("unit_id")->nullable();
             $table->timestamps();
 
-            $table->foreign("category_id")->on("categories")->references("id")->onDelete("set null");
+            $table->foreign("unit_id")->on("product_units")->references("id")->onDelete("set null");
         });
     }
 

@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Helpers\ExceptionResponseHelper;
-use App\Models\Category;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -29,7 +28,7 @@ class ProductUpdateRequest extends FormRequest
             "quantity" => ["required", "numeric", "min:0"],
             "purchase_price" => ["required", "numeric", "min:0"],
             "selling_price" => ["required", "numeric", "min:0"],
-            "category" => ["required", "exists:categories,name"],
+            "unit" => ["required", "exists:product_units,name"],
             "image" => ["nullable", "mimes:jpg,jpeg,png", "max:2048"]
         ];
     }
