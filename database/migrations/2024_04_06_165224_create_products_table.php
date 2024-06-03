@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer("purchase_price")->nullable(false);
             $table->integer("selling_price")->nullable(false);
             $table->string("image")->nullable();
+            $table->string("category", 100)->nullable(false);
             $table->unsignedBigInteger("unit_id")->nullable();
             $table->timestamps();
 

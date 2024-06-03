@@ -18,6 +18,7 @@
   "purchase_price": 120000,
   "selling_price": 150000,
   "unit": "Pcs" | "Kg",
+  "category": "Kayu",
   "image": "[image | mimes:jpg,jpeg,png]" // optional
 }
 ```
@@ -33,6 +34,7 @@
     "purchase_price": 120000,
     "selling_price": 150000,
     "unit": "Pcs",
+    "category": "Kayu",
     "image": "https://app.com/storage/images/240424012322872092.png" // nullable
   }
 }
@@ -67,6 +69,7 @@
       "purchase_price": 120000,
       "selling_price": 150000,
       "unit": "Pcs",
+      "category": "Kayu",
       "image": "https://app.com/storage/images/240424012322872092.png" // nullable
     },
     {
@@ -76,6 +79,7 @@
       "purchase_price": 800,
       "selling_price": 1000,
       "unit": "Pcs",
+      "category": "Payu",
       "image": "https://app.com/storage/images/240424010517844327.png" // nullable
     }
   ]
@@ -110,6 +114,7 @@
     "purchase_price": 120000,
     "selling_price": 150000,
     "unit": "Pcs",
+    "category": "Kayu",
     "image": "https://app.com/storage/images/240424012322872092.png" // nullable
   }
 }
@@ -141,6 +146,7 @@
   "purchase_price": 120000,
   "selling_price": 150000,
   "unit": "Pcs",
+  "category": "Kayu",
   "image": "[image | mimes:jpg,jpeg,png]" // optional
 }
 ```
@@ -156,6 +162,7 @@
     "purchase_price": 120000,
     "selling_price": 150000,
     "unit": "Pcs",
+    "category": "Kayu",
     "image": "https://app.com/storage/images/240428155054255497.png" // nullable
   }
 }
@@ -213,6 +220,7 @@
       "name": "kayu jati",
       "quantity": 100,
       "unit": "Pcs",
+      "category": "kayu",
       "purchase_price": 120000,
       "selling_price": 150000
     },
@@ -221,6 +229,7 @@
       "name": "paku",
       "quantity": 1000,
       "unit": "Pcs",
+      "category": "Paku",
       "purchase_price": 800,
       "selling_price": 1000
     }
@@ -296,6 +305,7 @@
         "product": {
             "name": "Kayu",
             "unit": "Pcs",
+            "category": "Kayu",
             "purchase_price": 4800000,
             "total_purchase_price": 500000,
             "selling_price": 150000,
@@ -316,6 +326,7 @@
         "product": {
             "name": "Paku",
             "unit": "Pcs",
+            "category": "Paku",
             "purchase_price": 800,
             "total_purchase_price": 80000,
             "selling_price": 1000,

@@ -16,6 +16,7 @@ class Product extends Model
         "purchase_price",
         "selling_price",
         "image",
+        "category",
         "unit_id"
     ];
 

@@ -20,6 +20,7 @@ class RestockProductHistoryResource extends JsonResource
             "product" => [
                 "name" => $this->name,
                 "unit" => $this->unit,
+                "category" => $this->category,
                 "pruchase_price" => $this->purchase_price,
                 "total_puchase_price" => $this->total_purchase_price,
                 "selling_price" => $this->selling_price,
