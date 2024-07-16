@@ -54,6 +54,9 @@
 
 **Role :** Admin | Kasir | Gudang
 
+**Query Parameter :**
+- category
+
 **Request Header :**
 - AUTHORIZATION : token-123
 

@@ -75,7 +75,15 @@ class ProductController extends Controller
 
     public function list(Request $request): JsonResponse
     {
-        $products = Product::get();
+        $category = $request->query("category");
+        $query = Product::query();
+
+        if($category) {
+            $query->where(function($q) use ($category) {
+                $q->where("category", "like", '%' . $category . '%');
+            });
+        }
+        $products = $query->get();
 
         return (ProductResource::collection($products))->response()->setStatusCode(200);
     }
