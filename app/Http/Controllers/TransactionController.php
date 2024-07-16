@@ -100,4 +100,13 @@ class TransactionController extends Controller
 
         return (TransactionDetailResource::collection($transactions))->response()->setStatusCode(200);
     }
+
+    public function detailIncome(Request $request, int $transactionId): TransactionDetailResource
+    {
+        $transaction = Transaction::whereId($transactionId)->first();
+        if(!$transaction) {
+            ExceptionResponseHelper::throwNotFoundError("Transaksi tidak ditemukan.");
+        }
+        return new TransactionDetailResource($transaction);
+    }
 }
