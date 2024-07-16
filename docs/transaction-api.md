@@ -181,7 +181,7 @@
 }
 ```
 
-## Detail Income Transactions
+## Detail Income Transaction
 
 **Endpoint :** GET /api/transactions/income/:transactionId
 
@@ -222,6 +222,39 @@
       }
     ]
   }
+}
+```
+
+**Response Body (Failed) :**
+
+```json
+{
+  "error": "Transaksi tidak ditemukan."
+}
+```
+
+## Update Transaction Status
+
+**Endpoint :** POST /api/transactions/status/:transactionId
+
+**Role :** Admin | Kasir
+
+**Request Header :**
+- AUTHORIZATION : token-123
+
+**Request Body :**
+
+```json
+{
+  "status": "Lunas"
+}
+```
+
+**Response Body (Success) :**
+
+```json
+{
+  "message": "Transaksi berhasil diperbarui."
 }
 ```
 

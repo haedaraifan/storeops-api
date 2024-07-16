@@ -27,6 +27,7 @@ Route::middleware(ApiAuthMiddleware::class)->group(function() {
     Route::middleware("role:Kasir")->group(function() {
         Route::post("/transactions/expense", [TransactionController::class, "expense"]);
         Route::post("/transactions/income", [TransactionController::class, "income"]);
+        Route::post("/transactions/status/{transactionId}", [TransactionController::class, "updateStatus"])->where("transactionId", "[0-9]+");
     });
 
     Route::get("/transactions", [TransactionController::class, "list"]);

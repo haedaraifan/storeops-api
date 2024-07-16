@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\ExceptionResponseHelper;
 use App\Http\Requests\TransactionExpenseRequest;
 use App\Http\Requests\TransactionIncomeRequest;
+use App\Http\Requests\TransactionStatusUpdateRequest;
 use App\Http\Resources\TransactionDetailResource;
 use App\Http\Resources\TransactionResource;
 use App\Models\Product;
@@ -26,6 +27,15 @@ class TransactionController extends Controller
     private function getTransactionStatus(string $status): TransactionStatus
     {
         return TransactionStatus::whereName($status)->first();
+    }
+
+    private function getTransaction(int $transactionId): Transaction
+    {
+        $transaction = Transaction::whereId($transactionId)->first();
+        if(!$transaction) {
+            ExceptionResponseHelper::throwNotFoundError("Transaksi tidak ditemukan.");
+        }
+        return $transaction;
     }
 
     public function expense(TransactionExpenseRequest $request): JsonResponse
@@ -103,10 +113,21 @@ class TransactionController extends Controller
 
     public function detailIncome(Request $request, int $transactionId): TransactionDetailResource
     {
-        $transaction = Transaction::whereId($transactionId)->first();
-        if(!$transaction) {
-            ExceptionResponseHelper::throwNotFoundError("Transaksi tidak ditemukan.");
-        }
+        $transaction = $this->getTransaction($transactionId);
         return new TransactionDetailResource($transaction);
+    }
+
+    public function updateStatus(TransactionStatusUpdateRequest $request, int $transactionId): JsonResponse
+    {
+        $data = $request->validated();
+        $transaction = $this->getTransaction($transactionId);
+        $newTransactionStatus = $this->getTransactionStatus($data["status"]);
+
+        $transaction->status_id = $newTransactionStatus->id;
+        $transaction->save();
+
+        return response()->json([
+            "message" => "Transaksi berhasil diperbarui."
+        ])->setStatusCode(200);
     }
 }
