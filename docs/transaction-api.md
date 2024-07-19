@@ -265,3 +265,46 @@
   "error": "Transaksi tidak ditemukan."
 }
 ```
+
+## Transaction Income Statistic
+
+**Endpoint :** GET /api/transactions/income/statistic
+
+**Role :** Admin | Kasir | Gudang
+
+**Query Parameter :**
+- year
+- month
+- sort : asc | desc
+
+**Request Header :**
+- AUTHORIZATION : token-123
+
+**Response Body (Success) :**
+
+```json
+{
+  "data": {
+    "year": "2024",
+    "month": "7",
+    "products": [
+      {
+        "name": "Batako",
+        "quantity": 2000
+      },
+      {
+        "name": "Paku",
+        "quantity": 10000
+      }
+    ]
+  }
+}
+```
+
+**Response Body (Failed) :**
+
+```json
+{
+  "error": "Transaksi tidak ditemukan."
+}
+```

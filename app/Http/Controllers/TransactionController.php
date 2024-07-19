@@ -7,6 +7,7 @@ use App\Http\Requests\TransactionExpenseRequest;
 use App\Http\Requests\TransactionIncomeRequest;
 use App\Http\Requests\TransactionStatusUpdateRequest;
 use App\Http\Resources\TransactionDetailResource;
+use App\Http\Resources\TransactionIncomeStatisticResource;
 use App\Http\Resources\TransactionResource;
 use App\Models\Product;
 use App\Models\Transaction;
@@ -15,7 +16,6 @@ use App\Models\TransactionStatus;
 use App\Models\TransactionType;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
@@ -129,5 +129,24 @@ class TransactionController extends Controller
         return response()->json([
             "message" => "Transaksi berhasil diperbarui."
         ])->setStatusCode(200);
+    }
+
+    public function statistic(Request $request): TransactionIncomeStatisticResource
+    {
+        $year = $request->query("year", now()->year);
+        $month = $request->query("month", now()->month);
+        $sort = $request->query("sort");
+
+        $recap = TransactionProduct::selectRaw("name, CAST(SUM(quantity) AS UNSIGNED) as quantity")
+            ->whereHas("transaction", fn($query) => $query->whereYear("date", $year)->whereMonth("date", $month))
+            ->groupBy("name")
+            ->orderBy("quantity", $sort == "asc" ? "asc" : "desc")
+            ->get();
+
+        return new TransactionIncomeStatisticResource([
+            "year" => strval($year),
+            "month" => strval($month),
+            "products" => $recap
+        ]);
     }
 }
