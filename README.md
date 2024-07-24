@@ -15,6 +15,7 @@
 ## Product Api
 
 - **Add Product**
+- **Import Products**
 - **List Product**
 - **Get Product**
 - **Update Product**

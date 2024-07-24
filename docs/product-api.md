@@ -48,6 +48,47 @@
 }
 ```
 
+## Import Products
+
+**Endpoint :** POST /api/products/import
+
+**Role :** Admin
+
+**Request Header :**
+- AUTHORIZATION : token-123
+
+**Excel File Row**
+- name
+- quantity
+- purchase_price
+- selling_price
+- category
+- unit
+
+**Request Body :**
+
+```json
+{
+  "products": "mimes:xlsx,xlx"
+}
+```
+
+**Response Body (Success) :**
+
+```json
+{
+  "message": "Data berhasil ditambahkan."
+}
+```
+
+**Response Body (Failed) :**
+
+```json
+{
+  "error": "Unauthorized."
+}
+```
+
 ## List Product
 
 **Endpoint :** GET /api/products

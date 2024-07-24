@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ExceptionResponseHelper;
 use App\Http\Requests\ProductCreateRequest;
+use App\Http\Requests\ProductImportRequest;
 use App\Http\Requests\ProductRestockRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Resources\ProductResource;
+use App\Imports\ProductsImport;
 use App\Models\AddProductHistory;
 use App\Models\Product;
 use App\Models\ProductUnit;
 use App\Models\RestockProductHistory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -135,5 +138,16 @@ class ProductController extends Controller
         return response()->json([
             "message" => "Produk berhasil direstok."
         ])->setStatusCode(200);
+    }
+
+    public function import(ProductImportRequest $request): JsonResponse
+    {
+        $request->validated();
+
+        Excel::import(new ProductsImport, $request->file("products"));
+
+        return response()->json([
+            "message" => "Data berhasil ditambahkan."
+        ])->setStatusCode(201);
     }
 }
