@@ -7,12 +7,16 @@ use App\Http\Requests\ProductCreateRequest;
 use App\Http\Requests\ProductImportRequest;
 use App\Http\Requests\ProductRestockRequest;
 use App\Http\Requests\ProductUpdateRequest;
+use App\Http\Resources\ProductRecapResource;
 use App\Http\Resources\ProductResource;
 use App\Imports\ProductsImport;
 use App\Models\AddProductHistory;
 use App\Models\Product;
 use App\Models\ProductUnit;
 use App\Models\RestockProductHistory;
+use App\Models\Transaction;
+use App\Models\TransactionProduct;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -149,5 +153,43 @@ class ProductController extends Controller
         return response()->json([
             "message" => "Data berhasil ditambahkan."
         ])->setStatusCode(201);
+    }
+
+    // baru bisa rekap data pada bulan sekarang
+    public function recap(Request $request): JsonResponse
+    {
+        $year = now()->year;
+        $month = now()->month;
+        // $year = $request->query("year", now()->year);
+        // $month = $request->query("month", now()->month);
+        $startDate = Carbon::create($year, $month, 1)->startOfMonth();
+        $endDate = Carbon::create($year, $month, 1)->endOfMonth();
+
+        $products = Product::get();
+        $outgoingQuantity = TransactionProduct::selectRaw("name, SUM(quantity) as quantity")
+            ->whereHas('transaction', function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('date', [$startDate, $endDate]);
+            })
+            ->groupBy('name')
+            ->get();
+        $incomingQuantity = RestockProductHistory::selectRaw("name, SUM(quantity) as quantity")
+            ->whereBetween("created_at", [$startDate, $endDate])
+            ->groupBy("name")
+            ->get();
+
+        $productRecap = $products->map(function($product) use ($outgoingQuantity, $incomingQuantity) {
+            $outgoing = $outgoingQuantity->firstWhere("name", $product->name);
+            $incoming = $incomingQuantity->firstWhere("name", $product->name);
+
+            return [
+                "name" => $product->name,
+                "first_quantity" => 0,
+                "last_quantity" => $product->quantity,
+                "incoming_quantity" => $incoming->quantity ?? 0,
+                "outgoing_quantity" => $outgoing->quantity ?? 0
+            ];
+        });
+
+        return (ProductRecapResource::collection($productRecap))->response()->setStatusCode(200);
     }
 }

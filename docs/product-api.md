@@ -396,3 +396,43 @@
   "error": "Unauthorized."
 }
 ```
+
+## Recap Products
+
+**Endpoint :** GET /api/products/recap
+
+**Role :** Admin | Kasir | Gudang
+
+**Request Header :**
+- AUTHORIZATION : token-123
+
+**Response Body (Success) :**
+
+```json
+{
+  "data": [
+    {
+      "name": "kayu jati",
+      "first_quantity": 100,
+      "last_quantity": 100,
+      "incoming_quantity": 100,
+      "outgoing_quantity": 100
+    },
+    {
+      "name": "paku",
+      "first_quantity": 200,
+      "last_quantity": 100,
+      "incoming_quantity": 50,
+      "outgoing_quantity": 150
+    },
+  ]
+}
+```
+
+**Response Body (Failed) :**
+
+```json
+{
+  "error": "Unauthorized."
+}
+```

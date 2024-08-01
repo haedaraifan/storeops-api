@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('restock_product_histories', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger("product_id")->nullable(false);
             $table->string("name", 100)->nullable(false);
             $table->string("unit", 20)->nullable(false);
             $table->string("category", 100)->nullable(false);
