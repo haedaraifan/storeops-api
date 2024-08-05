@@ -70,7 +70,7 @@ class TransactionController extends Controller
                 ExceptionResponseHelper::throwInvariantError("Kuantitas lebih banyak dari stok produk.");
             }
 
-            $transaction->selling_price += ($product->selling_price * $productRequest["quantity"]);
+            $transaction->selling_price += $product->selling_price * $productRequest["quantity"];
             $product->quantity -= $productRequest["quantity"];
             $product->save();
 
@@ -78,7 +78,9 @@ class TransactionController extends Controller
                 "product_id" => $product->id,
                 "name" => $product->name,
                 "price" => $product->selling_price,
-                "quantity" => $productRequest["quantity"]
+                "quantity" => $productRequest["quantity"],
+                "option_id" => $productRequest["option"] ?? 1,
+                "is_checked" => $productRequest["is_checked"] ?? false
             ]);
             array_push($transactionProducts, $transactionProduct);
         }
@@ -107,7 +109,10 @@ class TransactionController extends Controller
     public function listIncome(Request $request): JsonResponse
     {
         $incomeType = TransactionType::whereName("Penjualan")->first();
-        $transactions = Transaction::whereTypeId($incomeType->id)->orderBy("date", "desc")->get();
+        $transactions = Transaction::whereTypeId($incomeType->id)
+            ->with(["products.option"])
+            ->orderBy("date", "desc")
+            ->get();
 
         return (TransactionDetailResource::collection($transactions))->response()->setStatusCode(200);
     }

@@ -51,11 +51,15 @@
   "products": [
     {
       "id": 1,
-      "quantity": 2
+      "quantity": 2,
+      "option": 2, // optional
+      "is_checked": true // optional
     },
     {
       "id": 2,
-      "quantity": 5
+      "quantity": 5,
+      "option": 1, // optional
+      "is_checked": false // optional
     }
   ],
   "discount": 10000, // optional
@@ -160,12 +164,16 @@
         {
             "name": "Kayu",
             "quantity": 1,
-            "price": 150000
+            "price": 150000,
+            "option": "Dikirim",
+            "is_checked": true
         },
         {
             "name": "Paku",
             "quantity": 10,
-            "price": 10000
+            "price": 10000,
+            "option": "Diambil",
+            "is_checked": true
         }
       ]
     }

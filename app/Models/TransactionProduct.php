@@ -16,11 +16,19 @@ class TransactionProduct extends Model
         "name",
         "quantity",
         "price",
-        "product_id"
+        "product_id",
+        "option_id",
+        "is_checked",
     ];
 
     public function transaction(): BelongsTo
     {
         return $this->belongsTo(Transaction::class);
     }
+
+    public function option(): BelongsTo
+    {
+        return $this->belongsTo(TransactionProductOption::class);
+    }
+
 }

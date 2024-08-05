@@ -17,8 +17,11 @@ return new class extends Migration
             $table->integer("quantity")->nullable(false);
             $table->integer("price")->nullable(false);
             $table->unsignedBigInteger("transaction_id")->nullable(false);
+            $table->unsignedBigInteger('option_id')->nullable(false);
+            $table->boolean('is_checked')->default(false);
 
             $table->foreign("transaction_id")->on("transactions")->references("id")->onDelete('CASCADE');
+            $table->foreign('option_id')->references('id')->on('transaction_product_options')->onDelete('cascade');
         });
     }
 

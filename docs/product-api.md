@@ -304,12 +304,12 @@
 {
   "quantity": 45,
   "total_purchase_price": 500000,
-  "destination_address": "Besito",
+  "destination_address": "Besito", // nullable
   "supplier_name": "Jamal",
   "supplier_address": "Gang 10",
   "supplier_phone": "0811111",
   "shipping_method": "Mobil",
-  "payment_method": "Cash"
+  "payment_method": "Cash" // nullable
 }
 ```
 

@@ -17,7 +17,9 @@ class TransactionProductResource extends JsonResource
         return [
             "name" => $this->name,
             "quantity" => $this->quantity,
-            "price" => $this->price
+            "price" => $this->price,
+            "option" => $this->option->name,
+            "is_checked" => $this->is_checked === 0 ? false : true,
         ];
     }
 }

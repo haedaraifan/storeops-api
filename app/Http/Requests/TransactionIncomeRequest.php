@@ -27,6 +27,8 @@ class TransactionIncomeRequest extends FormRequest
             "products" => ["required", "array"],
             "products.*.id" => ["required","exists:products,id"],
             "products.*.quantity" => ["required","numeric","min:1"],
+            "products.*.option" => ["numeric", "exists:transaction_product_options,id"],
+            "products.*.is_checked" => ["boolean"],
             "discount" => ["nullable", "numeric", "min:0"],
             "additional_cost" => ["nullable", "numeric", "min:0"],
             "note" => ["nullable", "max:255"],

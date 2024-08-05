@@ -21,8 +21,8 @@ class TransactionDetailResource extends JsonResource
             "status" => $this->status->name,
             "purchase_price" => $this->purchase_price,
             "selling_price" => $this->selling_price,
-            "discount" => $this->discount,
-            "additional_cost" => $this->additional_cost,
+            "discount" => $this->discount ?? 0,
+            "additional_cost" => $this->additional_cost ?? 0,
             "payment_method" => $this->payment_method,
             "customer" => [
                 "name" => $this->customer_name,
