@@ -10,6 +10,8 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class ProductsImport implements ToModel, WithHeadingRow
 {
+    private $importedProducts = [];
+
     /**
     * @param array $row
     *
@@ -23,7 +25,7 @@ class ProductsImport implements ToModel, WithHeadingRow
             ExceptionResponseHelper::throwNotFoundError("Unit [" . $row["unit"] . "] tidak ditemukan.");
         }
 
-        return new Product([
+        $product = new Product([
             "name" => $row["name"],
             "quantity" => $row["quantity"],
             "purchase_price" => $row["purchase_price"],
@@ -31,5 +33,19 @@ class ProductsImport implements ToModel, WithHeadingRow
             "category" => $row["category"],
             "unit_id" => $unit->id
         ]);
+        $product->save();
+
+        $this->importedProducts[] = $product;
+        return $product;
+    }
+
+    /**
+    * Get the imported products.
+    *
+    * @return array
+    */
+    public function getImportedProducts()
+    {
+        return $this->importedProducts;
     }
 }

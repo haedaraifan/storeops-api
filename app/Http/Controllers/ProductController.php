@@ -67,6 +67,7 @@ class ProductController extends Controller
         $product->save();
 
         $addProductHistory = new AddProductHistory($product->toArray());
+        $addProductHistory->product_id = $product->id;
         $addProductHistory->unit = $product->unit->name;
         $addProductHistory->save();
 
@@ -132,6 +133,7 @@ class ProductController extends Controller
         $product->save();
 
         $restockProductHistory = new RestockProductHistory($data);
+        $restockProductHistory->product_id = $product->id;
         $restockProductHistory->name = $product->name;
         $restockProductHistory->unit = $product->unit->name;
         $restockProductHistory->category = $product->category;
@@ -147,11 +149,21 @@ class ProductController extends Controller
     public function import(ProductImportRequest $request): JsonResponse
     {
         $request->validated();
+        $import = new ProductsImport();
 
-        Excel::import(new ProductsImport, $request->file("products"));
+        Excel::import($import, $request->file("products"));
+
+        $importedProducts = $import->getImportedProducts();
+        foreach($importedProducts as $product) {
+            $addProductHistory = new AddProductHistory($product->toArray());
+            $addProductHistory->product_id = $product->id;
+            $addProductHistory->unit = $product->unit->name;
+            $addProductHistory->save();
+        }
 
         return response()->json([
-            "message" => "Data berhasil ditambahkan."
+            "message" => "Data berhasil ditambahkan.",
+            "imported" => $importedProducts
         ])->setStatusCode(201);
     }
 
@@ -166,24 +178,29 @@ class ProductController extends Controller
         $endDate = Carbon::create($year, $month, 1)->endOfMonth();
 
         $products = Product::get();
-        $outgoingQuantity = TransactionProduct::selectRaw("name, SUM(quantity) as quantity")
-            ->whereHas('transaction', function ($query) use ($startDate, $endDate) {
-                $query->whereBetween('date', [$startDate, $endDate]);
-            })
-            ->groupBy('name')
+        $firstQuantity = AddProductHistory::selectRaw("product_id AS id, name, quantity")
+            ->whereBetween("date", [$startDate, $endDate])
             ->get();
-        $incomingQuantity = RestockProductHistory::selectRaw("name, SUM(quantity) as quantity")
+        $outgoingQuantity = TransactionProduct::selectRaw("product_id AS id, name, SUM(quantity) as quantity")
+            ->whereHas("transaction", function ($query) use ($startDate, $endDate) {
+                $query->whereBetween("date", [$startDate, $endDate]);
+            })
+            ->groupBy("product_id", "name")
+            ->get();
+        $incomingQuantity = RestockProductHistory::selectRaw("product_id AS id, name, SUM(quantity) as quantity")
             ->whereBetween("created_at", [$startDate, $endDate])
-            ->groupBy("name")
+            ->groupBy("product_id", "name")
             ->get();
 
-        $productRecap = $products->map(function($product) use ($outgoingQuantity, $incomingQuantity) {
-            $outgoing = $outgoingQuantity->firstWhere("name", $product->name);
-            $incoming = $incomingQuantity->firstWhere("name", $product->name);
+        $productRecap = $products->map(function($product) use ($firstQuantity, $outgoingQuantity, $incomingQuantity) {
+            $first = $firstQuantity->firstWhere("id", $product->id);
+            $outgoing = $outgoingQuantity->firstWhere("id", $product->id);
+            $incoming = $incomingQuantity->firstWhere("id", $product->id);
 
             return [
+                "id" => $product->id,
                 "name" => $product->name,
-                "first_quantity" => 0,
+                "first_quantity" => $first->quantity ?? 0,
                 "last_quantity" => $product->quantity,
                 "incoming_quantity" => $incoming->quantity ?? 0,
                 "outgoing_quantity" => $outgoing->quantity ?? 0

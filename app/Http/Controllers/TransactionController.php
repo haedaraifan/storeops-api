@@ -75,6 +75,7 @@ class TransactionController extends Controller
             $product->save();
 
             $transactionProduct = new TransactionProduct([
+                "product_id" => $product->id,
                 "name" => $product->name,
                 "price" => $product->selling_price,
                 "quantity" => $productRequest["quantity"]
@@ -98,7 +99,7 @@ class TransactionController extends Controller
 
     public function list(Request $request): JsonResponse
     {
-        $transactions = Transaction::get();
+        $transactions = Transaction::orderBy("date", "desc")->get();
 
         return (TransactionResource::collection($transactions))->response()->setStatusCode(200);
     }
@@ -106,7 +107,7 @@ class TransactionController extends Controller
     public function listIncome(Request $request): JsonResponse
     {
         $incomeType = TransactionType::whereName("Penjualan")->first();
-        $transactions = Transaction::whereTypeId($incomeType->id)->get();
+        $transactions = Transaction::whereTypeId($incomeType->id)->orderBy("date", "desc")->get();
 
         return (TransactionDetailResource::collection($transactions))->response()->setStatusCode(200);
     }
@@ -137,9 +138,9 @@ class TransactionController extends Controller
         $month = $request->query("month", now()->month);
         $sort = $request->query("sort");
 
-        $recap = TransactionProduct::selectRaw("name, CAST(SUM(quantity) AS UNSIGNED) as quantity")
+        $recap = TransactionProduct::selectRaw("product_id AS id, name, CAST(SUM(quantity) AS UNSIGNED) as quantity")
             ->whereHas("transaction", fn($query) => $query->whereYear("date", $year)->whereMonth("date", $month))
-            ->groupBy("name")
+            ->groupBy("product_id", "name")
             ->orderBy("quantity", $sort == "asc" ? "asc" : "desc")
             ->get();
 

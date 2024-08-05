@@ -15,6 +15,7 @@ class ProductRecapResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            "id" => $this["id"],
             "name" => $this["name"],
             "first_quantity" => (int) ($this["first_quantity"] ?? 0),
             "last_quantity" => (int) ($this["last_quantity"] ?? 0),
