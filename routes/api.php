@@ -35,6 +35,7 @@ Route::middleware(ApiAuthMiddleware::class)->group(function() {
     Route::get("/transactions/income", [TransactionController::class, "listIncome"]);
     Route::get("/transactions/income/{transactionId}", [TransactionController::class, "detailIncome"])->where("transactionId", "[0-9]+");
     Route::get("/transactions/income/statistic", [TransactionController::class, "statistic"]);
+    Route::post("/transactions/{transactionId}/checklist", [TransactionController::class, "checklistProduct"])->where("transactionId", "[0-9]+");
 
     Route::get("/products", [ProductController::class,"list"]);
     Route::get("/products/{productId}", [ProductController::class,"get"])->where("productId", "[0-9]+");

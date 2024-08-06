@@ -162,6 +162,7 @@
       },
       "products": [
         {
+            "id": 1,
             "name": "Kayu",
             "quantity": 1,
             "price": 150000,
@@ -169,11 +170,12 @@
             "is_checked": true
         },
         {
+            "id": 2,
             "name": "Paku",
             "quantity": 10,
             "price": 10000,
             "option": "Diambil",
-            "is_checked": true
+            "is_checked": false
         }
       ]
     }
@@ -219,14 +221,20 @@
     },
     "products": [
       {
+        "id": 1,
         "name": "Kayu",
         "quantity": 1,
-        "price": 150000
+        "price": 150000,
+        "option": "Dikirim",
+        "is_checked": true
       },
       {
+        "id": 2,
         "name": "Paku",
         "quantity": 10,
-        "price": 10000
+        "price": 10000,
+        "option": "Diambil",
+        "is_checked": false
       }
     ]
   }
@@ -297,15 +305,50 @@
     "month": "7",
     "products": [
       {
+        "id": 3,
         "name": "Batako",
         "quantity": 2000
       },
       {
+        "id": 2,
         "name": "Paku",
         "quantity": 10000
       }
     ]
   }
+}
+```
+
+**Response Body (Failed) :**
+
+```json
+{
+  "error": "Transaksi tidak ditemukan."
+}
+```
+
+## Checklist Transaction Product
+
+**Endpoint :** POST /api/transactions/:transactionId/checklist
+
+**Role :** Admin | Kasir | Gudang
+
+**Request Header :**
+- AUTHORIZATION : token-123
+
+**Request Body :**
+
+```json
+{
+  "products": [1, 2] // array of product_id
+}
+```
+
+**Response Body (Success) :**
+
+```json
+{
+  "message": "Data produk berhasil diperbarui."
 }
 ```
 

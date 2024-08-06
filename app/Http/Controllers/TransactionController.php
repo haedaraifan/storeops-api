@@ -6,6 +6,7 @@ use App\Helpers\ExceptionResponseHelper;
 use App\Http\Requests\TransactionExpenseRequest;
 use App\Http\Requests\TransactionIncomeRequest;
 use App\Http\Requests\TransactionStatusUpdateRequest;
+use App\Http\Requests\UpdateChecklistProductRequest;
 use App\Http\Resources\TransactionDetailResource;
 use App\Http\Resources\TransactionIncomeStatisticResource;
 use App\Http\Resources\TransactionResource;
@@ -154,5 +155,20 @@ class TransactionController extends Controller
             "month" => strval($month),
             "products" => $recap
         ]);
+    }
+
+    public function checklistProduct(UpdateChecklistProductRequest $request, int $transactionId): JsonResponse
+    {
+        $data = $request->validated();
+
+        TransactionProduct::whereTransactionId($transactionId)
+            ->whereIn("product_id", $data["products"])
+            ->update([
+                "is_checked" => true
+            ]);
+
+        return response()->json([
+            "message" => "Data produk berhasil diperbarui."
+        ])->setStatusCode(200);
     }
 }
