@@ -17,8 +17,7 @@ class TransactionIncomeStatisticResource extends JsonResource
         $data = $this->resource;
 
         return [
-            "year" => $data["year"] ?? null,
-            "month" => $data["month"] ?? null,
+            "range" => $data["range"] ?? null,
             "products" => $data["products"] ?? null
         ];
     }

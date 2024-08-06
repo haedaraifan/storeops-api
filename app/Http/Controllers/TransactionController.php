@@ -15,6 +15,7 @@ use App\Models\Transaction;
 use App\Models\TransactionProduct;
 use App\Models\TransactionStatus;
 use App\Models\TransactionType;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -113,7 +114,7 @@ class TransactionController extends Controller
         $transactions = Transaction::whereTypeId($incomeType->id)
             ->with(["products.option"])
             ->orderBy("date", "desc")
-            ->get();
+            ->paginate(10);
 
         return (TransactionDetailResource::collection($transactions))->response()->setStatusCode(200);
     }
@@ -144,15 +145,15 @@ class TransactionController extends Controller
         $month = $request->query("month", now()->month);
         $sort = $request->query("sort");
 
+        $range = Carbon::create($year, $month, 1);
         $recap = TransactionProduct::selectRaw("product_id AS id, name, CAST(SUM(quantity) AS UNSIGNED) as quantity")
             ->whereHas("transaction", fn($query) => $query->whereYear("date", $year)->whereMonth("date", $month))
             ->groupBy("product_id", "name")
             ->orderBy("quantity", $sort == "asc" ? "asc" : "desc")
-            ->get();
+            ->paginate(20);
 
         return new TransactionIncomeStatisticResource([
-            "year" => strval($year),
-            "month" => strval($month),
+            "range" => $range->isoFormat("MMMM Y"),
             "products" => $recap
         ]);
     }

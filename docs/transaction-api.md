@@ -179,7 +179,39 @@
         }
       ]
     }
-  ]
+  ],
+  "links": {
+	"first": ":baseUrl/api/transactions/income?page=1",
+	"last": ":baseUrl/api/transactions/income?page=1",
+	"prev": null,
+	"next": null
+  },
+  "meta": {
+	"current_page": 1,
+	"from": 1,
+	"last_page": 1,
+	"links": [
+	  {
+		"url": null,
+		"label": "&laquo; Previous",
+		"active": false
+	  },
+	  {
+		"url": ":baseUrl/api/transactions/income?page=1",
+		"label": "1",
+		"active": true
+	  },
+	  {
+		"url": null,
+		"label": "Next &raquo;",
+		"active": false
+	  }
+	],
+	"path": ":baseUrl/api/transactions/income",
+	"per_page": 10,
+	"to": 10,
+	"total": 10
+  }
 }
 ```
 
@@ -301,20 +333,49 @@
 ```json
 {
   "data": {
-    "year": "2024",
-    "month": "7",
-    "products": [
-      {
-        "id": 3,
-        "name": "Batako",
-        "quantity": 2000
-      },
-      {
-        "id": 2,
-        "name": "Paku",
-        "quantity": 10000
-      }
-    ]
+    "range": "Agustus 2024",
+    "products": {
+      "current_page": 1,
+      "data": [
+        {
+          "id": 3,
+          "name": "Batako",
+          "quantity": 2000
+        },
+        {
+          "id": 2,
+          "name": "Paku",
+          "quantity": 10000
+        }
+      ],
+      "first_page_url": ":baseUrl/api/transactions/income/statistic?page=1",
+      "from": 1,
+      "last_page": 1,
+      "last_page_url": ":baseUrl/api/transactions/income/statistic?page=1",
+      "links": [
+        {
+          "url": null,
+          "label": "&laquo; Previous",
+          "active": false
+        },
+        {
+          "url": ":baseUrl/api/transactions/income/statistic?page=1",
+          "label": "1",
+          "active": true
+        },
+        {
+          "url": null,
+          "label": "Next &raquo;",
+          "active": false
+        }
+      ],
+      "next_page_url": null,
+      "path": ":baseUrl/api/transactions/income/statistic",
+      "per_page": 20,
+      "prev_page_url": null,
+      "to": 7,
+      "total": 7
+    }
   }
 }
 ```
