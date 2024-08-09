@@ -103,7 +103,7 @@ class TransactionController extends Controller
 
     public function list(Request $request): JsonResponse
     {
-        $transactions = Transaction::orderBy("date", "desc")->get();
+        $transactions = Transaction::orderBy("date", "desc")->paginate(10);
 
         return (TransactionResource::collection($transactions))->response()->setStatusCode(200);
     }

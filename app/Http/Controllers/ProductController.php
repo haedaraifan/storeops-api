@@ -14,7 +14,6 @@ use App\Models\AddProductHistory;
 use App\Models\Product;
 use App\Models\ProductUnit;
 use App\Models\RestockProductHistory;
-use App\Models\Transaction;
 use App\Models\TransactionProduct;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -91,7 +90,8 @@ class ProductController extends Controller
                 $q->where("category", "like", '%' . $category . '%');
             });
         }
-        $products = $query->get();
+        $query->orderBy("created_at", "desc");
+        $products = $query->paginate(10);
 
         return (ProductResource::collection($products))->response()->setStatusCode(200);
     }

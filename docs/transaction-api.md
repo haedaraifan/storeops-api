@@ -119,7 +119,44 @@
       "purchase_price": null, // nullable
       "selling_price": 120000 // nullable
     }
-  ]
+  ],
+  "links": {
+	"first": "https://app.com/api/transactions?page=1",
+	"last": "https://app.com/api/transactions?page=2",
+	"prev": null,
+	"next": "https://app.com/api/transactions?page=2"
+  },
+  "meta": {
+	"current_page": 1,
+	"from": 1,
+	"last_page": 2,
+	"links": [
+	  {
+	  	"url": null,
+	  	"label": "&laquo; Previous",
+	  	"active": false
+	  },
+	  {
+	  	"url": "https://app.com/api/transactions?page=1",
+	  	"label": "1",
+	  	"active": true
+	  },
+	  {
+	  	"url": "https://app.com/api/transactions?page=2",
+	  	"label": "2",
+	  	"active": false
+	  },
+	  {
+	  	"url": "https://app.com/api/transactions?page=2",
+	  	"label": "Next &raquo;",
+	  	"active": false
+	  }
+	],
+	"path": "https://app.com/api/transactions",
+	"per_page": 10,
+	"to": 10,
+	"total": 11
+  }
 }
 ```
 
@@ -181,8 +218,8 @@
     }
   ],
   "links": {
-	"first": ":baseUrl/api/transactions/income?page=1",
-	"last": ":baseUrl/api/transactions/income?page=1",
+	"first": "https://app.com/api/transactions/income?page=1",
+	"last": "https://app.com/api/transactions/income?page=1",
 	"prev": null,
 	"next": null
   },
@@ -197,7 +234,7 @@
 		"active": false
 	  },
 	  {
-		"url": ":baseUrl/api/transactions/income?page=1",
+		"url": "https://app.com/api/transactions/income?page=1",
 		"label": "1",
 		"active": true
 	  },
@@ -207,7 +244,7 @@
 		"active": false
 	  }
 	],
-	"path": ":baseUrl/api/transactions/income",
+	"path": "https://app.com/api/transactions/income",
 	"per_page": 10,
 	"to": 10,
 	"total": 10
@@ -348,10 +385,10 @@
           "quantity": 10000
         }
       ],
-      "first_page_url": ":baseUrl/api/transactions/income/statistic?page=1",
+      "first_page_url": "https://app.com/api/transactions/income/statistic?page=1",
       "from": 1,
       "last_page": 1,
-      "last_page_url": ":baseUrl/api/transactions/income/statistic?page=1",
+      "last_page_url": "https://app.com/api/transactions/income/statistic?page=1",
       "links": [
         {
           "url": null,
@@ -359,7 +396,7 @@
           "active": false
         },
         {
-          "url": ":baseUrl/api/transactions/income/statistic?page=1",
+          "url": "https://app.com/api/transactions/income/statistic?page=1",
           "label": "1",
           "active": true
         },
@@ -370,7 +407,7 @@
         }
       ],
       "next_page_url": null,
-      "path": ":baseUrl/api/transactions/income/statistic",
+      "path": "https://app.com/api/transactions/income/statistic",
       "per_page": 20,
       "prev_page_url": null,
       "to": 7,
