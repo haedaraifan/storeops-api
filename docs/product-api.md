@@ -97,6 +97,7 @@
 
 **Query Parameter :**
 - category
+- paginate: true | false
 
 **Request Header :**
 - AUTHORIZATION : token-123

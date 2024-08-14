@@ -83,6 +83,7 @@ class ProductController extends Controller
     public function list(Request $request): JsonResponse
     {
         $category = $request->query("category");
+        $isPaginate = $request->query("paginate", "true");
         $query = Product::query();
 
         if($category) {
@@ -91,7 +92,7 @@ class ProductController extends Controller
             });
         }
         $query->orderBy("created_at", "desc");
-        $products = $query->paginate(10);
+        $products = $isPaginate === "false" ? $query->get() : $query->paginate(10);
 
         return (ProductResource::collection($products))->response()->setStatusCode(200);
     }
