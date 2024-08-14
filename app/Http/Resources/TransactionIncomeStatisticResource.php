@@ -15,10 +15,11 @@ class TransactionIncomeStatisticResource extends JsonResource
     public function toArray(Request $request): array
     {
         $data = $this->resource;
+        $products = $data['products'];
 
         return [
             "range" => $data["range"] ?? null,
-            "products" => $data["products"] ?? null
+            "products" => $products->items() ?? null
         ];
     }
 }

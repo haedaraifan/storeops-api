@@ -139,7 +139,7 @@ class TransactionController extends Controller
         ])->setStatusCode(200);
     }
 
-    public function statistic(Request $request): TransactionIncomeStatisticResource
+    public function statistic(Request $request): JsonResponse
     {
         $year = $request->query("year", now()->year);
         $month = $request->query("month", now()->month);
@@ -152,10 +152,30 @@ class TransactionController extends Controller
             ->orderBy("quantity", $sort == "asc" ? "asc" : "desc")
             ->paginate(20);
 
-        return new TransactionIncomeStatisticResource([
+        $resource = new TransactionIncomeStatisticResource([
             "range" => $range->isoFormat("MMMM Y"),
             "products" => $recap
         ]);
+
+        return response()->json([
+            "data" => $resource,
+            "links" => [
+                "first" => $recap->url(1),
+                "last" => $recap->url($recap->lastPage()),
+                "prev" => $recap->previousPageUrl(),
+                "next" => $recap->nextPageUrl(),
+            ],
+            "meta" => [
+                "current_page" => $recap->currentPage(),
+                "from" => $recap->firstItem(),
+                "last_page" => $recap->lastPage(),
+                "links" => $recap->linkCollection(),
+                "path" => $recap->path(),
+                "per_page" => $recap->perPage(),
+                "to" => $recap->lastItem(),
+                "total" => $recap->total(),
+            ],
+        ])->setStatusCode(200);
     }
 
     public function checklistProduct(UpdateChecklistProductRequest $request, int $transactionId): JsonResponse
