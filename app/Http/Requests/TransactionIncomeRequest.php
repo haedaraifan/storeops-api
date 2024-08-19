@@ -36,7 +36,8 @@ class TransactionIncomeRequest extends FormRequest
             "payment_method" => ["nullable", "max:20"],
             "customer_name" => ["nullable", "max:100"],
             "customer_phone" => ["nullable", "max:20"],
-            "customer_address" => ["nullable", "max:255"]
+            "customer_address" => ["nullable", "max:255"],
+            "is_finished" => ["nullable", "boolean"],
         ];
     }
 

@@ -186,7 +186,8 @@
       "id": 2,
       "date": "Kamis, 2 Mei 2024",
       "type": "Penjualan",
-      "status": "Lunas",    
+      "status": "Lunas",
+      "is_finished": true,
       "purchase_price": null, // nullable
       "selling_price": 160000, // nullable
       "discount": 20000, // nullable

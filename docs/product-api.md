@@ -542,7 +542,49 @@
       "incoming_quantity": 50,
       "outgoing_quantity": 150
     },
-  ]
+  ],
+  "links": {
+    "first": "https://app.com/api/products/recap?page=1",
+    "last": "https://app.com/api/products/recap?page=3",
+    "prev": null,
+    "next": "https://app.com/api/products/recap?page=2"
+  },
+  "meta": {
+    "current_page": 1,
+    "from": 1,
+    "last_page": 3,
+    "links": [
+  	  {
+  	    "url": null,
+  	    "label": "&laquo; Previous",
+  	    "active": false
+  	  },
+  	  {
+  	    "url": "https://app.com/api/products/recap?page=1",
+  	    "label": "1",
+  	    "active": true
+  	  },
+  	  {
+  	    "url": "https://app.com/api/products/recap?page=2",
+  	    "label": "2",
+  	    "active": false
+  	  },
+  	  {
+  	    "url": "https://app.com/api/products/recap?page=3",
+  	    "label": "3",
+  	    "active": false
+  	  },
+  	  {
+  	    "url": "https://app.com/api/products/recap?page=2",
+  	    "label": "Next &raquo;",
+  	    "active": false
+  	  }
+    ],
+    "path": "https://app.com/api/products/recap",
+    "per_page": 10,
+    "to": 10,
+    "total": 23
+  }
 }
 ```
 

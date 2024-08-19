@@ -29,7 +29,8 @@ class Transaction extends Model
         "customer_phone",
         "customer_address",
         "type_id",
-        "status_id"
+        "status_id",
+        "is_finished"
     ];
 
     public function type(): BelongsTo

@@ -18,6 +18,7 @@ use App\Models\TransactionProduct;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
@@ -208,6 +209,16 @@ class ProductController extends Controller
             ];
         });
 
-        return (ProductRecapResource::collection($productRecap))->response()->setStatusCode(200);
+        $perPage = 10;
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $paginatedRecap = new LengthAwarePaginator(
+            $productRecap->forPage($currentPage, $perPage),
+            $productRecap->count(),
+            $perPage,
+            $currentPage,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
+
+        return (ProductRecapResource::collection($paginatedRecap))->response()->setStatusCode(200);
     }
 }
