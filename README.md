@@ -36,6 +36,7 @@
 - **Detail Income Transaction**
 - **Update Transaction Status**
 - **Transaction Income Statistic**
+- **Checklist Transaction Product**
 
 [Detail...](https://github.com/haedaraifan/storeops-api/blob/dev/docs/transaction-api.md)
 

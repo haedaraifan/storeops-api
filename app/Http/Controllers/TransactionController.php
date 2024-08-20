@@ -110,11 +110,24 @@ class TransactionController extends Controller
 
     public function listIncome(Request $request): JsonResponse
     {
+        $range = $request->query("range", "all");
         $incomeType = TransactionType::whereName("Penjualan")->first();
-        $transactions = Transaction::whereTypeId($incomeType->id)
-            ->with(["products.option"])
-            ->orderBy("date", "desc")
-            ->paginate(10);
+        $query = Transaction::whereTypeId($incomeType->id)->with(["products.option"]);
+
+        switch($range) {
+            case "daily":
+                $query->whereDate("date", Carbon::today());
+                break;
+            case "weekly":
+                $query->whereBetween("date", [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
+                break;
+            case "monthly":
+                $query->whereMonth("date", Carbon::now()->month)->whereYear("date", Carbon::now()->year);
+                break;
+            default:
+                break;
+        }
+        $transactions = $query->orderBy("date", "desc")->paginate(10);
 
         return (TransactionDetailResource::collection($transactions))->response()->setStatusCode(200);
     }

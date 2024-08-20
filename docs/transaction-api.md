@@ -174,6 +174,9 @@
 
 **Role :** Admin | Kasir | Gudang
 
+**Query Parameter :**
+- range : daily | weekly | monthly
+
 **Request Header :**
 - AUTHORIZATION : token-123
 
