@@ -520,6 +520,10 @@
 
 **Role :** Admin | Kasir | Gudang
 
+**Query Parameter :**
+- month
+- year
+
 **Request Header :**
 - AUTHORIZATION : token-123
 
@@ -527,22 +531,25 @@
 
 ```json
 {
-  "data": [
+  "data": {
+    "range": "Agustus 2024",
+    "products": [
     {
-      "name": "kayu jati",
-      "first_quantity": 100,
-      "last_quantity": 100,
-      "incoming_quantity": 100,
-      "outgoing_quantity": 100
-    },
-    {
-      "name": "paku",
-      "first_quantity": 200,
-      "last_quantity": 100,
-      "incoming_quantity": 50,
-      "outgoing_quantity": 150
-    },
-  ],
+        "name": "kayu jati",
+        "first_quantity": 100,
+        "last_quantity": 100,
+        "incoming_quantity": 100,
+        "outgoing_quantity": 100
+      },
+      {
+        "name": "paku",
+        "first_quantity": 200,
+        "last_quantity": 100,
+        "incoming_quantity": 50,
+        "outgoing_quantity": 150
+      },
+    ]
+  },
   "links": {
     "first": "https://app.com/api/products/recap?page=1",
     "last": "https://app.com/api/products/recap?page=3",

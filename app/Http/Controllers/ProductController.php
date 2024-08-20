@@ -12,6 +12,7 @@ use App\Http\Resources\ProductResource;
 use App\Imports\ProductsImport;
 use App\Models\AddProductHistory;
 use App\Models\Product;
+use App\Models\ProductsRecap;
 use App\Models\ProductUnit;
 use App\Models\RestockProductHistory;
 use App\Models\TransactionProduct;
@@ -19,6 +20,7 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
@@ -172,13 +174,57 @@ class ProductController extends Controller
     // baru bisa rekap data pada bulan sekarang
     public function recap(Request $request): JsonResponse
     {
-        $year = now()->year;
-        $month = now()->month;
-        // $year = $request->query("year", now()->year);
-        // $month = $request->query("month", now()->month);
+        $year = $request->query("year", now()->year);
+        $month = $request->query("month", now()->month);
         $startDate = Carbon::create($year, $month, 1)->startOfMonth();
         $endDate = Carbon::create($year, $month, 1)->endOfMonth();
 
+        if($month != now()->month || $year != now()->year) {
+            $productRecap = ProductsRecap::whereDate("date", $endDate)
+                ->select("product_id as id", "name", "image", "first_quantity", "last_quantity", "incoming_quantity", "outgoing_quantity")
+                ->get();
+        } else {
+            $productRecap = $this->getCurrentMonthRecap($startDate, $endDate);
+        }
+
+        $perPage = 10;
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $paginatedRecap = new LengthAwarePaginator(
+            $productRecap->forPage($currentPage, $perPage),
+            $productRecap->count(),
+            $perPage,
+            $currentPage,
+            ["path" => $request->url(), "query" => $request->query()]
+        );
+
+        $resource = [
+            "range" => Carbon::create($year, $month, 1)->isoFormat("MMMM Y"),
+            "products" => ProductRecapResource::collection($paginatedRecap),
+        ];
+
+        return response()->json([
+            "data" => $resource,
+            "links" => [
+                "first" => $paginatedRecap->url(1),
+                "last" => $paginatedRecap->url($paginatedRecap->lastPage()),
+                "prev" => $paginatedRecap->previousPageUrl(),
+                "next" => $paginatedRecap->nextPageUrl(),
+            ],
+            "meta" => [
+                "current_page" => $paginatedRecap->currentPage(),
+                "from" => $paginatedRecap->firstItem(),
+                "last_page" => $paginatedRecap->lastPage(),
+                "links" => $paginatedRecap->linkCollection(),
+                "path" => $paginatedRecap->path(),
+                "per_page" => $paginatedRecap->perPage(),
+                "to" => $paginatedRecap->lastItem(),
+                "total" => $paginatedRecap->total(),
+            ],
+        ])->setStatusCode(200);
+    }
+
+    private function getCurrentMonthRecap($startDate, $endDate)
+    {
         $products = Product::get();
         $firstQuantity = AddProductHistory::selectRaw("product_id AS id, name, quantity")
             ->whereBetween("date", [$startDate, $endDate])
@@ -194,7 +240,7 @@ class ProductController extends Controller
             ->groupBy("product_id", "name")
             ->get();
 
-        $productRecap = $products->map(function($product) use ($firstQuantity, $outgoingQuantity, $incomingQuantity) {
+        return $products->map(function($product) use ($firstQuantity, $outgoingQuantity, $incomingQuantity) {
             $first = $firstQuantity->firstWhere("id", $product->id);
             $outgoing = $outgoingQuantity->firstWhere("id", $product->id);
             $incoming = $incomingQuantity->firstWhere("id", $product->id);
@@ -208,17 +254,5 @@ class ProductController extends Controller
                 "outgoing_quantity" => $outgoing->quantity ?? 0
             ];
         });
-
-        $perPage = 10;
-        $currentPage = LengthAwarePaginator::resolveCurrentPage();
-        $paginatedRecap = new LengthAwarePaginator(
-            $productRecap->forPage($currentPage, $perPage),
-            $productRecap->count(),
-            $perPage,
-            $currentPage,
-            ['path' => $request->url(), 'query' => $request->query()]
-        );
-
-        return (ProductRecapResource::collection($paginatedRecap))->response()->setStatusCode(200);
     }
 }

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProductsRecap extends Model
 {
     use HasFactory;
-
+    protected $table = "products_recap";
     public $timestamps = false;
 
     protected $casts = [
@@ -17,6 +17,7 @@ class ProductsRecap extends Model
 
     protected $fillable = [
         "date",
+        "product_id",
         "name",
         "image",
         "first_quantity",
