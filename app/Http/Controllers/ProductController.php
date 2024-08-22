@@ -170,7 +170,6 @@ class ProductController extends Controller
         ])->setStatusCode(201);
     }
 
-    // baru bisa rekap data pada bulan sekarang
     public function recap(Request $request): JsonResponse
     {
         $year = $request->query("year", now()->year);
@@ -183,7 +182,7 @@ class ProductController extends Controller
                 ->select("product_id as id", "name", "image", "first_quantity", "last_quantity", "incoming_quantity", "outgoing_quantity")
                 ->get();
         } else {
-            $productRecap = $this->getCurrentMonthRecap($startDate, $endDate);
+            $productRecap = $this->getCurrentMonthRecap($startDate, $endDate, Carbon::create($year, $month, 1)->subMonth());
         }
 
         $perPage = 10;
@@ -222,11 +221,11 @@ class ProductController extends Controller
         ])->setStatusCode(200);
     }
 
-    private function getCurrentMonthRecap($startDate, $endDate)
+    private function getCurrentMonthRecap($startDate, $endDate, $previousMonth)
     {
         $products = Product::get();
-        $firstQuantity = AddProductHistory::selectRaw("product_id AS id, name, quantity")
-            ->whereBetween("date", [$startDate, $endDate])
+        $firstQuantity = ProductsRecap::selectRaw("product_id AS id, name, last_quantity AS quantity")
+            ->whereDate("date", $previousMonth->endOfMonth())
             ->get();
         $outgoingQuantity = TransactionProduct::selectRaw("product_id AS id, name, SUM(quantity) as quantity")
             ->whereHas("transaction", function ($query) use ($startDate, $endDate) {

@@ -95,6 +95,9 @@
 
 **Role :** Admin | Kasir | Gudang
 
+**Query Parameter :**
+- paginate: true | false
+
 **Request Header :**
 - AUTHORIZATION : token-123
 
@@ -176,6 +179,7 @@
 
 **Query Parameter :**
 - range : daily | weekly | monthly
+- paginate: true | false
 
 **Request Header :**
 - AUTHORIZATION : token-123
@@ -365,6 +369,7 @@
 - year
 - month
 - sort : asc | desc
+- paginate: true | false
 
 **Request Header :**
 - AUTHORIZATION : token-123

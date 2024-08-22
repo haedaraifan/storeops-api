@@ -13,14 +13,18 @@ class HistoryController extends Controller
 {
     public function listAddedProduct(Request $request): JsonResponse
     {
-        $histories = AddProductHistory::orderBy("date", "DESC")->paginate(10);
+        $isPaginate = $request->query("paginate", "true");
+        $histories = AddProductHistory::orderBy("date", "DESC");
+        $histories = $isPaginate === "false" ? $histories->get() : $histories->paginate(10);
 
         return (AddProductHistoryResource::collection($histories))->response()->setStatusCode(200);
     }
 
     public function listRestockedProduct(Request $request): JsonResponse
     {
-        $hisotries = RestockProductHistory::orderBy("created_at", "DESC")->paginate(10);
+        $isPaginate = $request->query("paginate", "true");
+        $hisotries = RestockProductHistory::orderBy("created_at", "DESC");
+        $hisotries = $isPaginate === "false" ? $hisotries->get() : $hisotries->paginate(10);
 
         return (RestockProductHistoryResource::collection($hisotries))->response()->setStatusCode(200);
     }

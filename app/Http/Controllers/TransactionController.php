@@ -103,7 +103,9 @@ class TransactionController extends Controller
 
     public function list(Request $request): JsonResponse
     {
-        $transactions = Transaction::orderBy("date", "desc")->paginate(10);
+        $isPaginate = $request->query("paginate", "true");
+        $transactions = Transaction::orderBy("date", "desc");
+        $transactions = $isPaginate === "false" ? $transactions->get() : $transactions->paginate(10);
 
         return (TransactionResource::collection($transactions))->response()->setStatusCode(200);
     }
@@ -111,6 +113,7 @@ class TransactionController extends Controller
     public function listIncome(Request $request): JsonResponse
     {
         $range = $request->query("range", "all");
+        $isPaginate = $request->query("paginate", "true");
         $incomeType = TransactionType::whereName("Penjualan")->first();
         $query = Transaction::whereTypeId($incomeType->id)->with(["products.option"]);
 
@@ -127,7 +130,8 @@ class TransactionController extends Controller
             default:
                 break;
         }
-        $transactions = $query->orderBy("date", "desc")->paginate(10);
+        $transactions = $query->orderBy("date", "desc");
+        $transactions = $isPaginate === "false" ? $transactions->get() : $transactions->paginate(10);
 
         return (TransactionDetailResource::collection($transactions))->response()->setStatusCode(200);
     }
@@ -157,13 +161,14 @@ class TransactionController extends Controller
         $year = $request->query("year", now()->year);
         $month = $request->query("month", now()->month);
         $sort = $request->query("sort");
+        $isPaginate = $request->query("paginate", "true");
 
         $range = Carbon::create($year, $month, 1);
         $recap = TransactionProduct::selectRaw("product_id AS id, name, CAST(SUM(quantity) AS UNSIGNED) as quantity")
             ->whereHas("transaction", fn($query) => $query->whereYear("date", $year)->whereMonth("date", $month))
             ->groupBy("product_id", "name")
-            ->orderBy("quantity", $sort == "asc" ? "asc" : "desc")
-            ->paginate(20);
+            ->orderBy("quantity", $sort == "asc" ? "asc" : "desc");
+        $recap = $isPaginate === "false" ? $recap->get() : $recap->paginate(20);
 
         $resource = new TransactionIncomeStatisticResource([
             "range" => $range->isoFormat("MMMM Y"),

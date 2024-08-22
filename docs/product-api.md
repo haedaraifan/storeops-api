@@ -292,7 +292,10 @@
 
 **Endpoint :** GET /api/products/histories/add
 
-**Role :** Admin | Kasir | Gudang
+**Role :** Admin | Kasir | 
+
+**Query Parameter :**
+- paginate: true | false
 
 **Request Header :**
 - AUTHORIZATION : token-123
@@ -419,6 +422,9 @@
 **Endpoint :** GET /api/products/histories/restock
 
 **Role :** Admin | Kasir | Gudang
+
+**Query Parameter :**
+- paginate: true | false
 
 **Request Header :**
 - AUTHORIZATION : token-123
