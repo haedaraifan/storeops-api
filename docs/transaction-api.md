@@ -179,6 +179,7 @@
 
 **Query Parameter :**
 - range : daily | weekly | monthly
+- paid: true | false
 - paginate: true | false
 
 **Request Header :**

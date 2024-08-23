@@ -113,6 +113,7 @@ class TransactionController extends Controller
     public function listIncome(Request $request): JsonResponse
     {
         $range = $request->query("range", "all");
+        $paid = $request->query("paid", "all");
         $isPaginate = $request->query("paginate", "true");
         $incomeType = TransactionType::whereName("Penjualan")->first();
         $query = Transaction::whereTypeId($incomeType->id)->with(["products.option"]);
@@ -130,6 +131,17 @@ class TransactionController extends Controller
             default:
                 break;
         }
+        switch($paid) {
+            case "true":
+                $query->whereStatusId($this->getTransactionStatus("Lunas")->id);
+                break;
+            case "false":
+                $query->whereStatusId($this->getTransactionStatus("Belum Lunas")->id);
+                break;
+            default:
+                break;
+        }
+
         $transactions = $query->orderBy("date", "desc");
         $transactions = $isPaginate === "false" ? $transactions->get() : $transactions->paginate(10);
 

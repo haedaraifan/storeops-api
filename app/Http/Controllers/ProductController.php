@@ -85,6 +85,7 @@ class ProductController extends Controller
     public function list(Request $request): JsonResponse
     {
         $category = $request->query("category");
+        $stock = $request->query("stock", "all");
         $isPaginate = $request->query("paginate", "true");
         $query = Product::query();
 
@@ -93,6 +94,21 @@ class ProductController extends Controller
                 $q->where("category", "like", '%' . $category . '%');
             });
         }
+
+        switch($stock) {
+            case "high":
+                $query->where("quantity", '>', 50);
+                break;
+            case "low";
+                $query->where("quantity", '<', 51);
+                break;
+            case "empty";
+                $query->where("quantity", 0);
+                break;
+            default;
+                break;
+        }
+
         $query->orderBy("created_at", "desc");
         $products = $isPaginate === "false" ? $query->get() : $query->paginate(10);
 

@@ -97,6 +97,7 @@
 
 **Query Parameter :**
 - category
+- stock: high | low | empty
 - paginate: true | false
 
 **Request Header :**
@@ -295,6 +296,7 @@
 **Role :** Admin | Kasir | 
 
 **Query Parameter :**
+- range: monthly | weekly | daily
 - paginate: true | false
 
 **Request Header :**
@@ -424,6 +426,7 @@
 **Role :** Admin | Kasir | Gudang
 
 **Query Parameter :**
+- range: monthly | weekly | daily
 - paginate: true | false
 
 **Request Header :**
