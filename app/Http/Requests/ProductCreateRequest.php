@@ -28,7 +28,7 @@ class ProductCreateRequest extends FormRequest
             "quantity" => ["required", "numeric", "min:0"],
             "purchase_price" => ["required", "numeric", "min:0"],
             "selling_price" => ["required", "numeric", "min:0"],
-            "unit" => ["required", "exists:product_units,name"],
+            "unit" => ["nullable", "exists:product_units,name"],
             "category" => ["required", "max:100"],
             "image" => ["nullable", "mimes:jpg,jpeg,png", "max:2048"]
         ];
