@@ -395,12 +395,12 @@
 {
   "quantity": 45,
   "total_purchase_price": 500000,
-  "destination_address": "Besito", // nullable
+  "destination_address": "Besito", // optional
   "supplier_name": "Jamal",
   "supplier_address": "Gang 10",
   "supplier_phone": "0811111",
-  "shipping_method": "Mobil",
-  "payment_method": "Cash" // nullable
+  "shipping_method": "Mobil", // optional
+  "payment_method": "Cash" // optional
 }
 ```
 
@@ -450,9 +450,9 @@
             "selling_price": 150000,
             "new_quantity": 40
         },
-        "destination_address": "Besito",
-        "payment_method": "Cash",
-        "shipping_method": "Mobil pickup",
+        "destination_address": "Besito", // nullable
+        "payment_method": "Cash", // nullable
+        "shipping_method": "Mobil pickup", // nullable
         "supplier": {
             "name": "Udin",
             "address": "Dawe",

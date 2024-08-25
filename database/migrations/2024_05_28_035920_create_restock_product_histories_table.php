@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string("supplier_name", 100)->nullable(false);
             $table->string("supplier_address", 255)->nullable(false);
             $table->string("supplier_phone", 20)->nullable(false);
-            $table->string("shipping_method", 100)->nullable(false);
+            $table->string("shipping_method", 100)->nullable();
             $table->string("payment_method", 100)->nullable();
         });
     }

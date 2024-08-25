@@ -30,7 +30,7 @@ class ProductRestockRequest extends FormRequest
             "supplier_name" => ["required", "max:100"],
             "supplier_address" => ["required", "max:255"],
             "supplier_phone" => ["required", "max:20"],
-            "shipping_method" => ["required", "max:100"],
+            "shipping_method" => ["nullable", "max:100"],
             "payment_method" => ["max:100"]
         ];
     }
