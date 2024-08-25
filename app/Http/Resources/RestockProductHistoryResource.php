@@ -15,7 +15,7 @@ class RestockProductHistoryResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "date" => $this->created_at->isoFormat('dddd, D MMMM Y'),
+            "date" => $this->date->isoFormat('dddd, D MMMM Y'),
             "product" => [
                 "name" => $this->name,
                 "unit" => $this->unit ?? null,

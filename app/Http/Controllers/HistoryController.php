@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DateFormatHelper;
 use App\Http\Resources\AddProductHistoryResource;
 use App\Http\Resources\RestockProductHistoryResource;
 use App\Models\AddProductHistory;
@@ -9,12 +10,12 @@ use App\Models\RestockProductHistory;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class HistoryController extends Controller
 {
     public function listAddedProduct(Request $request): JsonResponse
     {
+        $search = $request->query("search");
         $range = $request->query("range", "all");
         $isPaginate = $request->query("paginate", "true");
         $query = AddProductHistory::orderBy("date", "DESC");
@@ -32,6 +33,15 @@ class HistoryController extends Controller
             default:
                 break;
         }
+
+        if($search) {
+            $query->where(function ($q) use ($search) {
+                $formattedDay = DateFormatHelper::indonesianToEnglishDayName($search);
+                $q->where("name", "like", "%{$search}%")
+                    ->orWhereRaw("DATE_FORMAT(date, '%W, %e %M %Y') LIKE ?", ["%{$formattedDay}%"]);
+            });
+        }
+
         $histories = $isPaginate === "false" ? $query->get() : $query->paginate(10);
 
         return (AddProductHistoryResource::collection($histories))->response()->setStatusCode(200);
@@ -39,6 +49,7 @@ class HistoryController extends Controller
 
     public function listRestockedProduct(Request $request): JsonResponse
     {
+        $search = $request->query("search");
         $range = $request->query("range", "all");
         $isPaginate = $request->query("paginate", "true");
         $query = RestockProductHistory::orderBy("created_at", "DESC");
@@ -56,6 +67,15 @@ class HistoryController extends Controller
             default:
                 break;
         }
+
+        if($search) {
+            $query->where(function ($q) use ($search) {
+                $formattedDay = DateFormatHelper::indonesianToEnglishDayName($search);
+                $q->where("name", "like", "%{$search}%")
+                    ->orWhereRaw("DATE_FORMAT(date, '%W, %e %M %Y') LIKE ?", ["%{$formattedDay}%"]);
+            });
+        }
+
         $hisotries = $isPaginate === "false" ? $query->get() : $query->paginate(10);
 
         return (RestockProductHistoryResource::collection($hisotries))->response()->setStatusCode(200);

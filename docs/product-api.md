@@ -296,6 +296,7 @@
 **Role :** Admin | Kasir | 
 
 **Query Parameter :**
+- search: product name, date
 - range: monthly | weekly | daily
 - paginate: true | false
 
@@ -426,6 +427,7 @@
 **Role :** Admin | Kasir | Gudang
 
 **Query Parameter :**
+- search: product name, date
 - range: monthly | weekly | daily
 - paginate: true | false
 

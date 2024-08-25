@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('restock_product_histories', function (Blueprint $table) {
+            $table->timestamp("date")->nullable(false);
             $table->unsignedBigInteger("product_id")->nullable(false);
             $table->string("name", 100)->nullable(false);
             $table->string("unit", 20)->nullable(false);
@@ -26,7 +27,6 @@ return new class extends Migration
             $table->string("supplier_phone", 20)->nullable(false);
             $table->string("shipping_method", 100)->nullable(false);
             $table->string("payment_method", 100)->nullable();
-            $table->timestamps();
         });
     }
 

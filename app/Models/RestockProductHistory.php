@@ -9,6 +9,12 @@ class RestockProductHistory extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
+    protected $casts = [
+        "date" => "datetime",
+    ];
+
     protected $fillable = [
         "name",
         "unit",

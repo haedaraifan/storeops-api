@@ -30,7 +30,8 @@
         },
         "files": [
             "app/Helpers/ExceptionResponseHelper.php",
-            "app/Helpers/SendNotificationHelper.php"
+            "app/Helpers/SendNotificationHelper.php",
+            "app/Helpers/DateFormatHelper.php"
         ]
     },
     "autoload-dev": {
