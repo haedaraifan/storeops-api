@@ -15,11 +15,10 @@ class RestockProductHistoryResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "id" => $this->id,
             "date" => $this->created_at->isoFormat('dddd, D MMMM Y'),
             "product" => [
                 "name" => $this->name,
-                "unit" => $this->unit,
+                "unit" => $this->unit ?? null,
                 "category" => $this->category,
                 "pruchase_price" => $this->purchase_price,
                 "total_puchase_price" => $this->total_purchase_price,

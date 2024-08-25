@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string("name", 100)->nullable(false);
             $table->integer("quantity")->nullable(false);
             $table->string("category", 100)->nullable(false);
-            $table->string("unit", 20)->nullable(false);
+            $table->string("unit", 20)->nullable();
             $table->integer("purchase_price")->nullable(false);
             $table->integer("selling_price")->nullable(false);
         });

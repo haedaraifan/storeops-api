@@ -19,11 +19,7 @@ class ProductsImport implements ToModel, WithHeadingRow
     */
     public function model(array $row)
     {
-        $unit = ProductUnit::whereName($row["unit"])->first();
-
-        if(!$unit) {
-            ExceptionResponseHelper::throwNotFoundError("Unit [" . $row["unit"] . "] tidak ditemukan.");
-        }
+        $unit = ProductUnit::whereName($row["unit"] ?? null)->first();
 
         $product = new Product([
             "name" => $row["name"],
@@ -31,7 +27,7 @@ class ProductsImport implements ToModel, WithHeadingRow
             "purchase_price" => $row["purchase_price"],
             "selling_price" => $row["selling_price"],
             "category" => $row["category"],
-            "unit_id" => $unit->id
+            "unit_id" => $unit->id ?? null
         ]);
         $product->save();
 

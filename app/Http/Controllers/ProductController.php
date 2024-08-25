@@ -41,8 +41,12 @@ class ProductController extends Controller
         return $product;
     }
 
-    private function getProductUnit(string $unitName): ProductUnit
+    private function getProductUnit(?string $unitName): ?ProductUnit
     {
+        if (is_null($unitName) || trim($unitName) === '') {
+            return null;
+        }
+
         return ProductUnit::whereName($unitName)->first();
     }
 
@@ -56,7 +60,7 @@ class ProductController extends Controller
     public function create(ProductCreateRequest $request): JsonResponse
     {
         $data = $request->validated();
-        $unit = $this->getProductUnit($data["unit"]);
+        $unit = $this->getProductUnit($data["unit"] ?? null);
         $product = new Product($data);
 
         if($request->hasFile("image")) {
@@ -64,12 +68,12 @@ class ProductController extends Controller
             $product->image = $imageUrl;
         }
 
-        $product->unit_id = $unit->id;
+        $product->unit_id = $unit->id ?? null;
         $product->save();
 
         $addProductHistory = new AddProductHistory($product->toArray());
         $addProductHistory->product_id = $product->id;
-        $addProductHistory->unit = $product->unit->name;
+        $addProductHistory->unit = $unit->name ?? null;
         $addProductHistory->save();
 
         return (new ProductResource($product))->response()->setStatusCode(201);
@@ -119,14 +123,14 @@ class ProductController extends Controller
     {
         $data = $request->validated();
         $product = $this->getProduct($productId);
-        $unit = $this->getProductUnit($data["unit"]);
+        $unit = $this->getProductUnit($data["unit"] ?? null);
 
         $product->fill($data);
         if($request->hasFile("image")) {
             $imageUrl = $this->sendProductImage($request->file("image"));
             $product->image = $imageUrl;
         }
-        $product->unit_id = $unit->id;
+        $product->unit_id = $unit->id ?? null;
         $product->save();
 
         return new ProductResource($product);
@@ -176,7 +180,7 @@ class ProductController extends Controller
         foreach($importedProducts as $product) {
             $addProductHistory = new AddProductHistory($product->toArray());
             $addProductHistory->product_id = $product->id;
-            $addProductHistory->unit = $product->unit->name;
+            $addProductHistory->unit = $product->unit->name ?? null;
             $addProductHistory->save();
         }
 
