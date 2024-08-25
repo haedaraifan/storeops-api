@@ -15,7 +15,7 @@ return new class extends Migration
             $table->timestamp("date")->nullable(false);
             $table->unsignedBigInteger("product_id")->nullable(false);
             $table->string("name", 100)->nullable(false);
-            $table->string("unit", 20)->nullable(false);
+            $table->string("unit", 20)->nullable();
             $table->string("category", 100)->nullable(false);
             $table->integer("purchase_price")->nullable(false);
             $table->integer("total_purchase_price")->nullable(false);

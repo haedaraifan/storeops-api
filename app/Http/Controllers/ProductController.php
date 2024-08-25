@@ -158,7 +158,7 @@ class ProductController extends Controller
         $restockProductHistory = new RestockProductHistory($data);
         $restockProductHistory->product_id = $product->id;
         $restockProductHistory->name = $product->name;
-        $restockProductHistory->unit = $product->unit->name;
+        $restockProductHistory->unit = $product->unit->name ?? null;
         $restockProductHistory->category = $product->category;
         $restockProductHistory->purchase_price = $product->purchase_price;
         $restockProductHistory->selling_price = $product->selling_price;

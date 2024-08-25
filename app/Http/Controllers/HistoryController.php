@@ -52,7 +52,7 @@ class HistoryController extends Controller
         $search = $request->query("search");
         $range = $request->query("range", "all");
         $isPaginate = $request->query("paginate", "true");
-        $query = RestockProductHistory::orderBy("created_at", "DESC");
+        $query = RestockProductHistory::orderBy("date", "DESC");
 
         switch($range) {
             case "daily":
