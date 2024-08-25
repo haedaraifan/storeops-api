@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ExceptionResponseHelper;
+use App\Helpers\SendNotificationHelper;
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserRegisterRequest;
 use App\Http\Requests\UserUpdateRequest;
@@ -10,6 +11,8 @@ use App\Http\Resources\UserResource;
 use App\Models\Authentication;
 use App\Models\Role;
 use App\Models\User;
+use App\Notifications\MobileAppNotification;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -48,12 +51,13 @@ class UserController extends Controller
         }
 
         $token = Str::uuid()->toString();
-        $expiredAt = now()->addYear();
+        $expiredAt = Carbon::now()->addYear();
         $user->token = $token;
 
         $authentication = new Authentication();
         $authentication->user_id = $user->id;
         $authentication->token = $token;
+        $authentication->fcm_token = $data["fcm_token"] ?? null;
         $authentication->expired_at = $expiredAt;
         $authentication->save();
 
@@ -95,5 +99,17 @@ class UserController extends Controller
         return response()->json([
             "message" => "Logout berhasil."
         ])->setStatusCode(200);
+    }
+
+    public function send(Request $request): JsonResponse
+    {
+        $title = $request->query("title", "lorem ipsum");
+        $body = $request->query("body", "ini body");
+
+        SendNotificationHelper::toMobileApp($title, $body);
+
+        return response()->json([
+            'message' => "notif sended!"
+        ]);
     }
 }

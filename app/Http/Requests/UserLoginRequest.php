@@ -25,7 +25,8 @@ class UserLoginRequest extends FormRequest
     {
         return [
             "name" => ["required", "max:100"],
-            "password" => ["required", "max:100"]
+            "password" => ["required", "max:100"],
+            "fcm_token" => ["nullable"],
         ];
     }
 

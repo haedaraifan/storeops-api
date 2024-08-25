@@ -15,6 +15,7 @@ class Authentication extends Model
     protected $fillable = [
         "user_id",
         "token",
+        "fcm_token",
         "expired_at"
     ];
 

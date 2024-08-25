@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ExceptionResponseHelper;
+use App\Helpers\SendNotificationHelper;
 use App\Http\Requests\TransactionExpenseRequest;
 use App\Http\Requests\TransactionIncomeRequest;
 use App\Http\Requests\TransactionStatusUpdateRequest;
@@ -95,6 +96,8 @@ class TransactionController extends Controller
             $transactionProduct->transaction_id = $transaction->id;
             $transactionProduct->save();
         }
+
+        SendNotificationHelper::toMobileApp("Ada transaksi baru!", "ini body");
 
         return response()->json([
             "message" => "Transaksi berhasil dicatat."

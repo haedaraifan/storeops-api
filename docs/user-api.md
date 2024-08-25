@@ -50,7 +50,8 @@
 ```json
 {
   "name": "john",
-  "password": "rahasia"
+  "password": "rahasia",
+  "fcm_token": "fcm-token-123" // optional
 }
 ```
 

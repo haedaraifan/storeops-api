@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post("/login", [UserController::class, "login"]);
 
+Route::post("/send", [UserController::class, "send"]);
+
 Route::middleware(ApiAuthMiddleware::class)->group(function() {
     Route::get("/me", [UserController::class, "get"]);
     Route::patch("/me", [UserController::class, "update"]);
