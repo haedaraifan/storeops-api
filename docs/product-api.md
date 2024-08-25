@@ -96,6 +96,7 @@
 **Role :** Admin | Kasir | Gudang
 
 **Query Parameter :**
+- search: product name
 - category
 - stock: high | low | empty
 - paginate: true | false
@@ -530,6 +531,7 @@
 **Role :** Admin | Kasir | Gudang
 
 **Query Parameter :**
+- search: product name
 - month
 - year
 
@@ -544,6 +546,7 @@
     "range": "Agustus 2024",
     "products": [
     {
+        "id": 1,
         "name": "kayu jati",
         "first_quantity": 100,
         "last_quantity": 100,
@@ -551,6 +554,7 @@
         "outgoing_quantity": 100
       },
       {
+        "id": 2,
         "name": "paku",
         "first_quantity": 200,
         "last_quantity": 100,

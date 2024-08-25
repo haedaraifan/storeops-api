@@ -178,6 +178,7 @@
 **Role :** Admin | Kasir | Gudang
 
 **Query Parameter :**
+- search = customer name, date
 - range : daily | weekly | monthly
 - paid: true | false
 - paginate: true | false

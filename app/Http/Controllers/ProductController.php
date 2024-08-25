@@ -88,15 +88,18 @@ class ProductController extends Controller
 
     public function list(Request $request): JsonResponse
     {
+        $search = $request->query("search");
         $category = $request->query("category");
         $stock = $request->query("stock", "all");
         $isPaginate = $request->query("paginate", "true");
         $query = Product::query();
 
         if($category) {
-            $query->where(function($q) use ($category) {
-                $q->where("category", "like", '%' . $category . '%');
-            });
+            $query->where("category", "like", "%{$category}%");
+        }
+
+        if($search) {
+            $query->where("name", "like", "%{$search}%");
         }
 
         switch($stock) {
@@ -192,6 +195,7 @@ class ProductController extends Controller
 
     public function recap(Request $request): JsonResponse
     {
+        $search = $request->query("search", '');
         $year = $request->query("year", now()->year);
         $month = $request->query("month", now()->month);
         $startDate = Carbon::create($year, $month, 1)->startOfMonth();
@@ -200,9 +204,10 @@ class ProductController extends Controller
         if($month != now()->month || $year != now()->year) {
             $productRecap = ProductsRecap::whereDate("date", $endDate)
                 ->select("product_id as id", "name", "image", "first_quantity", "last_quantity", "incoming_quantity", "outgoing_quantity")
+                ->where("name", "like", "%{$search}%")
                 ->get();
         } else {
-            $productRecap = $this->getCurrentMonthRecap($startDate, $endDate, Carbon::create($year, $month, 1)->subMonth());
+            $productRecap = $this->getCurrentMonthRecap($search, $startDate, $endDate, Carbon::create($year, $month, 1)->subMonth());
         }
 
         $perPage = 10;
@@ -241,9 +246,9 @@ class ProductController extends Controller
         ])->setStatusCode(200);
     }
 
-    private function getCurrentMonthRecap($startDate, $endDate, $previousMonth)
+    private function getCurrentMonthRecap($search, $startDate, $endDate, $previousMonth)
     {
-        $products = Product::get();
+        $products = Product::where("name", "like", "%{$search}%")->get();
         $firstQuantity = ProductsRecap::selectRaw("product_id AS id, name, last_quantity AS quantity")
             ->whereDate("date", $previousMonth->endOfMonth())
             ->get();
@@ -254,7 +259,7 @@ class ProductController extends Controller
             ->groupBy("product_id", "name")
             ->get();
         $incomingQuantity = RestockProductHistory::selectRaw("product_id AS id, name, SUM(quantity) as quantity")
-            ->whereBetween("created_at", [$startDate, $endDate])
+            ->whereBetween("date", [$startDate, $endDate])
             ->groupBy("product_id", "name")
             ->get();
 

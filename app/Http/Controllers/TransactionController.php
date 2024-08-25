@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DateFormatHelper;
 use App\Helpers\ExceptionResponseHelper;
 use App\Helpers\SendNotificationHelper;
 use App\Http\Requests\TransactionExpenseRequest;
@@ -115,6 +116,7 @@ class TransactionController extends Controller
 
     public function listIncome(Request $request): JsonResponse
     {
+        $search = $request->query("search");
         $range = $request->query("range", "all");
         $paid = $request->query("paid", "all");
         $isPaginate = $request->query("paginate", "true");
@@ -143,6 +145,14 @@ class TransactionController extends Controller
                 break;
             default:
                 break;
+        }
+
+        if($search) {
+            $query->where(function ($q) use ($search) {
+                $formattedDate = DateFormatHelper::toEnglishDate($search);
+                $q->where("customer_name", "like", "%{$search}%")
+                    ->orWhereRaw("DATE_FORMAT(date, '%W, %e %M %Y') LIKE ?", ["%{$formattedDate}%"]);
+            });
         }
 
         $transactions = $query->orderBy("date", "desc");

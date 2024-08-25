@@ -36,9 +36,9 @@ class HistoryController extends Controller
 
         if($search) {
             $query->where(function ($q) use ($search) {
-                $formattedDay = DateFormatHelper::indonesianToEnglishDayName($search);
+                $formattedDate = DateFormatHelper::toEnglishDate($search);
                 $q->where("name", "like", "%{$search}%")
-                    ->orWhereRaw("DATE_FORMAT(date, '%W, %e %M %Y') LIKE ?", ["%{$formattedDay}%"]);
+                    ->orWhereRaw("DATE_FORMAT(date, '%W, %e %M %Y') LIKE ?", ["%{$formattedDate}%"]);
             });
         }
 
@@ -70,9 +70,9 @@ class HistoryController extends Controller
 
         if($search) {
             $query->where(function ($q) use ($search) {
-                $formattedDay = DateFormatHelper::indonesianToEnglishDayName($search);
+                $formattedDate = DateFormatHelper::toEnglishDate($search);
                 $q->where("name", "like", "%{$search}%")
-                    ->orWhereRaw("DATE_FORMAT(date, '%W, %e %M %Y') LIKE ?", ["%{$formattedDay}%"]);
+                    ->orWhereRaw("DATE_FORMAT(date, '%W, %e %M %Y') LIKE ?", ["%{$formattedDate}%"]);
             });
         }
 
