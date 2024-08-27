@@ -99,7 +99,7 @@ class TransactionController extends Controller
             $transactionProduct->save();
         }
 
-        SendNotificationHelper::toMobileApp("Ada transaksi baru!", "ini body");
+        SendNotificationHelper::toMobileApp("Transaksi baru atas nama " . $data["customer_name"] ?? "Seseorang", Carbon::now()->isoFormat("dddd, D MMMM YYYY HH:mm"));
 
         return response()->json([
             "message" => "Transaksi berhasil dicatat."
