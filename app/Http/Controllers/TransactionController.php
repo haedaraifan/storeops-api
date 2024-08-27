@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ProductCheckedEvent;
 use App\Helpers\DateFormatHelper;
 use App\Helpers\ExceptionResponseHelper;
 use App\Helpers\SendNotificationHelper;
@@ -224,12 +225,15 @@ class TransactionController extends Controller
     public function checklistProduct(UpdateChecklistProductRequest $request, int $transactionId): JsonResponse
     {
         $data = $request->validated();
+        $transaction = $this->getTransaction($transactionId);
 
         TransactionProduct::whereTransactionId($transactionId)
             ->whereIn("product_id", $data["products"])
             ->update([
                 "is_checked" => true
             ]);
+
+        event(new ProductCheckedEvent($transactionId, $transaction->customer_name));
 
         return response()->json([
             "message" => "Data produk berhasil diperbarui."
