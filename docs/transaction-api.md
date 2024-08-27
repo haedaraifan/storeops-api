@@ -539,3 +539,36 @@
   "error": "Transaksi tidak ditemukan."
 }
 ```
+
+## Finish Transaction
+
+**Endpoint :** POST /api/transactions/finish/:transactionId
+
+**Role :** Admin | Kasir
+
+**Request Header :**
+- AUTHORIZATION : token-123
+
+**Request Body :**
+
+```json
+{
+  "is_finished": true
+}
+```
+
+**Response Body (Success) :**
+
+```json
+{
+  "message": "Transaksi berhasil diperbarui."
+}
+```
+
+**Response Body (Failed) :**
+
+```json
+{
+  "error": "Transaksi tidak ditemukan."
+}
+```

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ProductCheckedEvent;
 use App\Helpers\ExceptionResponseHelper;
 use App\Helpers\SendNotificationHelper;
 use App\Http\Requests\UserLoginRequest;
@@ -107,6 +108,16 @@ class UserController extends Controller
         $body = $request->query("body", "ini body");
 
         SendNotificationHelper::toMobileApp($title, $body);
+
+        return response()->json([
+            'message' => "notif sended!"
+        ]);
+    }
+
+    public function sendToWeb(Request $request): JsonResponse
+    {
+
+        event(new ProductCheckedEvent(27, "seseorang"));
 
         return response()->json([
             'message' => "notif sended!"

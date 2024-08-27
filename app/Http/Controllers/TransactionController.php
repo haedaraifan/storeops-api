@@ -7,6 +7,7 @@ use App\Helpers\DateFormatHelper;
 use App\Helpers\ExceptionResponseHelper;
 use App\Helpers\SendNotificationHelper;
 use App\Http\Requests\TransactionExpenseRequest;
+use App\Http\Requests\TransactionFinishRequest;
 use App\Http\Requests\TransactionIncomeRequest;
 use App\Http\Requests\TransactionStatusUpdateRequest;
 use App\Http\Requests\UpdateChecklistProductRequest;
@@ -238,5 +239,16 @@ class TransactionController extends Controller
         return response()->json([
             "message" => "Data produk berhasil diperbarui."
         ])->setStatusCode(200);
+    }
+
+    public function finish(TransactionFinishRequest $request, int $transactionId): JsonResponse
+    {
+        $request->validated();
+        Transaction::whereId($transactionId)
+            ->update(["is_finished" => true]);
+
+        return response()->json([
+            "message" => "Transaksi berhasil diperbarui."
+        ]);
     }
 }
