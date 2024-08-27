@@ -27,7 +27,6 @@ class TransactionIncomeRequest extends FormRequest
             "products" => ["required", "array"],
             "products.*.id" => ["required","exists:products,id"],
             "products.*.quantity" => ["required","numeric","min:1"],
-            "products.*.option" => ["numeric", "exists:transaction_product_options,id"],
             "products.*.is_checked" => ["boolean"],
             "discount" => ["nullable", "numeric", "min:0"],
             "additional_cost" => ["nullable", "numeric", "min:0"],
@@ -37,6 +36,7 @@ class TransactionIncomeRequest extends FormRequest
             "customer_name" => ["nullable", "max:100"],
             "customer_phone" => ["nullable", "max:20"],
             "customer_address" => ["nullable", "max:255"],
+            "option" => ["numeric", "exists:transaction_product_options,id"],
             "is_finished" => ["nullable", "boolean"],
         ];
     }

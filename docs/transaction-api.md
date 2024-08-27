@@ -52,19 +52,18 @@
     {
       "id": 1,
       "quantity": 2,
-      "option": 2, // optional
       "is_checked": true // optional
     },
     {
       "id": 2,
       "quantity": 5,
-      "option": 1, // optional
       "is_checked": false // optional
     }
   ],
   "discount": 10000, // optional
   "additional_cost": 2000, // optional
   "status": "Lunas",
+  "option": 1, // optional [1: Diambil, 2: Dikirim]
   "note": "Penjualan semen dan paku", // optional
   "payment_method": "Cash", // optional
   "customer_name": "Budi", // optional

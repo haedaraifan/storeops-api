@@ -84,7 +84,7 @@ class TransactionController extends Controller
                 "name" => $product->name,
                 "price" => $product->selling_price,
                 "quantity" => $productRequest["quantity"],
-                "option_id" => $productRequest["option"] ?? 1,
+                "option_id" => $data["option"] ?? 1,
                 "is_checked" => $productRequest["is_checked"] ?? false
             ]);
             array_push($transactionProducts, $transactionProduct);
