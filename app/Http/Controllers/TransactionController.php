@@ -228,7 +228,7 @@ class TransactionController extends Controller
         $transaction = $this->getTransaction($transactionId);
 
         TransactionProduct::whereTransactionId($transactionId)
-            ->whereIn("product_id", $data["products"])
+            ->whereIn("product_id", $data["products_id"])
             ->update([
                 "is_checked" => true
             ]);

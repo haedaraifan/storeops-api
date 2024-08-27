@@ -24,7 +24,7 @@ class UpdateChecklistProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "products" => ["required", "array"],
+            "products_id" => ["required", "array"],
             "products.*" => ["numeric", "exists:transaction_products,product_id"]
         ];
     }

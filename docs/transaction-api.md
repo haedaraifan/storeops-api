@@ -520,7 +520,7 @@
 
 ```json
 {
-  "products": [1, 2] // array of product_id
+  "products_id": [1, 2]
 }
 ```
 
