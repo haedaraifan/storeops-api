@@ -53,7 +53,7 @@ class ProductController extends Controller
     private function generateFileName($image): string
     {
         $extension = $image->getClientOriginalExtension();
-        $fileName = now()->format("ymdHisu") . '.' . $extension;
+        $fileName = Carbon::now()->format("ymdHisu") . '.' . $extension;
         return $fileName;
     }
 
@@ -196,18 +196,20 @@ class ProductController extends Controller
     public function recap(Request $request): JsonResponse
     {
         $search = $request->query("search", '');
-        $year = $request->query("year", now()->year);
-        $month = $request->query("month", now()->month);
+        $category = $request->query("category", '');
+        $year = $request->query("year", Carbon::now()->year);
+        $month = $request->query("month", Carbon::now()->month);
         $startDate = Carbon::create($year, $month, 1)->startOfMonth();
         $endDate = Carbon::create($year, $month, 1)->endOfMonth();
 
-        if($month != now()->month || $year != now()->year) {
+        if($month != Carbon::now()->month || $year != Carbon::now()->year) {
             $productRecap = ProductsRecap::whereDate("date", $endDate)
-                ->select("product_id as id", "name", "image", "first_quantity", "last_quantity", "incoming_quantity", "outgoing_quantity")
+                ->select("product_id as id", "name", "category", "first_quantity", "last_quantity", "incoming_quantity", "outgoing_quantity")
                 ->where("name", "like", "%{$search}%")
+                ->where("category", "like", "%{$category}%")
                 ->get();
         } else {
-            $productRecap = $this->getCurrentMonthRecap($search, $startDate, $endDate, Carbon::create($year, $month, 1)->subMonth());
+            $productRecap = $this->getCurrentMonthRecap($search, $category, $startDate, $endDate, Carbon::create($year, $month, 1)->subMonth());
         }
 
         $perPage = 10;
@@ -246,9 +248,11 @@ class ProductController extends Controller
         ])->setStatusCode(200);
     }
 
-    private function getCurrentMonthRecap($search, $startDate, $endDate, $previousMonth)
+    private function getCurrentMonthRecap($search, $category, $startDate, $endDate, $previousMonth)
     {
-        $products = Product::where("name", "like", "%{$search}%")->get();
+        $products = Product::where("name", "like", "%{$search}%")
+            ->where("category", "like", "%{$category}%")
+            ->get();
         $firstQuantity = ProductsRecap::selectRaw("product_id AS id, name, last_quantity AS quantity")
             ->whereDate("date", $previousMonth->endOfMonth())
             ->get();
@@ -271,6 +275,7 @@ class ProductController extends Controller
             return [
                 "id" => $product->id,
                 "name" => $product->name,
+                "category" => $product->category,
                 "first_quantity" => $first->quantity ?? 0,
                 "last_quantity" => $product->quantity,
                 "incoming_quantity" => $incoming->quantity ?? 0,

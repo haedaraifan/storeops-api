@@ -15,7 +15,6 @@ return new class extends Migration
             $table->timestamp("date")->nullable(false);
             $table->unsignedBigInteger("product_id")->nullable(false);
             $table->string("name")->nullable(false);
-            $table->string("image")->nullable();
             $table->integer("first_quantity")->nullable(false);
             $table->integer("last_quantity")->nullable(false);
             $table->integer("incoming_quantity")->nullable(false);

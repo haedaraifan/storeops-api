@@ -371,6 +371,7 @@
 **Role :** Admin | Kasir | Gudang
 
 **Query Parameter :**
+- category
 - year
 - month
 - sort : asc | desc
@@ -388,83 +389,15 @@
   	"products": [
   	  {
   	  	"id": 12,
-  	  	"name": "Product 2",
+  	  	"name": "Paku payung",
+        "category": "Paku dan Sekrup",
   	  	"quantity": 18
   	  },
   	  {
   	  	"id": 1,
-  	  	"name": "Product 1",
+  	  	"name": "Seng",
+        "category": "Material",
   	  	"quantity": 6
-  	  },
-  	  {
-  	  	"id": 26,
-  	  	"name": "test excel 10",
-  	  	"quantity": 6
-  	  },
-  	  {
-  	  	"id": 24,
-  	  	"name": "test excel 7",
-  	  	"quantity": 4
-  	  },
-  	  {
-  	  	"id": 28,
-  	  	"name": "test excel 12",
-  	  	"quantity": 4
-  	  },
-  	  {
-  	  	"id": 2,
-  	  	"name": "Product 2",
-  	  	"quantity": 4
-  	  },
-  	  {
-  	  	"id": 13,
-  	  	"name": "Product 3",
-  	  	"quantity": 3
-  	  },
-  	  {
-  	  	"id": 31,
-  	  	"name": "test excel 15",
-  	  	"quantity": 3
-  	  },
-  	  {
-  	  	"id": 3,
-  	  	"name": "Product 3",
-  	  	"quantity": 3
-  	  },
-  	  {
-  	  	"id": 30,
-  	  	"name": "test excel 14",
-  	  	"quantity": 3
-  	  },
-  	  {
-  	  	"id": 29,
-  	  	"name": "test excel 13",
-  	  	"quantity": 2
-  	  },
-  	  {
-  	  	"id": 23,
-  	  	"name": "test excel 6",
-  	  	"quantity": 2
-  	  },
-  	  {
-  	  	"id": 11,
-  	  	"name": "Product 1",
-  	  	"quantity": 2
-  	  },
-  	  {
-  	  	"id": 4,
-  	  	"name": "Bata",
-  	  	"quantity": 1
-  	  },
-  	  {
-  	  	"id": 15,
-  	  	"name": "aa",
-  	  	"quantity": 1
-  	  },
-  	  {
-  	  	"id": 25,
-  	  	"name": "test excel 8",
-  	  	"quantity": 1
   	  }
   	]
   },

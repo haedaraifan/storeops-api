@@ -92,6 +92,7 @@ class TransactionController extends Controller
             $transactionProduct = new TransactionProduct([
                 "product_id" => $product->id,
                 "name" => $product->name,
+                "category" => $product->category,
                 "price" => $product->selling_price,
                 "quantity" => $productRequest["quantity"],
                 "option_id" => $data["option"] ?? 1,
@@ -197,15 +198,17 @@ class TransactionController extends Controller
 
     public function statistic(Request $request): JsonResponse
     {
-        $year = $request->query("year", now()->year);
-        $month = $request->query("month", now()->month);
+        $category = $request->query("category");
+        $year = $request->query("year", Carbon::now()->year);
+        $month = $request->query("month", Carbon::now()->month);
         $sort = $request->query("sort");
         $isPaginate = $request->query("paginate", "true");
 
         $range = Carbon::create($year, $month, 1);
-        $recap = TransactionProduct::selectRaw("product_id AS id, name, CAST(SUM(quantity) AS UNSIGNED) as quantity")
+        $recap = TransactionProduct::selectRaw("product_id AS id, name, category, CAST(SUM(quantity) AS UNSIGNED) as quantity")
             ->whereHas("transaction", fn($query) => $query->whereYear("date", $year)->whereMonth("date", $month))
-            ->groupBy("product_id", "name")
+            ->where("category", "like", "%{$category}%")
+            ->groupBy("product_id", "name", "category")
             ->orderBy("quantity", $sort == "asc" ? "asc" : "desc");
         $recap = $isPaginate === "false" ? $recap->get() : $recap->paginate(20);
 

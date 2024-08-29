@@ -532,6 +532,7 @@
 
 **Query Parameter :**
 - search: product name
+- category: product category
 - month
 - year
 
@@ -548,6 +549,7 @@
     {
         "id": 1,
         "name": "kayu jati",
+        "category": "Material",
         "first_quantity": 100,
         "last_quantity": 100,
         "incoming_quantity": 100,
@@ -556,6 +558,7 @@
       {
         "id": 2,
         "name": "paku",
+        "category": "Paku dan Sekrup",
         "first_quantity": 200,
         "last_quantity": 100,
         "incoming_quantity": 50,

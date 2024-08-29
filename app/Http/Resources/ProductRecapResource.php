@@ -17,6 +17,7 @@ class ProductRecapResource extends JsonResource
         return [
             "id" => $this["id"],
             "name" => $this["name"],
+            "category" => $this["category"],
             "first_quantity" => (int) ($this["first_quantity"] ?? 0),
             "last_quantity" => (int) ($this["last_quantity"] ?? 0),
             "incoming_quantity" => (int) ($this["incoming_quantity"] ?? 0),
