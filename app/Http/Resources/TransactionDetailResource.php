@@ -16,6 +16,7 @@ class TransactionDetailResource extends JsonResource
     {
         return [
             "id" => $this->id,
+            "invoice" => $this->invoice,
             "date" => $this->date->isoFormat('dddd, D MMMM Y'),
             "type" => $this->type->name,
             "status" => $this->status->name,
@@ -30,7 +31,8 @@ class TransactionDetailResource extends JsonResource
                 "phone" => $this->customer_phone,
                 "address" => $this->customer_address
             ],
-            "products" => TransactionProductResource::collection($this->products)
+            "products" => TransactionProductResource::collection($this->products),
+            "note" => $this->note
         ];
     }
 }

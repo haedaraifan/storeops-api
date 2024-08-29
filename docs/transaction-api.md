@@ -192,6 +192,7 @@
   "data": [
     {
       "id": 2,
+      "invoice": "K344A259640H130920U4",
       "date": "Kamis, 2 Mei 2024",
       "type": "Penjualan",
       "status": "Lunas",
@@ -223,7 +224,8 @@
             "option": "Diambil",
             "is_checked": false
         }
-      ]
+      ],
+      "note": "ini note1" // nullable
     }
   ],
   "links": {
@@ -284,6 +286,7 @@
 {
   "data": {
     "id": 2,
+    "invoice": "K344A259640H130920U4",
     "date": "Kamis, 2 Mei 2024",
     "type": "Penjualan",
     "status": "Lunas",    
@@ -314,7 +317,8 @@
         "option": "Diambil",
         "is_checked": false
       }
-    ]
+    ],
+    "note": "ini note1" // nullable
   }
 }
 ```

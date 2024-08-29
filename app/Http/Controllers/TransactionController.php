@@ -44,6 +44,15 @@ class TransactionController extends Controller
         return $transaction;
     }
 
+    private function generateInvoiceNumber(int $transactionId): string
+    {
+        $currentDateTime = Carbon::now()->format("Ymdhis");
+        $uuidPart = strtoupper(substr(str_replace('-', '', \Illuminate\Support\Str::uuid()->toString()), 0, 8));
+        $baseInvoiceNumber = strval($transactionId) . $currentDateTime . $uuidPart;
+        $shuffledInvoiceNumber = str_shuffle($baseInvoiceNumber);
+        return substr($shuffledInvoiceNumber, 0, 20);
+    }
+
     public function expense(TransactionExpenseRequest $request): JsonResponse
     {
         $data = $request->validated();
@@ -91,6 +100,7 @@ class TransactionController extends Controller
             array_push($transactionProducts, $transactionProduct);
         }
 
+        $transaction->invoice = $this->generateInvoiceNumber($transaction->id);
         $transaction->status_id = $transactionStatus->id;
         $transaction->type_id = $transactionType->id;
         $transaction->save();
@@ -249,6 +259,27 @@ class TransactionController extends Controller
 
         return response()->json([
             "message" => "Transaksi berhasil diperbarui."
+        ]);
+    }
+
+    public function invoice(Request $request): JsonResponse
+    {
+        $transactionId = 123;
+        $currentDateTime = Carbon::now()->format('YmdHis'); // e.g., '20240829085913'
+
+        $transactionIdStr = strval($transactionId); // e.g., '123'
+
+        $randomChars = strtoupper(substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 5));
+
+        $uuidPart = strtoupper(substr(str_replace('-', '', \Illuminate\Support\Str::uuid()->toString()), 0, 8));
+
+        $baseInvoiceNumber = $transactionIdStr . $currentDateTime . $randomChars . $uuidPart;
+
+        $shuffledInvoiceNumber = str_shuffle($baseInvoiceNumber);
+
+    // return substr($shuffledInvoiceNumber, 0, 20);
+        return response()->json([
+            "invoice_number" => substr($shuffledInvoiceNumber, 0, 20)
         ]);
     }
 }
