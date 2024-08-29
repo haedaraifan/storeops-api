@@ -100,9 +100,11 @@ class TransactionController extends Controller
             array_push($transactionProducts, $transactionProduct);
         }
 
-        $transaction->invoice = $this->generateInvoiceNumber($transaction->id);
         $transaction->status_id = $transactionStatus->id;
         $transaction->type_id = $transactionType->id;
+        $transaction->save();
+
+        $transaction->invoice = $this->generateInvoiceNumber($transaction->id);
         $transaction->save();
 
         foreach($transactionProducts as $transactionProduct) {
