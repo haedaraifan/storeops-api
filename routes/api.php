@@ -9,9 +9,6 @@ use App\Http\Middleware\ApiAuthMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::post("/login", [UserController::class, "login"]);
-
-Route::get("/invoice", [TransactionController::class, "invoice"]);
-
 Route::post("/send", [UserController::class, "sendToWeb"]);
 
 Route::middleware(ApiAuthMiddleware::class)->group(function() {

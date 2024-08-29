@@ -263,25 +263,4 @@ class TransactionController extends Controller
             "message" => "Transaksi berhasil diperbarui."
         ]);
     }
-
-    public function invoice(Request $request): JsonResponse
-    {
-        $transactionId = 123;
-        $currentDateTime = Carbon::now()->format('YmdHis'); // e.g., '20240829085913'
-
-        $transactionIdStr = strval($transactionId); // e.g., '123'
-
-        $randomChars = strtoupper(substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 5));
-
-        $uuidPart = strtoupper(substr(str_replace('-', '', \Illuminate\Support\Str::uuid()->toString()), 0, 8));
-
-        $baseInvoiceNumber = $transactionIdStr . $currentDateTime . $randomChars . $uuidPart;
-
-        $shuffledInvoiceNumber = str_shuffle($baseInvoiceNumber);
-
-    // return substr($shuffledInvoiceNumber, 0, 20);
-        return response()->json([
-            "invoice_number" => substr($shuffledInvoiceNumber, 0, 20)
-        ]);
-    }
 }
