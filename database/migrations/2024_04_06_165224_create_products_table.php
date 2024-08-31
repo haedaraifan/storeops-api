@@ -17,12 +17,12 @@ return new class extends Migration
             $table->integer("quantity")->nullable(false);
             $table->integer("purchase_price")->nullable(false);
             $table->integer("selling_price")->nullable(false);
-            $table->unsignedBigInteger("category_id")->nullable();
-            $table->unsignedBigInteger("user_id")->nullable(false);
+            $table->string("image")->nullable();
+            $table->string("category", 100)->nullable(false);
+            $table->unsignedBigInteger("unit_id")->nullable();
             $table->timestamps();
 
-            $table->foreign("category_id")->on("categories")->references("id")->onDelete("set null");
-            $table->foreign("user_id")->on("users")->references("id");
+            $table->foreign("unit_id")->on("product_units")->references("id")->onDelete("set null");
         });
     }
 

@@ -2,7 +2,12 @@
 
 ## Register User
 
-**Endpoint :** POST /api/users/register
+**Endpoint :** POST /api/register
+
+**Role :** Admin
+
+**Request Header :**
+- AUTHORIZATION : token-123
 
 **Request Body :**
 
@@ -10,7 +15,8 @@
 {
   "email": "john@gmail.com",
   "password": "rahasia",
-  "name": "john doe"
+  "name": "john",
+  "role": "Kasir"
 }
 ```
 
@@ -19,9 +25,10 @@
 ```json
 {
   "data": {
-    "id": 1,
+    "id": 11,
     "email": "john@gmail.com",
-    "name": "john doe"
+    "name": "john",
+    "role": "Kasir"
   }
 }
 ```
@@ -36,14 +43,15 @@
 
 ## Login User
 
-**Endpoint :** POST /api/users/login
+**Endpoint :** POST /api/login
 
 **Request Body :**
 
 ```json
 {
-  "email": "john@gmail.com",
-  "password": "rahasia"
+  "name": "john",
+  "password": "rahasia",
+  "fcm_token": "fcm-token-123" // optional
 }
 ```
 
@@ -52,9 +60,10 @@
 ```json
 {
   "data": {
-    "id": 1,
+    "id": 11,
     "email": "john@gmail.com",
-    "name": "john doe",
+    "name": "john",
+    "role": "Kasir",
     "token": "token-123"
   }
 }
@@ -68,9 +77,11 @@
 }
 ```
 
-## Get User
+## Get User Profile
 
-**Endpoint :** GET /api/users/me
+**Endpoint :** GET /api/me
+
+**Role :** Admin | Kasir | Gudang
 
 **Request Header :**
 - AUTHORIZATION : token-123
@@ -80,9 +91,10 @@
 ```json
 {
   "data": {
-    "id": 1,
+    "id": 11,
     "email": "john@gmail.com",
-    "name": "john doe",
+    "name": "john",
+    "role": "Kasir"
   }
 }
 ```
@@ -95,9 +107,11 @@
 }
 ```
 
-## Update User
+## Update User Profile
 
-**Endpoint :** PATCH /api/users/me
+**Endpoint :** PATCH /api/me
+
+**Role :** Admin | Kasir | Gudang
 
 **Request Header :**
 - AUTHORIZATION : token-123
@@ -107,6 +121,7 @@
 ```json
 {
   "name": "doe", // optional
+  "email": "doe@gmail.com", // optional
   "password": "rahasia123" // optional
 }
 ```
@@ -116,9 +131,10 @@
 ```json
 {
   "data": {
-    "id": 1,
-    "email": "john@gmail.com",
-    "name": "doe"
+    "id": 11,
+    "email": "doe@gmail.com",
+    "name": "doe",
+    "role": "Kasir"
   }
 }
 ```
@@ -133,7 +149,9 @@
 
 ## Logout User
 
-**Endpoint :** POST /api/users/logout
+**Endpoint :** DELETE /api/logout
+
+**Role :** Admin | Kasir | Gudang
 
 **Request Header :**
 - AUTHORIZATION : token-123

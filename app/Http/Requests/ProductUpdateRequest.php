@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Category;
+use App\Helpers\ExceptionResponseHelper;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
 class ProductUpdateRequest extends FormRequest
 {
@@ -25,21 +23,19 @@ class ProductUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $categories = Category::pluck("name")->toArray();
-
         return [
             "name"=> ["required", "max:100"],
             "quantity" => ["required", "numeric", "min:0"],
             "purchase_price" => ["required", "numeric", "min:0"],
             "selling_price" => ["required", "numeric", "min:0"],
-            "category" => ["required", Rule::in($categories)]
+            "unit" => ["nullable", "exists:product_units,name"],
+            "category" => ["required", "max:100"],
+            "image" => ["nullable", "mimes:jpg,jpeg,png", "max:2048"]
         ];
     }
 
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response([
-            "error" => $validator->getMessageBag()->first(),
-        ], 400));
+        ExceptionResponseHelper::throwInvariantError($validator->getMessageBag()->first());
     }
 }

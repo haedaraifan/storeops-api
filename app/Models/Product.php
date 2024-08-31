@@ -15,17 +15,13 @@ class Product extends Model
         "quantity",
         "purchase_price",
         "selling_price",
-        "category_id",
-        "user_id"
+        "image",
+        "category",
+        "unit_id"
     ];
 
-    public function category(): BelongsTo
+    public function unit(): BelongsTo
     {
-        return $this->belongsTo(Category::class, "category_id", "id");
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class,"user_id", "id");
+        return $this->belongsTo(ProductUnit::class, "unit_id", "id");
     }
 }

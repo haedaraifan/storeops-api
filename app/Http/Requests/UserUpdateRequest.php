@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\ExceptionResponseHelper;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UserUpdateRequest extends FormRequest
 {
@@ -24,15 +24,14 @@ class UserUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            "email" => ["nullable", "max:100", "email"],
+            "name" => ["nullable", "max:100"],
             "password" => ["nullable", "max:100"],
-            "name" => ["nullable", "max:100"]
         ];
     }
 
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response([
-            "error" => $validator->getMessageBag()
-        ], 400));
+        ExceptionResponseHelper::throwInvariantError($validator->getMessageBag()->first());
     }
 }

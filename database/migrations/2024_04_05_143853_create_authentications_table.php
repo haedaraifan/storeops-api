@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('authentications', function (Blueprint $table) {
             $table->unsignedBigInteger("user_id")->nullable(false);
             $table->string("token", 100)->nullable(false);
-            $table->timestamps();
+            $table->timestamp('expired_at')->nullable(false);
 
             $table->foreign("user_id")->on("users")->references("id");
         });

@@ -10,8 +10,22 @@ class Authentication extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
+    protected $fillable = [
+        "user_id",
+        "token",
+        "fcm_token",
+        "expired_at"
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, "user_id", "id");
+    }
+
+    public function isExpired(): bool
+    {
+        return now()->greaterThan($this->expired_at);
     }
 }

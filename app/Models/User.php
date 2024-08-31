@@ -2,29 +2,42 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Model implements Authenticatable
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $fillable = [
         "email",
         "password",
-        "name"
+        "name",
+        "role_id"
     ];
 
     public function authentications(): HasMany
     {
-        return $this->hasMany(Authentication::class, "user_id", "id");
+        return $this->hasMany(Authentication::class);
     }
 
-    public function products(): HasMany
+    public function role(): BelongsTo
     {
-        return $this->hasMany(Product::class,"product_id", "id");
+        return $this->belongsTo(Role::class);
+    }
+
+    public function routeNotificationForFcm($notification)
+    {
+        return $this->authentications()
+            ->whereNotNull("fcm_token")
+            ->where("expired_at", '>', Carbon::now())
+            ->pluck("fcm_token")
+            ->toArray();
     }
 
     public function getAuthIdentifierName()
