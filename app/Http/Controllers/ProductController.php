@@ -287,6 +287,8 @@ class ProductController extends Controller
 
     public function detailRecap(Request $request, int $productId): JsonResponse
     {
+        $product = $this->getProduct($productId);
+
         $transactionProducts = TransactionProduct::with("transaction")
             ->where("product_id", $productId)
             ->orderByDesc("transaction_id")
@@ -305,6 +307,11 @@ class ProductController extends Controller
 
         return response()->json([
             "data" => [
+                "id" => $product->id,
+                "name" => $product->name,
+                "quantity" => $product->quantity,
+                "unit" => $product->unit,
+                "category" => $product->category,
                 "transactions" => $transactionRecap,
                 "restock" => ProductResctokRecapResource::collection($restockRecap)
             ]

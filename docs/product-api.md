@@ -633,6 +633,11 @@
 ```json
 {
   "data": {
+    "id": 1,
+	"name": "Cat Lippo",
+	"quantity": 40,
+	"unit": "pcs", // nullable
+	"category": "Pengecatan",
     "transaction": [
       {
 		"transaction_id": 2,
