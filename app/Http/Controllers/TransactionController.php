@@ -164,6 +164,7 @@ class TransactionController extends Controller
             $query->where(function ($q) use ($search) {
                 $formattedDate = DateFormatHelper::toEnglishDate($search);
                 $q->where("customer_name", "like", "%{$search}%")
+                    ->orWhere("invoice", "like", "%{$search}%")
                     ->orWhereRaw("DATE_FORMAT(date, '%W, %e %M %Y') LIKE ?", ["%{$formattedDate}%"]);
             });
         }

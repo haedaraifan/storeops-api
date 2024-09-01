@@ -8,6 +8,7 @@ use App\Http\Requests\ProductImportRequest;
 use App\Http\Requests\ProductRestockRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Resources\ProductRecapResource;
+use App\Http\Resources\ProductResctokRecapResource;
 use App\Http\Resources\ProductResource;
 use App\Imports\ProductsImport;
 use App\Models\AddProductHistory;
@@ -282,5 +283,31 @@ class ProductController extends Controller
                 "outgoing_quantity" => $outgoing->quantity ?? 0
             ];
         });
+    }
+
+    public function detailRecap(Request $request, int $productId): JsonResponse
+    {
+        $transactionProducts = TransactionProduct::with("transaction")
+            ->where("product_id", $productId)
+            ->orderByDesc("transaction_id")
+            ->get();
+
+        $transactionRecap = $transactionProducts->map(function($transactionProduct) {
+            return [
+                "transaction_id" => $transactionProduct->transaction->id,
+                "invoice" => $transactionProduct->transaction->invoice,
+                "date" => $transactionProduct->transaction->date->isoFormat("dddd, D MMMM Y"),
+                "quantity" => $transactionProduct->quantity
+            ];
+        });
+
+        $restockRecap = RestockProductHistory::where("product_id", $productId)->get();
+
+        return response()->json([
+            "data" => [
+                "transactions" => $transactionRecap,
+                "restock" => ProductResctokRecapResource::collection($restockRecap)
+            ]
+        ]);
     }
 }

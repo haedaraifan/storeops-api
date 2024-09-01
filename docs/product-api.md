@@ -618,3 +618,49 @@
   "error": "Unauthorized."
 }
 ```
+
+## Recap Product By Id
+
+**Endpoint :** GET /api/products/recap/:productId
+
+**Role :** Admin | Kasir | Gudang
+
+**Request Header :**
+- AUTHORIZATION : token-123
+
+**Response Body (Success) :**
+
+```json
+{
+  "data": {
+    "transaction": [
+      {
+		"transaction_id": 2,
+		"invoice": "02FAD1F4501230C33380",
+		"date": "Sabtu, 31 Agustus 2024",
+		"quantity": 10
+	  },
+	  {
+		"transaction_id": 1,
+		"invoice": "1E41023B353028B3CB07",
+		"date": "Sabtu, 31 Agustus 2024",
+		"quantity": 15
+	  }
+    ],
+    "restock": [
+      {
+		"date": "Sabtu, 31 Agustus 2024",
+		"quantity": 10
+	  }
+    ]
+  }
+}
+```
+
+**Response Body (Failed) :**
+
+```json
+{
+  "error": "Unauthorized."
+}
+```
