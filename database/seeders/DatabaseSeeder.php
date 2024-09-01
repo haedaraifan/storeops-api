@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $roles = ["Admin", "Kasir", "Gudang"];
-        $units = ["pcs", "kg"];
+        $units = ["pcs", "kg", "m"];
         $transactionStatuses = ["Lunas", "Belum lunas"];
         $transactionTypes = ["Penjualan", "Pengeluaran"];
         $TransactionProductOptions = ["Diambil", "Dikirim"];

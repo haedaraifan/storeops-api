@@ -34,12 +34,6 @@ class CustomServeCommand extends ServeCommand
 
     protected function runMonthlyRecapIfNeeded()
     {
-        $lastRecapDate = cache("last_recap_date");
-        $currentMonth = Carbon::now()->startOfMonth();
-
-        if (!$lastRecapDate || $currentMonth->greaterThan($lastRecapDate)) {
-            Artisan::call("recap:monthly");
-            cache(["last_recap_date" => $currentMonth], now()->addMonths(1));
-        }
+        Artisan::call("recap:monthly");
     }
 }

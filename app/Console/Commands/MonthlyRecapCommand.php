@@ -31,11 +31,7 @@ class MonthlyRecapCommand extends Command
      */
     public function handle()
     {
-        $currentMonth = Carbon::now()->month;
-        $currentYear = Carbon::now()->year;
-
-        $lastRecap = ProductsRecap::whereYear("date", $currentYear)
-            ->whereMonth("date", $currentMonth)
+        $lastRecap = ProductsRecap::where("date", Carbon::now()->startOfMonth()->subMonth()->endOfMonth())
             ->exists();
 
         if($lastRecap) {
@@ -55,7 +51,7 @@ class MonthlyRecapCommand extends Command
         $products = Product::get();
 
         $incomingQuantity = RestockProductHistory::selectRaw("product_id AS id, name, SUM(quantity) as quantity")
-            ->whereBetween("created_at", [$startDate, $endDate])
+            ->whereBetween("date", [$startDate, $endDate])
             ->groupBy("product_id", "name")
             ->get();
 
@@ -82,7 +78,7 @@ class MonthlyRecapCommand extends Command
                 "date" => $endDate,
                 "product_id" => $product->id,
                 "name" => $product->name,
-                "image" => $product->image,
+                "category" => $product->category,
                 "first_quantity" => $first->quantity,
                 "last_quantity" => $product->quantity,
                 "incoming_quantity" => $incoming->quantity ?? 0,

@@ -44,11 +44,11 @@ class TransactionController extends Controller
         return $transaction;
     }
 
-    private function generateInvoiceNumber(int $transactionId): string
+    private function generateInvoiceNumber(): string
     {
         $currentDateTime = Carbon::now()->format("Ymdhis");
         $uuidPart = strtoupper(substr(str_replace('-', '', \Illuminate\Support\Str::uuid()->toString()), 0, 8));
-        $baseInvoiceNumber = strval($transactionId) . $currentDateTime . $uuidPart;
+        $baseInvoiceNumber = $currentDateTime . $uuidPart;
         $shuffledInvoiceNumber = str_shuffle($baseInvoiceNumber);
         return substr($shuffledInvoiceNumber, 0, 20);
     }
@@ -101,11 +101,9 @@ class TransactionController extends Controller
             array_push($transactionProducts, $transactionProduct);
         }
 
+        $transaction->invoice = $this->generateInvoiceNumber();
         $transaction->status_id = $transactionStatus->id;
         $transaction->type_id = $transactionType->id;
-        $transaction->save();
-
-        $transaction->invoice = $this->generateInvoiceNumber($transaction->id);
         $transaction->save();
 
         foreach($transactionProducts as $transactionProduct) {
