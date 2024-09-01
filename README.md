@@ -24,6 +24,7 @@
 - **Restock Product**
 - **List Restocked Product History**
 - **Recap Products**
+- **Recap Product By Id**
 
 [Detail...](https://github.com/haedaraifan/storeops-api/blob/dev/docs/product-api.md)
 
