@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->timestamp("date")->nullable(false);
+            $table->dateTime("date")->nullable();
             $table->string("note", 255)->nullable();
             $table->integer("purchase_price")->nullable();
             $table->integer("selling_price")->nullable();

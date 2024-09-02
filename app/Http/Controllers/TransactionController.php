@@ -258,8 +258,10 @@ class TransactionController extends Controller
     public function finish(TransactionFinishRequest $request, int $transactionId): JsonResponse
     {
         $request->validated();
-        Transaction::whereId($transactionId)
-            ->update(["is_finished" => true]);
+        $transaction = $this->getTransaction($transactionId);
+
+        $transaction->is_finished = true;
+        $transaction->save(['touch' => false]);
 
         return response()->json([
             "message" => "Transaksi berhasil diperbarui."
