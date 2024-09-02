@@ -638,6 +638,7 @@
 	"quantity": 40,
 	"unit": "pcs", // nullable
 	"category": "Pengecatan",
+    "is_deleted": false,
     "transaction": [
       {
 		"transaction_id": 2,

@@ -33,10 +33,10 @@ class ProductController extends Controller
         return $imageUrl;
     }
 
-    private function getProduct(int $productId): Product
+    private function getProduct(int $productId, string $scope = "is_not_deleted"): Product
     {
-        $product = Product::whereId($productId)->first();
-        if(!$product) {
+        $product = Product::withTrashed()->find($productId);
+        if(!$product || ($scope !== "all" && $product->trashed())) {
             ExceptionResponseHelper::throwNotFoundError("Produk tidak ditemukan.");
         }
         return $product;
@@ -287,7 +287,7 @@ class ProductController extends Controller
 
     public function detailRecap(Request $request, int $productId): JsonResponse
     {
-        $product = $this->getProduct($productId);
+        $product = $this->getProduct($productId, "all");
 
         $transactionProducts = TransactionProduct::with("transaction")
             ->where("product_id", $productId)
@@ -312,6 +312,7 @@ class ProductController extends Controller
                 "quantity" => $product->quantity,
                 "unit" => $product->unit,
                 "category" => $product->category,
+                "is_deleted" => $product->deleted_at ? true : false,
                 "transactions" => $transactionRecap,
                 "restock" => ProductResctokRecapResource::collection($restockRecap)
             ]

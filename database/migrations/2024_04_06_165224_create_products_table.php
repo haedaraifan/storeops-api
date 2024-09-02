@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string("category", 100)->nullable(false);
             $table->unsignedBigInteger("unit_id")->nullable();
             $table->timestamps();
+            $table->timestamp("deleted_at")->nullable()->default(null);
 
             $table->foreign("unit_id")->on("product_units")->references("id")->onDelete("set null");
         });
