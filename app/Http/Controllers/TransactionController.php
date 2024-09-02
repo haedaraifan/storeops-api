@@ -132,6 +132,7 @@ class TransactionController extends Controller
         $search = $request->query("search");
         $range = $request->query("range", "all");
         $paid = $request->query("paid", "all");
+        $finish = $request->query("finish", "all");
         $isPaginate = $request->query("paginate", "true");
         $incomeType = TransactionType::whereName("Penjualan")->first();
         $query = Transaction::whereTypeId($incomeType->id)->with(["products.option"]);
@@ -155,6 +156,16 @@ class TransactionController extends Controller
                 break;
             case "false":
                 $query->whereStatusId($this->getTransactionStatus("Belum Lunas")->id);
+                break;
+            default:
+                break;
+        }
+        switch($finish) {
+            case "true":
+                $query->whereIsFinished(1);
+                break;
+            case "false":
+                $query->whereIsFinished(0);
                 break;
             default:
                 break;
@@ -259,6 +270,10 @@ class TransactionController extends Controller
     {
         $request->validated();
         $transaction = $this->getTransaction($transactionId);
+
+        if($transaction->status_id !==1) {
+            ExceptionResponseHelper::throwInvariantError("Transaksi belum lunas!");
+        }
 
         $transaction->is_finished = true;
         $transaction->save(['touch' => false]);

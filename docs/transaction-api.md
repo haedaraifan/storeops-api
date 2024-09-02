@@ -180,6 +180,7 @@
 - search = customer name, date, invoice
 - range : daily | weekly | monthly
 - paid: true | false
+- finish: true | false
 - paginate: true | false
 
 **Request Header :**
@@ -506,6 +507,6 @@
 
 ```json
 {
-  "error": "Transaksi tidak ditemukan."
+  "error": "Transaksi yang belum lunas tidak dapat diselesaikan."
 }
 ```
