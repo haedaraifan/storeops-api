@@ -533,6 +533,8 @@
 **Query Parameter :**
 - search: product name
 - category: product category
+- from: date format YYYY-MM-DD
+- to: date format YYYY-MM-DD
 - month
 - year
 
