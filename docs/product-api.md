@@ -432,6 +432,8 @@
 **Query Parameter :**
 - search: product name, date
 - range: monthly | weekly | daily
+- from: YYYY-MM-DD
+- to: YYYY-MM-DD
 - paginate: true | false
 
 **Request Header :**

@@ -59,8 +59,16 @@ class HistoryController extends Controller
     {
         $search = $request->query("search");
         $range = $request->query("range", "all");
+        $from = $request->query("from");
+        $to = $request->query("to");
         $isPaginate = $request->query("paginate", "true");
         $query = RestockProductHistory::orderBy("date", "DESC");
+
+        if($from && $to) {
+            $startDate = Carbon::parse($from)->startOfDay();
+            $endDate = Carbon::parse($to)->endOfDay();
+            $query->whereBetween("date", [$startDate, $endDate]);
+        }
 
         switch($range) {
             case "daily":
