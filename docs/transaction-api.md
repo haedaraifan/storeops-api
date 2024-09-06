@@ -60,7 +60,7 @@
       "is_checked": false // optional
     }
   ],
-  "nominals"; [
+  "nominals": [
     {
       "name": "Pengiriman" | "Lunas",
       "amount": 1000
