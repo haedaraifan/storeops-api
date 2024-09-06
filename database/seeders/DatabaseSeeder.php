@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\ProductUnit;
 use App\Models\Role;
+use App\Models\TransactionNominalType;
 use App\Models\TransactionProductOption;
 use App\Models\TransactionStatus;
 use App\Models\TransactionType;
@@ -23,7 +24,8 @@ class DatabaseSeeder extends Seeder
         $units = ["pcs", "kg", "m"];
         $transactionStatuses = ["Lunas", "Belum lunas"];
         $transactionTypes = ["Penjualan", "Pengeluaran"];
-        $TransactionProductOptions = ["Diambil", "Dikirim"];
+        $transactionProductOptions = ["Diambil", "Dikirim"];
+        $transactionNominalTypes = ["Pengiriman", "Lunas"];
 
         foreach($roles as $role) {
             Role::create([ "name" => $role ]);
@@ -41,8 +43,12 @@ class DatabaseSeeder extends Seeder
             TransactionType::create([ "name" => $transactionType ]);
         }
 
-        foreach($TransactionProductOptions as $TransactionProductOption) {
+        foreach($transactionProductOptions as $TransactionProductOption) {
             TransactionProductOption::create([ "name" => $TransactionProductOption ]);
+        }
+
+        foreach($transactionNominalTypes as $transactionNominalType) {
+            TransactionNominalType::create([ "name" => $transactionNominalType ]);
         }
 
         $adminRole = Role::whereName("Admin")->first();

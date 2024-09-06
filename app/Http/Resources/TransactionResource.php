@@ -19,8 +19,10 @@ class TransactionResource extends JsonResource
             "date" => $this->date->isoFormat('dddd, D MMMM Y'),
             "type" => $this->type->name,
             "status" => $this->status->name,
-            "purchase_price" => $this->purchase_price,
-            "selling_price" => $this->selling_price
+            "total_price" => $this->selling_price,
+            "nominals" => TransactionNominalResource::collection($this->nominals),
+            // "purchase_price" => $this->purchase_price,
+            // "selling_price" => $this->selling_price
         ];
     }
 }

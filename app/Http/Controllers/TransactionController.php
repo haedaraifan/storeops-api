@@ -16,6 +16,8 @@ use App\Http\Resources\TransactionIncomeStatisticResource;
 use App\Http\Resources\TransactionResource;
 use App\Models\Product;
 use App\Models\Transaction;
+use App\Models\TransactionCustomNominal;
+use App\Models\TransactionNominalType;
 use App\Models\TransactionProduct;
 use App\Models\TransactionStatus;
 use App\Models\TransactionType;
@@ -53,21 +55,21 @@ class TransactionController extends Controller
         return substr($shuffledInvoiceNumber, 0, 20);
     }
 
-    public function expense(TransactionExpenseRequest $request): JsonResponse
-    {
-        $data = $request->validated();
-        $transactionType = $this->getTransactionType("Pengeluaran");
-        $transactionStatus = $this->getTransactionStatus($data["status"]);
+    // public function expense(TransactionExpenseRequest $request): JsonResponse
+    // {
+    //     $data = $request->validated();
+    //     $transactionType = $this->getTransactionType("Pengeluaran");
+    //     $transactionStatus = $this->getTransactionStatus($data["status"]);
 
-        $transaction = new Transaction($data);
-        $transaction->status_id = $transactionStatus->id;
-        $transaction->type_id = $transactionType->id;
-        $transaction->save();
+    //     $transaction = new Transaction($data);
+    //     $transaction->status_id = $transactionStatus->id;
+    //     $transaction->type_id = $transactionType->id;
+    //     $transaction->save();
 
-        return response()->json([
-            "message" => "Transaksi berhasil dicatat."
-        ])->setStatusCode(201);
-    }
+    //     return response()->json([
+    //         "message" => "Transaksi berhasil dicatat."
+    //     ])->setStatusCode(201);
+    // }
 
     public function income(TransactionIncomeRequest $request): JsonResponse
     {
@@ -76,7 +78,7 @@ class TransactionController extends Controller
         $transactionType = $this->gettransactionType("Penjualan");
         $transactionStatus = $this->getTransactionStatus($data["status"]);
         $transactionProducts = [];
-        $transaction->selling_price = 0;
+        $totalPrice = 0;
 
         foreach($data["products"] as $productRequest) {
             $product = Product::whereId($productRequest["id"])->first();
@@ -85,7 +87,7 @@ class TransactionController extends Controller
                 ExceptionResponseHelper::throwInvariantError("Kuantitas lebih banyak dari stok produk.");
             }
 
-            $transaction->selling_price += $product->selling_price * $productRequest["quantity"];
+            $totalPrice += $product->selling_price * $productRequest["quantity"];
             $product->quantity -= $productRequest["quantity"];
             $product->save();
 
@@ -101,9 +103,25 @@ class TransactionController extends Controller
             array_push($transactionProducts, $transactionProduct);
         }
 
+        $transaction->selling_price = $totalPrice;
         $transaction->invoice = $this->generateInvoiceNumber();
         $transaction->status_id = $transactionStatus->id;
         $transaction->type_id = $transactionType->id;
+        $transaction->save();
+
+        foreach($data["nominals"] as $nominal) {
+            $nominalType = TransactionNominalType::whereName($nominal["name"])->first();
+            $transactionCustomNominal = new TransactionCustomNominal($nominal);
+            $transactionCustomNominal->transaction_id = $transaction->id;
+            $transactionCustomNominal->nominal_type_id = $nominalType->id;
+            $transactionCustomNominal->save();
+
+            if($nominal["name"] === "Pengiriman") {
+                $totalPrice += $nominal["amount"];
+            }
+        }
+
+        $transaction->selling_price = $totalPrice;
         $transaction->save();
 
         foreach($transactionProducts as $transactionProduct) {

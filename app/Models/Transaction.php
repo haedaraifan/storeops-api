@@ -47,4 +47,9 @@ class Transaction extends Model
     {
         return $this->hasMany(TransactionProduct::class, "transaction_id", "id");
     }
+
+    public function nominals(): HasMany
+    {
+        return $this->hasMany(TransactionCustomNominal::class);
+    }
 }

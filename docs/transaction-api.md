@@ -1,6 +1,6 @@
 # Transaction API Spec
 
-## Add Expense
+## Add Expense // Inactive
 
 **Endpoint :** POST /api/transactions/expense
 
@@ -60,8 +60,6 @@
       "is_checked": false // optional
     }
   ],
-  "discount": 10000, // optional
-  "additional_cost": 2000, // optional
   "status": "Lunas",
   "option": 1, // optional [1: Diambil, 2: Dikirim]
   "note": "Penjualan semen dan paku", // optional
@@ -108,18 +106,16 @@
     {
       "id": 1,
       "date": "Kamis, 2 Mei 2024",
-      "type": "Pengeluaran",
+      "type": "Penjualan",
       "status": "Lunas",
-      "purchase_price": 100000, // nullable
-      "selling_price": null // nullable
+      "total_price": 100000, // nullable
     },
     {
       "id": 2,
       "date": "Kamis, 2 Mei 2024",
       "type": "Penjualan",
       "status": "Lunas",
-      "purchase_price": null, // nullable
-      "selling_price": 120000 // nullable
+      "total_price": 20000, // nullable
     }
   ],
   "links": {
@@ -200,11 +196,18 @@
       "type": "Penjualan",
       "status": "Lunas",
       "is_finished": true,
-      "purchase_price": null, // nullable
-      "selling_price": 160000, // nullable
-      "discount": 20000, // nullable
-      "additional_cost": 10000, // nullable
       "payment_method": "Cash", // nullable
+      "total_price": 160000,
+      "nominals": [
+        {
+          "name": "Pengiriman",
+          "amount": 10000
+        },
+        {
+          "name": "Lunas",
+          "amount": 150000
+        }
+      ],
       "customer":  {
         "name": "Budi", // nullable
         "phone": "08512345", // nullable
@@ -224,7 +227,7 @@
             "name": "Paku",
             "quantity": 10,
             "price": 10000,
-            "option": "Diambil",
+            "option": "Dikirim",
             "is_checked": false
         }
       ],
@@ -293,11 +296,18 @@
     "date": "Kamis, 2 Mei 2024",
     "type": "Penjualan",
     "status": "Lunas",    
-    "purchase_price": null, // nullable
-    "selling_price": 160000, // nullable
-    "discount": 20000, // nullable
-    "additional_cost": 10000, // nullable
     "payment_method": "Cash", // nullable
+    "total_price": 160000,
+    "nominals": [
+        {
+          "name": "Pengiriman",
+          "amount": 10000
+        },
+        {
+          "name": "Lunas",
+          "amount": 150000
+        }
+      ],
     "customer":  {
       "name": "Budi", // nullable
       "phone": "08512345", // nullable

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->dateTime("date")->nullable();
             $table->string("note", 255)->nullable();
-            $table->integer("purchase_price")->nullable();
             $table->integer("selling_price")->nullable();
             $table->integer("discount")->nullable();
             $table->integer("additional_cost")->nullable();
