@@ -60,6 +60,12 @@
       "is_checked": false // optional
     }
   ],
+  "nominals"; [
+    {
+      "name": "Pengiriman" | "Lunas",
+      "amount": 1000
+    }
+  ],
   "status": "Lunas",
   "option": 1, // optional [1: Diambil, 2: Dikirim]
   "note": "Penjualan semen dan paku", // optional
@@ -108,14 +114,34 @@
       "date": "Kamis, 2 Mei 2024",
       "type": "Penjualan",
       "status": "Lunas",
-      "total_price": 100000, // nullable
+      "total_price": 100000,
+      "nominals": [
+        {
+          "name": "Pengiriman",
+          "amount": 10000
+        },
+        {
+          "name": "Lunas",
+          "amount": 150000
+        }
+      ],
     },
     {
       "id": 2,
       "date": "Kamis, 2 Mei 2024",
       "type": "Penjualan",
       "status": "Lunas",
-      "total_price": 20000, // nullable
+      "total_price": 20000,
+      "nominals": [
+        {
+          "name": "Pengiriman",
+          "amount": 10000
+        },
+        {
+          "name": "Lunas",
+          "amount": 150000
+        }
+      ],
     }
   ],
   "links": {
