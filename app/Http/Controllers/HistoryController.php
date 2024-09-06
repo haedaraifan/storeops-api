@@ -17,8 +17,16 @@ class HistoryController extends Controller
     {
         $search = $request->query("search");
         $range = $request->query("range", "all");
+        $from = $request->query("from");
+        $to = $request->query("to");
         $isPaginate = $request->query("paginate", "true");
         $query = AddProductHistory::orderBy("date", "DESC");
+
+        if($from && $to) {
+            $fromDate = Carbon::parse($from)->startOfDay();
+            $toDate = Carbon::parse($to)->endOfDay();
+            $query->whereBetween("date", [$fromDate, $toDate]);
+        }
 
         switch($range) {
             case "daily":
