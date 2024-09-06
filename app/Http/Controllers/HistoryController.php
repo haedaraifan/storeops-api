@@ -22,6 +22,7 @@ class HistoryController extends Controller
         $isPaginate = $request->query("paginate", "true");
         $query = AddProductHistory::orderBy("date", "DESC");
 
+        DateFormatHelper::validateDateRange(["from" => $from, "to" => $to]);
         if($from && $to) {
             $fromDate = Carbon::parse($from)->startOfDay();
             $toDate = Carbon::parse($to)->endOfDay();
@@ -64,6 +65,7 @@ class HistoryController extends Controller
         $isPaginate = $request->query("paginate", "true");
         $query = RestockProductHistory::orderBy("date", "DESC");
 
+        DateFormatHelper::validateDateRange(["from" => $from, "to" => $to]);
         if($from && $to) {
             $startDate = Carbon::parse($from)->startOfDay();
             $endDate = Carbon::parse($to)->endOfDay();

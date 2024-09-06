@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Helpers;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Validator;
 
 class DateFormatHelper
 {
@@ -40,5 +42,19 @@ class DateFormatHelper
             "desember" => "December",
             default => $month,
         };
+    }
+
+    public static function validateDateRange(array $query): ?JsonResponse
+    {
+        $validator = Validator::make($query, [
+            "from" => ["nullable", "date_format:Y-m-d"],
+            "to" => ["nullable", "date_format:Y-m-d"],
+        ]);
+
+        if($validator->fails()) {
+            ExceptionResponseHelper::throwInvariantError("Invalid date format.");
+        }
+
+        return null;
     }
 }

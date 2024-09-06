@@ -140,6 +140,7 @@ class TransactionController extends Controller
         $incomeType = TransactionType::whereName("Penjualan")->first();
         $query = Transaction::whereTypeId($incomeType->id)->with(["products.option"]);
 
+        DateFormatHelper::validateDateRange(["from" => $from, "to" => $to]);
         if($from && $to) {
             $fromDate = Carbon::parse($from)->startOfDay();
             $toDate = Carbon::parse($to)->endOfDay();
