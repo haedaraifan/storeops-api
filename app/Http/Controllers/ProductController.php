@@ -198,19 +198,11 @@ class ProductController extends Controller
     {
         $search = $request->query("search", '');
         $category = $request->query("category", '');
-
-        $fromDate = $request->query("from");
-        $toDate = $request->query("to");
         $year = $request->query("year", Carbon::now()->year);
         $month = $request->query("month", Carbon::now()->month);
 
-        if($fromDate && $toDate) {
-            $startDate = Carbon::parse($fromDate)->startOfDay();
-            $endDate = Carbon::parse($toDate)->endOfDay();
-        } else {
-            $startDate = Carbon::create($year, $month, 1)->startOfMonth();
-            $endDate = Carbon::create($year, $month, 1)->endOfMonth();
-        }
+        $startDate = Carbon::create($year, $month, 1)->startOfMonth();
+        $endDate = Carbon::create($year, $month, 1)->endOfMonth();
 
         if($month != Carbon::now()->month || $year != Carbon::now()->year) {
             $productRecap = ProductsRecap::whereDate("date", $endDate)
