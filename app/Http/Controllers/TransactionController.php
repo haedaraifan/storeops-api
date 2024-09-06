@@ -134,8 +134,17 @@ class TransactionController extends Controller
         $paid = $request->query("paid", "all");
         $finish = $request->query("finish", "all");
         $isPaginate = $request->query("paginate", "true");
+        $from = $request->query("from");
+        $to = $request->query("to");
+
         $incomeType = TransactionType::whereName("Penjualan")->first();
         $query = Transaction::whereTypeId($incomeType->id)->with(["products.option"]);
+
+        if($from && $to) {
+            $fromDate = Carbon::parse($from)->startOfDay();
+            $toDate = Carbon::parse($to)->endOfDay();
+            $query->whereBetween("date", [$fromDate, $toDate]);
+        }
 
         switch($range) {
             case "daily":
