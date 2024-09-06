@@ -6,7 +6,7 @@ use App\Helpers\ExceptionResponseHelper;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductUpdateRequest extends FormRequest
+class ProductAdjustRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,8 @@ class ProductUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name"=> ["required", "max:100"],
-            "purchase_price" => ["required", "numeric", "min:0"],
-            "selling_price" => ["required", "numeric", "min:0"],
-            "unit" => ["nullable", "exists:product_units,name"],
-            "category" => ["required", "max:100"],
-            "image" => ["nullable", "mimes:jpg,jpeg,png", "max:2048"]
+            "quantity" => ["required", "numeric", "min:0"],
+            "message" => ["required", "max:255"],
         ];
     }
 

@@ -423,6 +423,40 @@
 }
 ```
 
+## Adjust Product
+
+**Endpoint :** POST /api/products/:productId/adjust
+
+**Role :** Admin
+
+**Request Header :**
+- AUTHORIZATION : token-123
+
+**Request Body :**
+
+```json
+{
+  "quantity": 5,
+  "message": "Produk rusak" // optional
+}
+```
+
+**Response Body (Success) :**
+
+```json
+{
+  "message": "Produk berhasil disesuaikan."
+}
+```
+
+**Response Body (Failed) :**
+
+```json
+{
+  "error": "Produk tidak ditemukan."
+}
+```
+
 ## List Restocked Product History
 
 **Endpoint :** GET /api/products/histories/restock

@@ -22,6 +22,7 @@
 - **Delete Product**
 - **List Added Product History**
 - **Restock Product**
+- **Adjust Product**
 - **List Restocked Product History**
 - **Recap Products**
 - **Recap Product By Id**

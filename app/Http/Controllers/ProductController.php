@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ExceptionResponseHelper;
+use App\Http\Requests\ProductAdjustRequest;
 use App\Http\Requests\ProductCreateRequest;
 use App\Http\Requests\ProductImportRequest;
 use App\Http\Requests\ProductRestockRequest;
@@ -12,6 +13,7 @@ use App\Http\Resources\ProductResctokRecapResource;
 use App\Http\Resources\ProductResource;
 use App\Imports\ProductsImport;
 use App\Models\AddProductHistory;
+use App\Models\AdjustProductHistory;
 use App\Models\Product;
 use App\Models\ProductsRecap;
 use App\Models\ProductUnit;
@@ -171,6 +173,30 @@ class ProductController extends Controller
         return response()->json([
             "message" => "Produk berhasil direstok."
         ])->setStatusCode(200);
+    }
+
+    public function adjust(ProductAdjustRequest $request, int $productId): JsonResponse
+    {
+        $data = $request->validated();
+        $product = $this->getProduct($productId);
+
+        if($data["quantity"] > $product->quantity) {
+            ExceptionResponseHelper::throwInvariantError("Kuantitas lebih banyak dari stok produk.");
+        }
+
+        $product->decrement("quantity", $data['quantity']);
+        $product->save();
+
+        $adjustProductHistory = new AdjustProductHistory($data);
+        $adjustProductHistory->product_id = $product->id;
+        $adjustProductHistory->name = $product->name;
+        $adjustProductHistory->unit = $product->unit->name ?? null;
+        $adjustProductHistory->category = $product->category;
+        $adjustProductHistory->save();
+
+        return response()->json([
+            "message" => "Produk berhasil disesuaikan."
+        ]);
     }
 
     public function import(ProductImportRequest $request): JsonResponse
