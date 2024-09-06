@@ -62,7 +62,7 @@
   ],
   "nominals": [
     {
-      "name": "Pengiriman" | "Lunas",
+      "name": "Pengiriman", // [1. Pengiriman, 2. Lunas]
       "amount": 1000
     }
   ],
