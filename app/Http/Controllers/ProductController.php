@@ -75,6 +75,7 @@ class ProductController extends Controller
         $product->save();
 
         $addProductHistory = new AddProductHistory($product->toArray());
+        $addProductHistory->date = Carbon::now();
         $addProductHistory->product_id = $product->id;
         $addProductHistory->unit = $unit->name ?? null;
         $addProductHistory->save();
@@ -162,6 +163,7 @@ class ProductController extends Controller
         $product->save();
 
         $restockProductHistory = new RestockProductHistory($data);
+        $restockProductHistory->date = Carbon::now();
         $restockProductHistory->product_id = $product->id;
         $restockProductHistory->name = $product->name;
         $restockProductHistory->unit = $product->unit->name ?? null;
@@ -188,6 +190,7 @@ class ProductController extends Controller
         $product->save();
 
         $adjustProductHistory = new AdjustProductHistory($data);
+        $adjustProductHistory->date = Carbon::now();
         $adjustProductHistory->product_id = $product->id;
         $adjustProductHistory->name = $product->name;
         $adjustProductHistory->unit = $product->unit->name ?? null;
@@ -209,6 +212,7 @@ class ProductController extends Controller
         $importedProducts = $import->getImportedProducts();
         foreach($importedProducts as $product) {
             $addProductHistory = new AddProductHistory($product->toArray());
+            $addProductHistory->date = Carbon::now();
             $addProductHistory->product_id = $product->id;
             $addProductHistory->unit = $product->unit->name ?? null;
             $addProductHistory->save();

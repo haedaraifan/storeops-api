@@ -247,7 +247,6 @@
   "data": {
     "id": 1,
     "name": "kayu jati",
-    "quantity": 200,
     "purchase_price": 120000,
     "selling_price": 150000,
     "unit": "Pcs", // nullable
@@ -396,6 +395,7 @@
 
 ```json
 {
+  "invoice": "INV123",
   "quantity": 45,
   "total_purchase_price": 500000,
   "destination_address": "Besito", // optional

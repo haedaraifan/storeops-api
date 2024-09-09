@@ -103,6 +103,7 @@ class TransactionController extends Controller
             array_push($transactionProducts, $transactionProduct);
         }
 
+        $transaction->date = Carbon::now();
         $transaction->selling_price = $totalPrice;
         $transaction->invoice = $this->generateInvoiceNumber();
         $transaction->status_id = $transactionStatus->id;

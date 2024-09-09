@@ -18,6 +18,7 @@ class Transaction extends Model
     ];
 
     protected $fillable = [
+        "date",
         "invoice",
         "note",
         "purchase_price",

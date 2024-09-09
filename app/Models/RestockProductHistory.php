@@ -16,6 +16,8 @@ class RestockProductHistory extends Model
     ];
 
     protected $fillable = [
+        "date",
+        "invoice",
         "name",
         "unit",
         "purchase_price",
