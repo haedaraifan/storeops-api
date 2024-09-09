@@ -24,6 +24,7 @@ use App\Models\TransactionType;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
@@ -81,15 +82,24 @@ class TransactionController extends Controller
         $totalPrice = 0;
 
         foreach($data["products"] as $productRequest) {
-            $product = Product::whereId($productRequest["id"])->first();
+            // $product = Product::whereId($productRequest["id"])->first();
+            $product = DB::table("products")->where("id", $productRequest["id"])->first();
 
             if($productRequest["quantity"] > $product->quantity) {
                 ExceptionResponseHelper::throwInvariantError("Kuantitas lebih banyak dari stok produk.");
             }
 
             $totalPrice += $product->selling_price * $productRequest["quantity"];
-            $product->quantity -= $productRequest["quantity"];
-            $product->save();
+            // $product->quantity -= $productRequest["quantity"];
+            // $product->save();
+
+            $updated = DB::table("products")
+                ->where("id", $productRequest["id"])
+                ->update(["quantity" => $product->quantity - $productRequest["quantity"]]);
+
+            if (!$updated) {
+                ExceptionResponseHelper::throwInvariantError("Gagal memperbarui stok produk.");
+            }
 
             $transactionProduct = new TransactionProduct([
                 "product_id" => $product->id,
@@ -110,7 +120,7 @@ class TransactionController extends Controller
         $transaction->type_id = $transactionType->id;
         $transaction->save();
 
-        foreach($data["nominals"] as $nominal) {
+        foreach($data["nominals"] ?? [] as $nominal) {
             $nominalType = TransactionNominalType::whereName($nominal["name"])->first();
             $transactionCustomNominal = new TransactionCustomNominal($nominal);
             $transactionCustomNominal->transaction_id = $transaction->id;
