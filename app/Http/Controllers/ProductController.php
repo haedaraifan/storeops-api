@@ -320,21 +320,62 @@ class ProductController extends Controller
     {
         $product = $this->getProduct($productId, "all");
 
-        $transactionProducts = TransactionProduct::with("transaction")
+        $transactionProducts = collect(TransactionProduct::with("transaction")
             ->where("product_id", $productId)
             ->orderByDesc("transaction_id")
-            ->get();
+            ->get()
+            ->map(function($transactionProduct) {
+                return [
+                    "type" => "Penjualan",
+                    "date" => $transactionProduct->transaction ? $transactionProduct->transaction->date : null,
+                    "invoice" => $transactionProduct->transaction ? $transactionProduct->transaction->invoice : null,
+                    "note" => $transactionProduct->transaction ? $transactionProduct->transaction->note : null,
+                    "quantity" => '-' . $transactionProduct->quantity
+                ];
+            }));
 
-        $transactionRecap = $transactionProducts->map(function($transactionProduct) {
-            return [
-                "transaction_id" => $transactionProduct->transaction->id,
-                "invoice" => $transactionProduct->transaction->invoice,
-                "date" => $transactionProduct->transaction->date->isoFormat("dddd, D MMMM Y"),
-                "quantity" => $transactionProduct->quantity
-            ];
-        });
+        $addProductRecap = collect(AddProductHistory::where("product_id", $productId)
+            ->get()
+            ->map(function($addProduct) {
+                return [
+                    "type" => "Penambahan",
+                    "date" => $addProduct->date,
+                    "invoice" => null,
+                    "note" => null,
+                    "quantity" => '+' . $addProduct->quantity
+                ];
+            }));
 
-        $restockRecap = RestockProductHistory::where("product_id", $productId)->get();
+        $restockRecap = collect(RestockProductHistory::where("product_id", $productId)
+            ->get()
+            ->map(function($restock) {
+                return [
+                    "type" => "Restock",
+                    "date" => $restock->date,
+                    "invoice" => $restock->invoice ?? null,
+                    "note" => null,
+                    "quantity" => '+' . $restock->quantity
+                ];
+            }));
+
+        $adjustRecap = collect(AdjustProductHistory::where("product_id", $productId)
+            ->get()
+            ->map(function($adjust) {
+                return [
+                    "type" => "Penyesuaian",
+                    "date" => $adjust->date,
+                    "invoice" => null,
+                    "note" => $adjust->message ?? null,
+                    "quantity" => '-' . $adjust->quantity
+                ];
+            }));
+
+        $allRecap = $transactionProducts
+            ->merge($addProductRecap)
+            ->merge($restockRecap)
+            ->merge($adjustRecap);
+
+        $sortedRecap = $allRecap->sortByDesc("date")->values();
 
         return response()->json([
             "data" => [
@@ -344,8 +385,15 @@ class ProductController extends Controller
                 "unit" => $product->unit,
                 "category" => $product->category,
                 "is_deleted" => $product->deleted_at ? true : false,
-                "transactions" => $transactionRecap,
-                "restock" => ProductResctokRecapResource::collection($restockRecap)
+                "timeline" => $sortedRecap->map(function($recap) {
+                    return [
+                        "type" => $recap["type"],
+                        "date" => $recap["date"]->isoFormat("dddd, D MMMM YYYY"),
+                        "invoice" => $recap["invoice"],
+                        "note" => $recap["note"],
+                        "quantity" => $recap["quantity"]
+                    ];
+                })
             ]
         ]);
     }

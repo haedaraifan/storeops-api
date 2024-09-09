@@ -673,28 +673,38 @@
   "data": {
     "id": 1,
 	"name": "Cat Lippo",
-	"quantity": 40,
+	"quantity": 31,
 	"unit": "pcs", // nullable
 	"category": "Pengecatan",
     "is_deleted": false,
-    "transaction": [
+    "timeline": [
       {
-		"transaction_id": 2,
-		"invoice": "02FAD1F4501230C33380",
-		"date": "Sabtu, 31 Agustus 2024",
-		"quantity": 10
+		"type": "Restock",
+		"date": "Senin, 9 September 2024",
+		"invoice": "abc123", // nullable
+		"note": null, // nullable
+		"quantity": "+10"
 	  },
 	  {
-		"transaction_id": 1,
-		"invoice": "1E41023B353028B3CB07",
-		"date": "Sabtu, 31 Agustus 2024",
-		"quantity": 15
-	  }
-    ],
-    "restock": [
+		"type": "Penjualan",
+		"date": "Jumat, 6 September 2024",
+		"invoice": "B4CF1E844002041725E9", // nullable
+		"note": "nyoba request lengkap", // nullable
+		"quantity": "-1"
+	  },
       {
+		"type": "Penyesuaian",
+		"date": "Jumat, 6 September 2024",
+		"invoice": null, // nullable
+		"note": "barang rusak", // nullable
+		"quantity": "-3"
+	  },
+      {
+		"type": "Penambahan",
 		"date": "Sabtu, 31 Agustus 2024",
-		"quantity": 10
+		"invoice": null, // nullable
+		"note": null, // nullable
+		"quantity": "+25"
 	  }
     ]
   }
